@@ -11,16 +11,15 @@ namespace DAL.Models.Context
 
     public class ApplicationDbContext : DbContext
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
+        {
+        
+        }
 
-        public List<Notification> Notifications { get; set; }
-
-        public List<User> Users { get; set; }
-
-        public List<Player> Players { get; set; }
-
-        public List<Advertisement> Advertisements{ get; set; }
-
-        public List<Building> Buildings { get; set; }
+        public DbSet<Building> Buildings { get; set; }
+        public DbSet<Classified> Classifieds { get; set; }
+        public DbSet<Notification> Notifications { get; set; }
+        public DbSet<PlayerInformation> PlayerInformations { get; set; }
+        public DbSet<User> Users { get; set; }
     }
 }
