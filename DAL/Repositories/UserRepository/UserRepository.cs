@@ -1,5 +1,6 @@
 ﻿using DAL.Models;
 using DAL.Models.Context;
+using DAL.Models.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -60,7 +61,7 @@ namespace DAL.Repositories.UserRepository
 
         public void SetUserEmailToValidated(User user)
         {
-            user.IsEmailValid = true;
+            user.Role = RoleType.User;
             _context.SaveChanges();
         }
 

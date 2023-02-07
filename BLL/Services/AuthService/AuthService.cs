@@ -2,6 +2,7 @@
 using BLL.Exceptions;
 using BLL.Services.EmailService;
 using DAL.Models;
+using DAL.Models.Enums;
 using DAL.Repositories.UserRepository;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -55,6 +56,7 @@ namespace BLL.Services.AuthService
                 Email = userRegistrationRequest.Email,
                 PasswordHash = passwordHash,
                 PasswordSalt = passwordSalt,
+                Role = RoleType.Guest,
                 EmailValidationToken = validationToken,
                 EmailValidationTokenExpiration = DateTime.Now.AddMinutes(10)
             };
@@ -111,7 +113,8 @@ namespace BLL.Services.AuthService
             List<Claim> claims = new()
             {
                 new Claim("Email", user.Email),
-                new Claim("Username", user.Username) 
+                new Claim("Username", user.Username),
+                new Claim(ClaimTypes.Role, "Admin")
             };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(

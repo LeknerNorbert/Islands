@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using DAL.Models.Enums;
+using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -17,7 +18,7 @@ namespace DAL.Models
         public byte[]? PasswordSalt { get; set; }
         public string? EmailValidationToken { get; set; }
         public DateTime EmailValidationTokenExpiration { get; set; }
-        public bool IsEmailValid { get; set; }
+        public RoleType Role { get; set; }
         public string? PasswordResetToken { get; set; }
         public DateTime PasswordResetTokenExpiration { get; set; }
         public virtual PlayerInformation? PlayerInformation { get; set; }
