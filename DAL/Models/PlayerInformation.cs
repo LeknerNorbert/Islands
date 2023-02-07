@@ -6,9 +6,8 @@ namespace DAL.Models
 {
     public class PlayerInformation
     {
-        [Key]
-        [ForeignKey("User")]
-        public int PlayerInformationId { get; set; }
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity), ForeignKey("User")]
+        public int Id { get; set; }
         public int ExperiencePoint { get; set; }
         public int Coins { get; set; }
         public int Woods { get; set; }
@@ -19,7 +18,6 @@ namespace DAL.Models
         public int Strength { get; set; }
         public int Intelligence { get; set; }
         public int Ability { get; set; }
-
         public virtual User? User { get; set; }
         public ICollection<Building>? Buildings { get; set; }
         public ICollection<Classified>? Classifieds { get; set; }

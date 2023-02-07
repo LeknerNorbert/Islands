@@ -17,7 +17,7 @@ namespace DAL.Migrations
                 name: "Users",
                 columns: table => new
                 {
-                    UserId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Username = table.Column<string>(type: "varchar(255)", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
@@ -33,7 +33,7 @@ namespace DAL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Users", x => x.UserId);
+                    table.PrimaryKey("PK_Users", x => x.Id);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -41,7 +41,7 @@ namespace DAL.Migrations
                 name: "PlayerInformations",
                 columns: table => new
                 {
-                    PlayerInformationId = table.Column<int>(type: "int", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false),
                     ExperiencePoint = table.Column<int>(type: "int", nullable: false),
                     Coins = table.Column<int>(type: "int", nullable: false),
                     Woods = table.Column<int>(type: "int", nullable: false),
@@ -55,12 +55,12 @@ namespace DAL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PlayerInformations", x => x.PlayerInformationId);
+                    table.PrimaryKey("PK_PlayerInformations", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_PlayerInformations_Users_PlayerInformationId",
-                        column: x => x.PlayerInformationId,
+                        name: "FK_PlayerInformations_Users_Id",
+                        column: x => x.Id,
                         principalTable: "Users",
-                        principalColumn: "UserId",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
@@ -69,7 +69,7 @@ namespace DAL.Migrations
                 name: "Buildings",
                 columns: table => new
                 {
-                    BuildingId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Type = table.Column<int>(type: "int", nullable: false),
                     XCoordinate = table.Column<int>(type: "int", nullable: false),
@@ -81,12 +81,12 @@ namespace DAL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Buildings", x => x.BuildingId);
+                    table.PrimaryKey("PK_Buildings", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Buildings_PlayerInformations_PlayerInformationId",
                         column: x => x.PlayerInformationId,
                         principalTable: "PlayerInformations",
-                        principalColumn: "PlayerInformationId");
+                        principalColumn: "Id");
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -94,7 +94,7 @@ namespace DAL.Migrations
                 name: "Classifieds",
                 columns: table => new
                 {
-                    ClassifiedId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Item = table.Column<int>(type: "int", nullable: false),
                     Amount = table.Column<int>(type: "int", nullable: false),
@@ -106,12 +106,12 @@ namespace DAL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Classifieds", x => x.ClassifiedId);
+                    table.PrimaryKey("PK_Classifieds", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Classifieds_PlayerInformations_PlayerInformationId",
                         column: x => x.PlayerInformationId,
                         principalTable: "PlayerInformations",
-                        principalColumn: "PlayerInformationId");
+                        principalColumn: "Id");
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -119,7 +119,7 @@ namespace DAL.Migrations
                 name: "Notifications",
                 columns: table => new
                 {
-                    NotificationId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Title = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
@@ -130,12 +130,12 @@ namespace DAL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Notifications", x => x.NotificationId);
+                    table.PrimaryKey("PK_Notifications", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Notifications_PlayerInformations_PlayerInformationId",
                         column: x => x.PlayerInformationId,
                         principalTable: "PlayerInformations",
-                        principalColumn: "PlayerInformationId");
+                        principalColumn: "Id");
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 

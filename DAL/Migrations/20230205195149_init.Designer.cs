@@ -3,6 +3,7 @@ using System;
 using DAL.Models.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAL.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230205195149_init")]
+    partial class init
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -162,29 +164,23 @@ namespace DAL.Migrations
                     b.Property<string>("Email")
                         .HasColumnType("varchar(255)");
 
-                    b.Property<string>("EmailValidationToken")
-                        .HasColumnType("longtext");
-
-                    b.Property<DateTime>("EmailValidationTokenExpiration")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<bool>("IsEmailValid")
-                        .HasColumnType("tinyint(1)");
-
                     b.Property<byte[]>("PasswordHash")
                         .HasColumnType("longblob");
-
-                    b.Property<string>("PasswordResetToken")
-                        .HasColumnType("longtext");
-
-                    b.Property<DateTime>("PasswordResetTokenExpiration")
-                        .HasColumnType("datetime(6)");
 
                     b.Property<byte[]>("PasswordSalt")
                         .HasColumnType("longblob");
 
+                    b.Property<string>("ResetToken")
+                        .HasColumnType("longtext");
+
                     b.Property<string>("Username")
                         .HasColumnType("varchar(255)");
+
+                    b.Property<DateTime>("ValidationDate")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("ValidationToken")
+                        .HasColumnType("longtext");
 
                     b.HasKey("Id");
 

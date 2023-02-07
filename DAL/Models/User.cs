@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DAL.Models
 {
@@ -8,15 +9,17 @@ namespace DAL.Models
     [Index(nameof(Email), IsUnique = true)]
     public class User
     {
-        [Key]
-        public int UserId { get; set; }
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
         public string? Username { get; set; }
         public string? Email { get; set; }
         public byte[]? PasswordHash { get; set; }
         public byte[]? PasswordSalt { get; set; }
-        public string? ValidationToken { get; set; }
-        public DateTime ValidationDate { get; set; }
-        public string? ResetToken { get; set; }
+        public string? EmailValidationToken { get; set; }
+        public DateTime EmailValidationTokenExpiration { get; set; }
+        public bool IsEmailValid { get; set; }
+        public string? PasswordResetToken { get; set; }
+        public DateTime PasswordResetTokenExpiration { get; set; }
         public virtual PlayerInformation? PlayerInformation { get; set; }
     }
 }

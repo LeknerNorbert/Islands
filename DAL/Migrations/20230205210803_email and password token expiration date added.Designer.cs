@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAL.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230103231452_init")]
-    partial class init
+    [Migration("20230205210803_email and password token expiration date added")]
+    partial class emailandpasswordtokenexpirationdateadded
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,7 +23,7 @@ namespace DAL.Migrations
 
             modelBuilder.Entity("DAL.Models.Building", b =>
                 {
-                    b.Property<int>("BuildingId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
@@ -48,7 +48,7 @@ namespace DAL.Migrations
                     b.Property<int>("YCoordinate")
                         .HasColumnType("int");
 
-                    b.HasKey("BuildingId");
+                    b.HasKey("Id");
 
                     b.HasIndex("PlayerInformationId");
 
@@ -57,7 +57,7 @@ namespace DAL.Migrations
 
             modelBuilder.Entity("DAL.Models.Classified", b =>
                 {
-                    b.Property<int>("ClassifiedId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
@@ -82,7 +82,7 @@ namespace DAL.Migrations
                     b.Property<int>("ReplacementItem")
                         .HasColumnType("int");
 
-                    b.HasKey("ClassifiedId");
+                    b.HasKey("Id");
 
                     b.HasIndex("PlayerInformationId");
 
@@ -91,7 +91,7 @@ namespace DAL.Migrations
 
             modelBuilder.Entity("DAL.Models.Notification", b =>
                 {
-                    b.Property<int>("NotificationId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
@@ -107,7 +107,7 @@ namespace DAL.Migrations
                     b.Property<string>("Title")
                         .HasColumnType("longtext");
 
-                    b.HasKey("NotificationId");
+                    b.HasKey("Id");
 
                     b.HasIndex("PlayerInformationId");
 
@@ -116,7 +116,8 @@ namespace DAL.Migrations
 
             modelBuilder.Entity("DAL.Models.PlayerInformation", b =>
                 {
-                    b.Property<int>("PlayerInformationId")
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     b.Property<int>("Ability")
@@ -149,39 +150,45 @@ namespace DAL.Migrations
                     b.Property<int>("Woods")
                         .HasColumnType("int");
 
-                    b.HasKey("PlayerInformationId");
+                    b.HasKey("Id");
 
                     b.ToTable("PlayerInformations");
                 });
 
             modelBuilder.Entity("DAL.Models.User", b =>
                 {
-                    b.Property<int>("UserId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     b.Property<string>("Email")
                         .HasColumnType("varchar(255)");
 
+                    b.Property<string>("EmailValidationToken")
+                        .HasColumnType("longtext");
+
+                    b.Property<DateTime>("EmailValidationTokenExpiration")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<bool>("IsEmailValid")
+                        .HasColumnType("tinyint(1)");
+
                     b.Property<byte[]>("PasswordHash")
                         .HasColumnType("longblob");
+
+                    b.Property<string>("PasswordResetToken")
+                        .HasColumnType("longtext");
+
+                    b.Property<DateTime>("PasswordResetTokenExpiration")
+                        .HasColumnType("datetime(6)");
 
                     b.Property<byte[]>("PasswordSalt")
                         .HasColumnType("longblob");
 
-                    b.Property<string>("ResetToken")
-                        .HasColumnType("longtext");
-
                     b.Property<string>("Username")
                         .HasColumnType("varchar(255)");
 
-                    b.Property<DateTime>("ValidationDate")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<string>("ValidationToken")
-                        .HasColumnType("longtext");
-
-                    b.HasKey("UserId");
+                    b.HasKey("Id");
 
                     b.HasIndex("Email")
                         .IsUnique();
@@ -223,7 +230,7 @@ namespace DAL.Migrations
                 {
                     b.HasOne("DAL.Models.User", "User")
                         .WithOne("PlayerInformation")
-                        .HasForeignKey("DAL.Models.PlayerInformation", "PlayerInformationId")
+                        .HasForeignKey("DAL.Models.PlayerInformation", "Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

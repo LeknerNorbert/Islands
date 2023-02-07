@@ -2,6 +2,9 @@
 {
     public enum IslandType
     {
-        Winter
+        Europian,
+        Indian,
+        Viking,
+        Japan
     }
 }

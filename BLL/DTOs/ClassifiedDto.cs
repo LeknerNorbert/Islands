@@ -1,12 +1,14 @@
 ﻿using DAL.Models.Enums;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace DAL.Models
+namespace BLL.DTOs
 {
-    public class Classified
+    public class ClassifiedDto
     {
-        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public Item Item { get; set; }
         public int Amount { get; set; }
@@ -14,6 +16,5 @@ namespace DAL.Models
         public int ReplacementAmount { get; set; }
         public DateTime PublishDate { get; set; }
         public DateTime ExpirationDate { get; set; }
-        public PlayerInformation? PlayerInformation { get; set; }
     }
 }
