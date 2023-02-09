@@ -67,7 +67,7 @@ namespace BLL.Services.AuthService
 
         public void ResendEmailValidationEmail(string username)
         {
-            User? user = _userRepository.GetUserByUsername(username);
+            User user = _userRepository.GetUserByUsername(username);
             string validationToken = CreateRandomToken();
 
             _userRepository.ResetUserEmailValidationToken(user, validationToken, DateTime.Now.AddMinutes(10));
@@ -75,19 +75,33 @@ namespace BLL.Services.AuthService
             SendEmailValidationEmail(user.Email, validationToken);
         }
 
-        public void ResetPassword(string email)
+        public void ResetPasswordRequest(string email)
         {
-            throw new NotImplementedException();
+            User user = _userRepository.GetUserByEmail(email);
+            string resetPasswordToken = CreateRandomToken();
+   
+            _userRepository.SetPasswordResetToken(user, resetPasswordToken, DateTime.Now.AddMinutes(10));
+
+            SendPasswordResetEmail(email, resetPasswordToken);
         }
 
-        public void SetNewPassword(string token, string newPassword)
+        public void SetNewPassword(string token, string password)
         {
-            throw new NotImplementedException();
+            User user = _userRepository.GetUserByPasswordResetToken(token);
+
+            if (user.EmailValidationTokenExpiration < DateTime.Now)
+            {
+                throw new PasswordResetTokenExpiredException("Password reset token expired.");
+            }
+
+            CreatePasswordHash(password, out byte[] passwordHash, out byte[] passwordSalt);
+
+            _userRepository.SetNewPassword(user, passwordHash, passwordSalt);
         }
 
         public void VerifyEmail(string token)
         {
-            User? user = _userRepository.GetUserByValidationToken(token);
+            User user = _userRepository.GetUserByValidationToken(token);
 
             if (user.EmailValidationTokenExpiration < DateTime.Now)
             {
@@ -103,6 +117,17 @@ namespace BLL.Services.AuthService
             {
                 Email = email,
                 Subject = "Erősítsd meg az email címed!",
+                Body = token
+            };
+            _emailService.SendEmail(request);
+        }
+
+        private void SendPasswordResetEmail(string email, string token)
+        {
+            EmailDto request = new()
+            {
+                Email = email,
+                Subject = "Változtasd meg a jelszavad!",
                 Body = token
             };
             _emailService.SendEmail(request);

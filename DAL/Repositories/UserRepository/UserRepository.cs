@@ -39,6 +39,11 @@ namespace DAL.Repositories.UserRepository
             return _context.Users.First(u => u.EmailValidationToken == token);
         }
 
+        public User GetUserByPasswordResetToken(string token)
+        {
+            return _context.Users.First(u => u.PasswordResetToken == token);
+        }
+
         public void UpdateUserPassword(User user, byte[] passwordHash, byte[] passwordSalt)
         {
             user.PasswordHash = passwordHash;
@@ -62,6 +67,20 @@ namespace DAL.Repositories.UserRepository
         public void SetUserEmailToValidated(User user)
         {
             user.Role = RoleType.User;
+            _context.SaveChanges();
+        }
+
+        public void SetPasswordResetToken(User user, string passwordResetToken, DateTime expiration)
+        {
+            user.PasswordResetToken = passwordResetToken;
+            user.PasswordResetTokenExpiration = expiration;
+            _context.SaveChanges();
+        }
+
+        public void SetNewPassword(User user, byte[] passwordHash, byte[] passwordSalt)
+        {
+            user.PasswordHash = passwordHash;
+            user.PasswordSalt = passwordSalt;
             _context.SaveChanges();
         }
 

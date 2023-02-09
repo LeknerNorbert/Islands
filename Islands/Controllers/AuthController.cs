@@ -64,10 +64,6 @@ namespace Web.Controllers
             {
                 return BadRequest(ex.Message);
             }
-            catch (ArgumentNullException)
-            {
-                return BadRequest("Token does not exist.");
-            }
             catch (InvalidOperationException)
             {
                 return BadRequest("Token does not exist.");
@@ -88,10 +84,6 @@ namespace Web.Controllers
             {
                 _authService.ResendEmailValidationEmail(username);
                 return Ok("Email Validation email sended.");
-            }
-            catch (ArgumentNullException)
-            {
-                return BadRequest("User does not exist.");
             }
             catch (InvalidOperationException)
             {
@@ -118,10 +110,6 @@ namespace Web.Controllers
             {
                 return BadRequest(ex.Message);
             }
-            catch (ArgumentNullException)
-            {
-                return BadRequest("User does not exist.");
-            }
             catch (InvalidOperationException)
             {
                 return BadRequest("User does not exist.");
@@ -131,5 +119,53 @@ namespace Web.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpPost]
+        [ProducesResponseType(StatusCodes.Status202Accepted)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public IActionResult ResetPasswordRequest(string email)
+        {
+            try
+            {
+                _authService.ResetPasswordRequest(email);
+                return Ok("Reset password email sended");
+            }
+            catch (InvalidOperationException)
+            {
+                return NotFound("User does not exist with this email.");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPost]
+        [ProducesResponseType(StatusCodes.Status202Accepted)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public IActionResult SetNewPassword(string token, string password)
+        {
+            try
+            {
+                _authService.SetNewPassword(token, password);
+                return Ok();
+            }
+            catch (PasswordResetTokenExpiredException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (InvalidOperationException)
+            {
+                return NotFound("there is no such token.");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        
     }
 }
