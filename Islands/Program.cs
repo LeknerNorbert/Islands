@@ -1,7 +1,11 @@
 using BLL.Services.AuthService;
+using BLL.Services.ClassifiedAdService;
 using BLL.Services.EmailService;
+using BLL.Services.PlayerInformationService;
 using DAL.Models;
 using DAL.Models.Context;
+using DAL.Repositories.ClassifiedAdRepository;
+using DAL.Repositories.PlayerInformationRepository;
 using DAL.Repositories.UserRepository;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -40,8 +44,12 @@ builder.Services.AddEndpointsApiExplorer();
 // Dependency injections
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IEmailService, EmailService>();
+builder.Services.AddScoped<IClassifiedAdService, ClassifiedAdService>();
+builder.Services.AddScoped<IPlayerInformationService, PlayerInformationService>();
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IClassifiedAdRepository, ClassifiedAdRepository>();
+builder.Services.AddScoped<IPlayerInformationRepository, PlayerInformationRepository>();
 
 // Authentication
 builder.Services.AddSwaggerGen(options =>

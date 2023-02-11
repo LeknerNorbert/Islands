@@ -12,6 +12,7 @@ namespace DAL.Models
         public int Coins { get; set; }
         public int Woods { get; set; }
         public int Stones { get; set; }
+        public int Irons { get; set; }
         public IslandType SelectedIsland { get; set; }
         public DateTime LastExpeditionDate { get; set; }
         public DateTime LastBattleDate { get; set; }
@@ -20,7 +21,7 @@ namespace DAL.Models
         public int Ability { get; set; }
         public virtual User? User { get; set; }
         public ICollection<Building>? Buildings { get; set; }
-        public ICollection<Classified>? Classifieds { get; set; }
+        public ICollection<ClassifiedAd>? ClassifiedAds { get; set; }
         public ICollection<Notification>? Notifications { get; set; }
     }
 }

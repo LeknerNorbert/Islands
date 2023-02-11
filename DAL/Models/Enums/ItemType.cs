@@ -1,6 +1,6 @@
 ﻿namespace DAL.Models.Enums
 {
-    public enum Item
+    public enum ItemType
     {
         Coin,
         Wood,

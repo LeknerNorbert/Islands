@@ -17,7 +17,7 @@ namespace DAL.Models.Context
         }
 
         public DbSet<Building> Buildings { get; set; }
-        public DbSet<Classified> Classifieds { get; set; }
+        public DbSet<ClassifiedAd> Classifieds { get; set; }
         public DbSet<Notification> Notifications { get; set; }
         public DbSet<PlayerInformation> PlayerInformations { get; set; }
         public DbSet<User> Users { get; set; }

@@ -1,20 +1,22 @@
 ﻿using DAL.Models.Enums;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace BLL.DTOs
 {
-    public class ClassifiedDto
+    public class CreateClassifiedAdDto
     {
-        public int Id { get; set; }
-        public Item Item { get; set; }
+        [Required]
+        public ItemType Item { get; set; }
+        [Required]
         public int Amount { get; set; }
-        public Item ReplacementItem { get; set; }
+        [Required]
+        public ItemType ReplacementItem { get; set; }
+        [Required]
         public int ReplacementAmount { get; set; }
-        public DateTime PublishDate { get; set; }
-        public DateTime ExpirationDate { get; set; }
     }
 }
