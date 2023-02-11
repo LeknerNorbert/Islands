@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAL.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230205210803_email and password token expiration date added")]
-    partial class emailandpasswordtokenexpirationdateadded
+    [Migration("20230210233755_sql-server-init")]
+    partial class sqlserverinit
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -28,10 +28,10 @@ namespace DAL.Migrations
                         .HasColumnType("int");
 
                     b.Property<DateTime>("BuildDate")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("datetime");
 
                     b.Property<DateTime>("LastCollectDate")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("datetime");
 
                     b.Property<int>("Level")
                         .HasColumnType("int");
@@ -65,7 +65,7 @@ namespace DAL.Migrations
                         .HasColumnType("int");
 
                     b.Property<DateTime>("ExpirationDate")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("datetime");
 
                     b.Property<int>("Item")
                         .HasColumnType("int");
@@ -74,7 +74,7 @@ namespace DAL.Migrations
                         .HasColumnType("int");
 
                     b.Property<DateTime>("PublishDate")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("datetime");
 
                     b.Property<int>("ReplacementAmount")
                         .HasColumnType("int");
@@ -133,10 +133,10 @@ namespace DAL.Migrations
                         .HasColumnType("int");
 
                     b.Property<DateTime>("LastBattleDate")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("datetime");
 
                     b.Property<DateTime>("LastExpeditionDate")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("datetime");
 
                     b.Property<int>("SelectedIsland")
                         .HasColumnType("int");
@@ -162,31 +162,25 @@ namespace DAL.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Email")
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("varchar(95)");
 
                     b.Property<string>("EmailValidationToken")
                         .HasColumnType("longtext");
 
                     b.Property<DateTime>("EmailValidationTokenExpiration")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<bool>("IsEmailValid")
-                        .HasColumnType("tinyint(1)");
+                        .HasColumnType("datetime");
 
                     b.Property<byte[]>("PasswordHash")
                         .HasColumnType("longblob");
 
-                    b.Property<string>("PasswordResetToken")
-                        .HasColumnType("longtext");
-
-                    b.Property<DateTime>("PasswordResetTokenExpiration")
-                        .HasColumnType("datetime(6)");
-
                     b.Property<byte[]>("PasswordSalt")
                         .HasColumnType("longblob");
 
+                    b.Property<int>("Role")
+                        .HasColumnType("int");
+
                     b.Property<string>("Username")
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("varchar(95)");
 
                     b.HasKey("Id");
 

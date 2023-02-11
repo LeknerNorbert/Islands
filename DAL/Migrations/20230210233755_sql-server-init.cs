@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DAL.Migrations
 {
-    public partial class init : Migration
+    public partial class sqlserverinit : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -19,17 +19,16 @@ namespace DAL.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Username = table.Column<string>(type: "varchar(255)", nullable: true)
+                    Username = table.Column<string>(type: "varchar(95)", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    Email = table.Column<string>(type: "varchar(255)", nullable: true)
+                    Email = table.Column<string>(type: "varchar(95)", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     PasswordHash = table.Column<byte[]>(type: "longblob", nullable: true),
                     PasswordSalt = table.Column<byte[]>(type: "longblob", nullable: true),
-                    ValidationToken = table.Column<string>(type: "longtext", nullable: true)
+                    EmailValidationToken = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    ValidationDate = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    ResetToken = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4")
+                    EmailValidationTokenExpiration = table.Column<DateTime>(type: "datetime", nullable: false),
+                    Role = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -47,8 +46,8 @@ namespace DAL.Migrations
                     Woods = table.Column<int>(type: "int", nullable: false),
                     Stones = table.Column<int>(type: "int", nullable: false),
                     SelectedIsland = table.Column<int>(type: "int", nullable: false),
-                    LastExpeditionDate = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    LastBattleDate = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    LastExpeditionDate = table.Column<DateTime>(type: "datetime", nullable: false),
+                    LastBattleDate = table.Column<DateTime>(type: "datetime", nullable: false),
                     Strength = table.Column<int>(type: "int", nullable: false),
                     Intelligence = table.Column<int>(type: "int", nullable: false),
                     Ability = table.Column<int>(type: "int", nullable: false)
@@ -75,8 +74,8 @@ namespace DAL.Migrations
                     XCoordinate = table.Column<int>(type: "int", nullable: false),
                     YCoordinate = table.Column<int>(type: "int", nullable: false),
                     Level = table.Column<int>(type: "int", nullable: false),
-                    BuildDate = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    LastCollectDate = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    BuildDate = table.Column<DateTime>(type: "datetime", nullable: false),
+                    LastCollectDate = table.Column<DateTime>(type: "datetime", nullable: false),
                     PlayerInformationId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
@@ -100,8 +99,8 @@ namespace DAL.Migrations
                     Amount = table.Column<int>(type: "int", nullable: false),
                     ReplacementItem = table.Column<int>(type: "int", nullable: false),
                     ReplacementAmount = table.Column<int>(type: "int", nullable: false),
-                    PublishDate = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    ExpirationDate = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    PublishDate = table.Column<DateTime>(type: "datetime", nullable: false),
+                    ExpirationDate = table.Column<DateTime>(type: "datetime", nullable: false),
                     PlayerInformationId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>

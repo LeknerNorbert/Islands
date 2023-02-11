@@ -12,8 +12,8 @@ namespace BLL.Services.AuthService
         public void Login(UserLoginRequestDto userLoginRequest, out string token);
         public void Registration(UserRegistrationRequestDto userRegistrationRequest);
         public void VerifyEmail(string token);
-        public void ResetPasswordRequest(string email);
-        public void SetNewPassword(string token, string password);
         public void ResendEmailValidationEmail(string username);
+        public void GenerateTemporaryPassword(string email);
+        public void ResetPassword(string username, string password);
     }
 }

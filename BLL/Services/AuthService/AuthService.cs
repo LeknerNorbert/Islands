@@ -13,6 +13,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace BLL.Services.AuthService
@@ -75,30 +76,6 @@ namespace BLL.Services.AuthService
             SendEmailValidationEmail(user.Email, validationToken);
         }
 
-        public void ResetPasswordRequest(string email)
-        {
-            User user = _userRepository.GetUserByEmail(email);
-            string resetPasswordToken = CreateRandomToken();
-   
-            _userRepository.SetPasswordResetToken(user, resetPasswordToken, DateTime.Now.AddMinutes(10));
-
-            SendPasswordResetEmail(email, resetPasswordToken);
-        }
-
-        public void SetNewPassword(string token, string password)
-        {
-            User user = _userRepository.GetUserByPasswordResetToken(token);
-
-            if (user.EmailValidationTokenExpiration < DateTime.Now)
-            {
-                throw new PasswordResetTokenExpiredException("Password reset token expired.");
-            }
-
-            CreatePasswordHash(password, out byte[] passwordHash, out byte[] passwordSalt);
-
-            _userRepository.SetNewPassword(user, passwordHash, passwordSalt);
-        }
-
         public void VerifyEmail(string token)
         {
             User user = _userRepository.GetUserByValidationToken(token);
@@ -110,7 +87,26 @@ namespace BLL.Services.AuthService
 
             _userRepository.SetUserEmailToValidated(user);
         }
-        
+
+        public void GenerateTemporaryPassword(string email)
+        {
+            User user = _userRepository.GetUserByEmail(email);
+            string password = CreateRandomPassword();
+
+            CreatePasswordHash(password, out byte[] passwordHash, out byte[] passwordSalt);
+
+            _userRepository.SetNewPassword(user, passwordHash, passwordSalt);
+            SendTemporaryPasswordEmail(email, password);
+        }
+
+        public void ResetPassword(string username, string password)
+        {
+            User user = _userRepository.GetUserByUsername(username);
+            CreatePasswordHash(password, out byte[] passwordHash, out byte[] passwordSalt);
+
+            _userRepository.SetNewPassword(user, passwordHash, passwordSalt);
+        }
+
         private void SendEmailValidationEmail(string email, string token)
         {
             EmailDto request = new()
@@ -122,13 +118,13 @@ namespace BLL.Services.AuthService
             _emailService.SendEmail(request);
         }
 
-        private void SendPasswordResetEmail(string email, string token)
+        private void SendTemporaryPasswordEmail(string email, string password)
         {
             EmailDto request = new()
             {
                 Email = email,
-                Subject = "Változtasd meg a jelszavad!",
-                Body = token
+                Subject = "Ideiglenes jelszó beállítva!",
+                Body = $"Az ideiglenes jelszavad: {password} (belépés után rögtön változtasd meg)."
             };
             _emailService.SendEmail(request);
         }
@@ -139,7 +135,7 @@ namespace BLL.Services.AuthService
             {
                 new Claim("Email", user.Email),
                 new Claim("Username", user.Username),
-                new Claim(ClaimTypes.Role, "Admin")
+                new Claim(ClaimTypes.Role, user.Role.ToString())
             };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(
@@ -176,6 +172,18 @@ namespace BLL.Services.AuthService
         private static string CreateRandomToken()
         {
             return Convert.ToHexString(RandomNumberGenerator.GetBytes(64));
+        }
+
+        private static string CreateRandomPassword()
+        {
+            string password = "";
+
+            while(!Regex.IsMatch(password, @"^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$"))
+            {
+                password = Convert.ToBase64String(RandomNumberGenerator.GetBytes(8));
+            }
+
+            return password;
         }
     }
 }

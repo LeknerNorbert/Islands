@@ -1,6 +1,7 @@
 ﻿using BLL.DTOs;
 using BLL.Exceptions;
 using BLL.Services.AuthService;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Web.Filters;
@@ -49,7 +50,7 @@ namespace Web.Controllers
             }
         }
 
-        [HttpPut]
+        [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ValidateModel]
@@ -120,16 +121,16 @@ namespace Web.Controllers
             }
         }
 
-        [HttpPost]
+        [HttpPut]
         [ProducesResponseType(StatusCodes.Status202Accepted)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public IActionResult ResetPasswordRequest(string email)
+        public IActionResult SetTemporaryPassword(string email)
         {
             try
             {
-                _authService.ResetPasswordRequest(email);
-                return Ok("Reset password email sended");
+                _authService.GenerateTemporaryPassword(email);
+                return Ok("Email with temporary password sended.");
             }
             catch (InvalidOperationException)
             {
@@ -141,31 +142,22 @@ namespace Web.Controllers
             }
         }
 
-        [HttpPost]
-        [ProducesResponseType(StatusCodes.Status202Accepted)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [HttpPut, Authorize(Roles = "User")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public IActionResult SetNewPassword(string token, string password)
+        public IActionResult ResetPassword(PasswordResetDto changePassword)
         {
             try
             {
-                _authService.SetNewPassword(token, password);
-                return Ok();
-            }
-            catch (PasswordResetTokenExpiredException ex)
-            {
-                return BadRequest(ex.Message);
-            }
-            catch (InvalidOperationException)
-            {
-                return NotFound("there is no such token.");
+                string username = User.Claims.First(c => c.Type == "Username").Value;
+
+                _authService.ResetPassword(username, changePassword.Password);
+                return Ok("Password successfully changed.");
             }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
         }
-
-        
     }
 }
