@@ -54,7 +54,7 @@ namespace Web.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ValidateModel]
-        public IActionResult VerifyEmail(string token)
+        public IActionResult VerifyEmail([FromBody] string token)
         {
             try
             {
@@ -79,7 +79,7 @@ namespace Web.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ValidateModel]
-        public IActionResult ResendValidationEmail(string username)
+        public IActionResult ResendValidationEmail([FromBody] string username)
         {
             try
             {
@@ -125,7 +125,7 @@ namespace Web.Controllers
         [ProducesResponseType(StatusCodes.Status202Accepted)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public IActionResult SetTemporaryPassword(string email)
+        public IActionResult SetTemporaryPassword([FromBody] string email)
         {
             try
             {
