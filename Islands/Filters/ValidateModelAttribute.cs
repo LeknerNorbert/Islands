@@ -1,19 +1,23 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
 using System.Net;
 using System.Web.Http.Controllers;
-using System.Web.Http.Filters;
 
 namespace Web.Filters
 {
-    public class ValidateModelAttribute : ActionFilterAttribute
+    public class ValidateModelAttribute : Attribute, IActionFilter
     {
-        public override void OnActionExecuting(HttpActionContext context)
+        public void OnActionExecuting(ActionExecutingContext context)
         {
-            if (context.ModelState.IsValid == false)
+            if (!context.ModelState.IsValid)
             {
-                context.Response = context.Request.CreateErrorResponse(
-                    HttpStatusCode.BadRequest, context.ModelState);
+                context.Result = new BadRequestObjectResult("Model is invalid.");
             }
+        }
+
+        public void OnActionExecuted(ActionExecutedContext context)
+        {
+            // Do nothing
         }
     }
 }

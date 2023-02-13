@@ -31,7 +31,7 @@ namespace BLL.Services.AuthService
             _emailService = emailService;
         }
 
-        public void Login(UserLoginRequestDto userLoginRequest, out string token)
+        public void Login(LoginRequestDto userLoginRequest, out string token)
         {
             User user = _userRepository.GetUserByUsername(userLoginRequest.Username);
      
@@ -45,7 +45,7 @@ namespace BLL.Services.AuthService
             }
         }
 
-        public void Registration(UserRegistrationRequestDto userRegistrationRequest)
+        public void Registration(RegistrationRequestDto userRegistrationRequest)
         {
             CreatePasswordHash(userRegistrationRequest.Password, out byte[] passwordHash, out byte[] passwordSalt);
             

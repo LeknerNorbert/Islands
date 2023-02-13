@@ -10,8 +10,9 @@ namespace BLL.Services.ClassifiedAdService
     public interface IClassifiedAdService
     {
         public List<ClassifiedAdDto> GetClassifiedAds();
-        public List<ClassifiedAdDto> GetMyClassifiedAds(string username);
-        public void CreateClassifiedAd(string username, CreateClassifiedAdDto createClassifiedAd);
+        public List<ClassifiedAdDto> GetClassifiedAdsByUser(string username);
+        public void CreateClassifiedAd(string creatorUsername, CreateClassifiedAdDto createClassifiedAd);
         public void DeleteClassifiedAd(int id);
+        public void PurchaseClassifiedAd(string customerUsername, int id);
     }
 }

@@ -7,11 +7,13 @@ using System.Threading.Tasks;
 
 namespace BLL.DTOs
 {
-    public class UserLoginRequestDto
+    public class SkillsDto
     {
         [Required]
-        public string? Username { get; set; }
+        public int Strength { get; set; }
         [Required]
-        public string? Password { get; set; }
+        public int Intelligence { get; set; }
+        [Required]
+        public int Ability { get; set; }
     }
 }

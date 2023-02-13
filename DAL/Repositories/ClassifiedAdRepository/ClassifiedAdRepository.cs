@@ -30,7 +30,7 @@ namespace DAL.Repositories.ClassifiedAdRepository
             return _context.Classifieds.ToList();
         }
 
-        public List<ClassifiedAd> GetClassifiedAdsByUser(string username)
+        public List<ClassifiedAd> GetClassifiedAdsByUsername(string username)
         {
             return _context.Classifieds
                 .Include(c => c.PlayerInformation)

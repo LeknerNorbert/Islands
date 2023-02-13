@@ -11,7 +11,7 @@ namespace DAL.Repositories.ClassifiedAdRepository
     {
         public ClassifiedAd GetClassifiedAd(int id);
         public List<ClassifiedAd> GetClassifiedAds();
-        public List<ClassifiedAd> GetClassifiedAdsByUser(string username);
+        public List<ClassifiedAd> GetClassifiedAdsByUsername(string username);
         public void CreateClassifiedAd(ClassifiedAd classifiedAd);
         public void DeleteClassifiedAd(ClassifiedAd classifiedAd);
     }

@@ -14,6 +14,6 @@ namespace DAL.Models
         public int Level { get; set; }
         public DateTime BuildDate { get; set; }
         public DateTime LastCollectDate { get; set; }
-        public PlayerInformation? PlayerInformation { get; set; }
+        public Player? PlayerInformation { get; set; }
     }
 }

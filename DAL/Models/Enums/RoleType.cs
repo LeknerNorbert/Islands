@@ -9,6 +9,7 @@ namespace DAL.Models.Enums
     public enum RoleType
     {
         Guest,
-        User
+        User,
+        Player
     }
 }

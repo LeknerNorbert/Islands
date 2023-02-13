@@ -10,6 +10,6 @@ namespace DAL.Models
         public string? Title { get; set; }
         public string? Message { get; set; }
         public bool IsOpened { get; set; }
-        public PlayerInformation? PlayerInformation { get; set; }
+        public Player? PlayerInformation { get; set; }
     }
 }

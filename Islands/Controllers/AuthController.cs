@@ -4,6 +4,7 @@ using BLL.Services.AuthService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 using Web.Filters;
 
 namespace Web.Controllers
@@ -23,7 +24,7 @@ namespace Web.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ValidateModel]
-        public IActionResult Registration(UserRegistrationRequestDto userRegistrationResquest)
+        public IActionResult Registration([FromBody] RegistrationRequestDto userRegistrationResquest)
         {
             try
             {
@@ -50,6 +51,7 @@ namespace Web.Controllers
             }
         }
 
+        // Ellenőrizni, hogy csak akkor erősíthethesse meg a user az emailt, ha még nem tette
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -75,6 +77,7 @@ namespace Web.Controllers
             }
         }
 
+        // Csak a már belépett, de még nem megeőrsített emaillel rendelkezőknek elérhető
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -100,7 +103,7 @@ namespace Web.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ValidateModel]
-        public IActionResult Login(UserLoginRequestDto userLoginRequest)
+        public IActionResult Login(LoginRequestDto userLoginRequest)
         {
             try
             {
@@ -125,6 +128,7 @@ namespace Web.Controllers
         [ProducesResponseType(StatusCodes.Status202Accepted)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ValidateModel]
         public IActionResult SetTemporaryPassword([FromBody] string email)
         {
             try
@@ -142,16 +146,17 @@ namespace Web.Controllers
             }
         }
 
-        [HttpPut, Authorize(Roles = "User")]
+        [HttpPut, /*Authorize(Roles = "User")*/]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ValidateModel]
         public IActionResult ResetPassword(PasswordResetDto changePassword)
         {
             try
             {
                 string username = User.Claims.First(c => c.Type == "Username").Value;
-
                 _authService.ResetPassword(username, changePassword.Password);
+
                 return Ok("Password successfully changed.");
             }
             catch (Exception ex)

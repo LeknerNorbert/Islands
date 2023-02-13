@@ -19,6 +19,6 @@ namespace DAL.Models
         public string? EmailValidationToken { get; set; }
         public DateTime EmailValidationTokenExpiration { get; set; }
         public RoleType Role { get; set; }
-        public virtual PlayerInformation? PlayerInformation { get; set; }
+        public virtual Player? PlayerInformation { get; set; }
     }
 }

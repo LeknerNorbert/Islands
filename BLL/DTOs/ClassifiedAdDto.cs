@@ -15,6 +15,5 @@ namespace BLL.DTOs
         public ItemType ReplacementItem { get; set; }
         public int ReplacementAmount { get; set; }
         public DateTime PublishDate { get; set; }
-        public DateTime ExpirationDate { get; set; }
     }
 }

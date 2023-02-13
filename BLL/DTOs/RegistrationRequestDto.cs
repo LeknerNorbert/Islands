@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BLL.DTOs
 {
-    public class UserRegistrationRequestDto
+    public class RegistrationRequestDto
     {
         [Required, StringLength(255, MinimumLength = 3)]
         public string? Username { get; set; }

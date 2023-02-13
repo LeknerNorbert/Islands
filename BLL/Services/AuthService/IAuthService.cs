@@ -9,8 +9,8 @@ namespace BLL.Services.AuthService
 {
     public interface IAuthService
     {
-        public void Login(UserLoginRequestDto userLoginRequest, out string token);
-        public void Registration(UserRegistrationRequestDto userRegistrationRequest);
+        public void Login(LoginRequestDto userLoginRequest, out string token);
+        public void Registration(RegistrationRequestDto userRegistrationRequest);
         public void VerifyEmail(string token);
         public void ResendEmailValidationEmail(string username);
         public void GenerateTemporaryPassword(string email);

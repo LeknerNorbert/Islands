@@ -10,9 +10,8 @@ namespace BLL.DTOs
 {
     public class IslandDto
     {
-        public IslandType Name { get; set; }
-        public string? ImagePath { get; set; }
-        public Vector2[]? BuildingAreas { get; set; }
+        public string? Background { get; set; }
+        public Vector2[]? ConstructionAreas { get; set; }
         public Vector2[]? NPCRoutes { get; set; }
         public string[]? NPCSprites { get; set; }
     }

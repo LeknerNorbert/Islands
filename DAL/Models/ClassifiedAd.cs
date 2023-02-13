@@ -13,6 +13,6 @@ namespace DAL.Models
         public ItemType ReplacementItem { get; set; }
         public int ReplacementAmount { get; set; }
         public DateTime PublishDate { get; set; }
-        public PlayerInformation? PlayerInformation { get; set; }
+        public Player? PlayerInformation { get; set; }
     }
 }

@@ -1,0 +1,53 @@
+{
+  "Background": "",
+  "NPCSprites": [
+    "",
+    "",
+    "",
+    ""
+  ],
+  "NPCRoutes": [
+    {
+      "coordX": 0,
+      "coordY": 0
+    },
+    {
+      "coordX": 0,
+      "coordY": 0
+    },
+    {
+      "coordX": 0,
+      "coordY": 0
+    },
+    {
+      "coordX": 0,
+      "coordY": 0
+    },
+    {
+      "coordX": 0,
+      "coordY": 0
+    }
+  ],
+  "ConstructionAreas": [
+    {
+      "coordX": 0,
+      "coordY": 0
+    },
+    {
+      "coordX": 0,
+      "coordY": 0
+    },
+    {
+      "coordX": 0,
+      "coordY": 0
+    },
+    {
+      "coordX": 0,
+      "coordY": 0
+    },
+    {
+      "coordX": 0,
+      "coordY": 0
+    }
+  ]
+}

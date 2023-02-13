@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DAL.Models
 {
-    public class PlayerInformation
+    public class Player
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity), ForeignKey("User")]
         public int Id { get; set; }
