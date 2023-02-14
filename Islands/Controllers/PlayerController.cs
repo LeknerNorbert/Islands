@@ -4,6 +4,7 @@ using DAL.Models.Enums;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Web.Controllers
 {
@@ -11,14 +12,14 @@ namespace Web.Controllers
     [ApiController]
     public class PlayerController : ControllerBase
     {
-        private readonly IPlayerService _playerInformationService;
+        private readonly IPlayerService _playerService;
 
         public PlayerController(IPlayerService playerInformationService)
         {
-            _playerInformationService = playerInformationService;
+            _playerService = playerInformationService;
         }
 
-        [HttpGet, Authorize]
+        [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public IActionResult GetPlayer()
@@ -26,9 +27,9 @@ namespace Web.Controllers
             try
             {
                 string username = User.Claims.First(c => c.Type == "Username").Value;
-                PlayerDto playerInformation = _playerInformationService.GetPlayer(username);
+                PlayerDto playerInformation = _playerService.GetPlayer(username);
 
-                return Ok(playerInformation);
+                return Ok();
             }
             catch (InvalidOperationException)
             {
@@ -40,25 +41,30 @@ namespace Web.Controllers
             }
         }
 
-        [HttpPost, Authorize]
-        [ProducesResponseType(StatusCodes.Status202Accepted)]
+        [HttpPost]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public IActionResult CreatePlayer([FromBody] IslandType island)
         {
             try
             {
                 string username = User.Claims.First(c => c.Type == "Username").Value;
-                _playerInformationService.CreatePlayer(username, island);
-                return Ok();
+                _playerService.CreatePlayer(username, island);
+
+                return Ok("Player has been created.");
             }
-            catch (Exception)
+            catch (DbUpdateException)
             {
-                return BadRequest();
+                return BadRequest("Database error during create.");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
             }
         }
 
 
-        [HttpPut, Authorize]
+        [HttpPut]
         [ProducesResponseType(StatusCodes.Status202Accepted)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public IActionResult UpdateSkillPoints(SkillsDto skillPoints)

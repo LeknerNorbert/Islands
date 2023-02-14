@@ -1,12 +1,12 @@
 {
-  "background": "",
-  "npcSprites": [
+  "Background": "",
+  "NPCSprites": [
     "",
     "",
     "",
     ""
   ],
-  "npcRoutes": [
+  "NPCRoutes": [
     {
       "coordX": 0,
       "coordY": 0
@@ -28,7 +28,7 @@
       "coordY": 0
     }
   ],
-  "constructionAreas": [
+  "ConstructionAreas": [
     {
       "coordX": 0,
       "coordY": 0

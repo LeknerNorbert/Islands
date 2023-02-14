@@ -10,9 +10,9 @@ namespace BLL.DTOs
     public class ClassifiedAdDto
     {
         public int Id { get; set; }
-        public ItemType Item { get; set; }
+        public Item Item { get; set; }
         public int Amount { get; set; }
-        public ItemType ReplacementItem { get; set; }
+        public Item ReplacementItem { get; set; }
         public int ReplacementAmount { get; set; }
         public DateTime PublishDate { get; set; }
     }

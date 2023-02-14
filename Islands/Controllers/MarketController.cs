@@ -3,6 +3,7 @@ using BLL.Exceptions;
 using BLL.Services.ClassifiedAdService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Web.Filters;
 
 namespace Web.Controllers
 {
@@ -17,7 +18,7 @@ namespace Web.Controllers
             _classifiedAdService = classifiedAdService;
         }
 
-        [HttpGet, /*Authorize(Roles = "User")*/]
+        [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public IActionResult GetClassifieds()
@@ -33,7 +34,7 @@ namespace Web.Controllers
             }
         }
 
-        [HttpGet, /*Authorize(Roles = "User")*/]
+        [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public IActionResult GetMyClassifieds()
@@ -51,9 +52,10 @@ namespace Web.Controllers
             }
         }
 
-        [HttpPost,/*Authorize(Roles = "User")*/]
-        [ProducesResponseType(StatusCodes.Status201Created)]
+        [HttpPost]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ValidateModel]
         public IActionResult CreateClassifiedAd(CreateClassifiedAdDto createClassifiedAd)
         {
             try
@@ -69,8 +71,8 @@ namespace Web.Controllers
             }
         }
 
-        [HttpDelete, /*Authorize(Roles = "User")*/]
-        [ProducesResponseType(StatusCodes.Status201Created)]
+        [HttpDelete]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public IActionResult DeleteClassifiedAd(int id)
         {
@@ -88,8 +90,8 @@ namespace Web.Controllers
         }
 
 
-        [HttpPut, /*Authorize(Roles = "User")*/]
-        [ProducesResponseType(StatusCodes.Status201Created)]
+        [HttpPut]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status405MethodNotAllowed)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public IActionResult PurchaseClassifiedAd(int id)

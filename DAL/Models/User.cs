@@ -18,7 +18,7 @@ namespace DAL.Models
         public byte[]? PasswordSalt { get; set; }
         public string? EmailValidationToken { get; set; }
         public DateTime EmailValidationTokenExpiration { get; set; }
-        public RoleType Role { get; set; }
+        public Role Role { get; set; }
         public virtual Player? PlayerInformation { get; set; }
     }
 }

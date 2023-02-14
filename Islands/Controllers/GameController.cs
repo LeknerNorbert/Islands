@@ -5,7 +5,7 @@ namespace Web.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-    public class IslandController : ControllerBase
+    public class GameController : ControllerBase
     {
 
     }

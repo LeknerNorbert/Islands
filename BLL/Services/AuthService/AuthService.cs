@@ -57,7 +57,7 @@ namespace BLL.Services.AuthService
                 Email = userRegistrationRequest.Email,
                 PasswordHash = passwordHash,
                 PasswordSalt = passwordSalt,
-                Role = RoleType.Guest,
+                Role = Role.Guest,
                 EmailValidationToken = validationToken,
                 EmailValidationTokenExpiration = DateTime.Now.AddMinutes(10)
             };

@@ -29,7 +29,7 @@ namespace BLL.Services.ClassifiedAdService
 
             switch (createClassifiedAd.Item)
             {
-                case ItemType.Coin:
+                case Item.Coin:
                     if (creator.Coins >= createClassifiedAd.Amount)
                     {
                         _playerRepository.UpdatePlayerCoins(creator, createClassifiedAd.Amount * -1);
@@ -40,7 +40,7 @@ namespace BLL.Services.ClassifiedAdService
                     }
 
                     break;
-                case ItemType.Wood:
+                case Item.Wood:
                     if (creator.Woods >= createClassifiedAd.Amount)
                     {
                         _playerRepository.UpdatePlayerWoods(creator, createClassifiedAd.Amount * -1);
@@ -51,7 +51,7 @@ namespace BLL.Services.ClassifiedAdService
                     }
 
                     break;
-                case ItemType.Stone:
+                case Item.Stone:
                     if (creator.Stones >= createClassifiedAd.Amount)
                     {
                         _playerRepository.UpdatePlayerStones(creator, createClassifiedAd.Amount * -1);
@@ -62,7 +62,7 @@ namespace BLL.Services.ClassifiedAdService
                     }
 
                     break;
-                case ItemType.Iron:
+                case Item.Iron:
                     if (creator.Irons >= createClassifiedAd.Amount)
                     {
                         _playerRepository.UpdatePlayerIrons(creator, createClassifiedAd.Amount * -1);
@@ -134,7 +134,7 @@ namespace BLL.Services.ClassifiedAdService
 
             switch (classifiedAd.ReplacementItem)
             {
-                case ItemType.Coin:
+                case Item.Coin:
                     if (customer.Coins >= classifiedAd.ReplacementAmount)
                     {
                         _playerRepository.UpdatePlayerCoins(customer, classifiedAd.ReplacementAmount * -1);
@@ -146,7 +146,7 @@ namespace BLL.Services.ClassifiedAdService
                     }
 
                     break;
-                case ItemType.Wood:
+                case Item.Wood:
                     if (customer.Woods >= classifiedAd.ReplacementAmount)
                     {
                         _playerRepository.UpdatePlayerWoods(customer, classifiedAd.ReplacementAmount * -1);
@@ -158,7 +158,7 @@ namespace BLL.Services.ClassifiedAdService
                     }
 
                     break;
-                case ItemType.Stone:
+                case Item.Stone:
                     if (customer.Woods >= classifiedAd.ReplacementAmount)
                     {
                         _playerRepository.UpdatePlayerStones(customer, classifiedAd.ReplacementAmount * -1);
@@ -170,7 +170,7 @@ namespace BLL.Services.ClassifiedAdService
                     }
 
                     break;
-                case ItemType.Iron:
+                case Item.Iron:
                     if (customer.Irons >= classifiedAd.ReplacementAmount)
                     {
                         _playerRepository.UpdatePlayerIrons(customer, classifiedAd.ReplacementAmount * -1);
@@ -186,19 +186,19 @@ namespace BLL.Services.ClassifiedAdService
 
             switch (classifiedAd.Item)
             {
-                case ItemType.Coin:
+                case Item.Coin:
                     _playerRepository.UpdatePlayerCoins(customer, classifiedAd.Amount);
 
                     break;
-                case ItemType.Wood:
+                case Item.Wood:
                     _playerRepository.UpdatePlayerWoods(customer, classifiedAd.Amount);
 
                     break;
-                case ItemType.Stone:
+                case Item.Stone:
                     _playerRepository.UpdatePlayerStones(customer, classifiedAd.Amount);
 
                     break;
-                case ItemType.Iron:
+                case Item.Iron:
                     _playerRepository.UpdatePlayerIrons(customer, classifiedAd.Amount);
 
                     break;

@@ -55,7 +55,7 @@ namespace DAL.Repositories.UserRepository
 
         public void SetUserEmailToValidated(User user)
         {
-            user.Role = RoleType.User;
+            user.Role = Role.User;
             _context.SaveChanges();
         }
 

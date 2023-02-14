@@ -81,7 +81,6 @@ namespace Web.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ValidateModel]
         public IActionResult ResendValidationEmail([FromBody] string username)
         {
             try
@@ -128,7 +127,6 @@ namespace Web.Controllers
         [ProducesResponseType(StatusCodes.Status202Accepted)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ValidateModel]
         public IActionResult SetTemporaryPassword([FromBody] string email)
         {
             try

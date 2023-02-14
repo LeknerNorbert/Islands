@@ -34,6 +34,7 @@ builder.Services.AddCors(options =>
         });
 });
 
+// Custom model validation filter
 builder.Services.Configure<ApiBehaviorOptions>(options
     => options.SuppressModelStateInvalidFilter = true);
 
@@ -55,8 +56,7 @@ builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddScoped<IClassifiedAdService, ClassifiedAdService>();
 builder.Services.AddScoped<IPlayerService, PlayerService>();
-builder.Services.AddScoped<IIslandService, IslandService>();
-builder.Services.AddScoped<ValidateModelAttribute>();
+builder.Services.AddSingleton<IGameConfigurationService, GameConfigurationService>();
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IClassifiedAdRepository, ClassifiedAdRepository>();

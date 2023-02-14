@@ -16,13 +16,13 @@ namespace BLL.Services.PlayerInformationService
     {
         private readonly IPlayerRepository _playerRepository;
         private readonly IUserRepository _userRepository;
-        private readonly IIslandService _islandService;
+        private readonly IGameConfigurationService _gameConfigurationService;
 
-        public PlayerService(IPlayerRepository playerRepository, IUserRepository userRepository, IIslandService islandService)
+        public PlayerService(IPlayerRepository playerRepository, IUserRepository userRepository, IGameConfigurationService gameConfigurationService)
         {
             _playerRepository = playerRepository;
             _userRepository = userRepository; 
-            _islandService = islandService;
+            _gameConfigurationService = gameConfigurationService;
         }
 
         public PlayerDto GetPlayer(string username)
@@ -49,8 +49,9 @@ namespace BLL.Services.PlayerInformationService
         public void CreatePlayer(string username, IslandType island)
         {
             User user = _userRepository.GetUserByUsername(username);
-            SkillsDto skills = _islandService.GetDefaultSkills(island);
-            Player player = new Player()
+            SkillsDto defaultSkills = _gameConfigurationService.GetDefaultSkillsByIsland(island);
+
+            Player player = new()
             {
                 ExperiencePoint = 0,
                 Coins = 0,
@@ -60,9 +61,9 @@ namespace BLL.Services.PlayerInformationService
                 SelectedIsland = island,
                 LastBattleDate = DateTime.MinValue,
                 LastExpeditionDate = DateTime.MinValue,
-                Strength = skills.Strength,
-                Intelligence = skills.Intelligence,
-                Ability = skills.Ability,
+                Strength = defaultSkills.Strength,
+                Intelligence = defaultSkills.Intelligence,
+                Ability = defaultSkills.Ability,
                 User = user,
             };
             

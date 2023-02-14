@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DAL.Models.Enums
 {
-    public enum RoleType
+    public enum Role
     {
         Guest,
         User,

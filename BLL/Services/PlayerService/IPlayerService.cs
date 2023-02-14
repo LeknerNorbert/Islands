@@ -12,5 +12,6 @@ namespace BLL.Services.PlayerInformationService
     {
         public PlayerDto GetPlayer(string username);
         public void CreatePlayer(string username, IslandType island);
+        public void UpdateSkillPoints(SkillsDto skills);
     }
 }

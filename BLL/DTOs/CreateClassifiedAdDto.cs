@@ -11,11 +11,11 @@ namespace BLL.DTOs
     public class CreateClassifiedAdDto
     {
         [Required]
-        public ItemType Item { get; set; }
+        public Item Item { get; set; }
         [Required]
         public int Amount { get; set; }
         [Required]
-        public ItemType ReplacementItem { get; set; }
+        public Item ReplacementItem { get; set; }
         [Required]
         public int ReplacementAmount { get; set; }
     }
