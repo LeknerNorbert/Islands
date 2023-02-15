@@ -1,13 +1,13 @@
-using BLL.Services.AuthService;
-using BLL.Services.ClassifiedAdService;
-using BLL.Services.EmailService;
-using BLL.Services.IslandService;
-using BLL.Services.PlayerInformationService;
-using DAL.Models;
-using DAL.Models.Context;
-using DAL.Repositories.ClassifiedAdRepository;
-using DAL.Repositories.PlayerInformationRepository;
-using DAL.Repositories.UserRepository;
+using Islands.Filters;
+using Islands.Models.Context;
+using Islands.Repositories.ClassifiedAdRepository;
+using Islands.Repositories.PlayerInformationRepository;
+using Islands.Repositories.UserRepository;
+using Islands.Services.AuthService;
+using Islands.Services.ClassifiedAdService;
+using Islands.Services.EmailService;
+using Islands.Services.IslandService;
+using Islands.Services.PlayerInformationService;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -15,7 +15,6 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Filters;
 using System.Text;
-using Web.Filters;
 
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 

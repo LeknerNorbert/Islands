@@ -1,11 +1,9 @@
-﻿using BLL.DTOs;
-using BLL.Exceptions;
-using BLL.Services.AuthService;
-using Microsoft.AspNetCore.Authorization;
+﻿using Islands.DTOs;
+using Islands.Exceptions;
+using Islands.Filters;
+using Islands.Services.AuthService;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations;
-using Web.Filters;
 
 namespace Web.Controllers
 {
@@ -24,7 +22,7 @@ namespace Web.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ValidateModel]
-        public IActionResult Registration([FromBody] RegistrationRequestDto userRegistrationResquest)
+        public IActionResult Registration([FromBody] RegistrationRequestDTO userRegistrationResquest)
         {
             try
             {
@@ -102,7 +100,7 @@ namespace Web.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ValidateModel]
-        public IActionResult Login(LoginRequestDto userLoginRequest)
+        public IActionResult Login(LoginRequestDTO userLoginRequest)
         {
             try
             {
@@ -148,7 +146,7 @@ namespace Web.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ValidateModel]
-        public IActionResult ResetPassword(PasswordResetDto changePassword)
+        public IActionResult ResetPassword(PasswordResetDTO changePassword)
         {
             try
             {

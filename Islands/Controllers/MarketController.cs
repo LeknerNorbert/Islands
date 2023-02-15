@@ -1,9 +1,7 @@
-﻿using BLL.DTOs;
-using BLL.Exceptions;
-using BLL.Services.ClassifiedAdService;
-using Microsoft.AspNetCore.Authorization;
+﻿using Islands.DTOs;
+using Islands.Filters;
+using Islands.Services.ClassifiedAdService;
 using Microsoft.AspNetCore.Mvc;
-using Web.Filters;
 
 namespace Web.Controllers
 {
@@ -25,7 +23,7 @@ namespace Web.Controllers
         {
             try
             {
-                List<ClassifiedAdDto> classifieds = _classifiedAdService.GetClassifiedAds();
+                List<ClassifiedAdDTO> classifieds = _classifiedAdService.GetClassifiedAds();
                 return Ok(classifieds);
             }
             catch (Exception ex)
@@ -42,7 +40,7 @@ namespace Web.Controllers
             try
             {
                 string username = User.Claims.First(c => c.Type == "Username").Value;
-                List<ClassifiedAdDto> classifieds = _classifiedAdService.GetClassifiedAdsByUser(username);
+                List<ClassifiedAdDTO> classifieds = _classifiedAdService.GetClassifiedAdsByUser(username);
 
                 return Ok(classifieds);
             }
@@ -56,7 +54,7 @@ namespace Web.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ValidateModel]
-        public IActionResult CreateClassifiedAd(CreateClassifiedAdDto createClassifiedAd)
+        public IActionResult CreateClassifiedAd(CreateClassifiedAdDTO createClassifiedAd)
         {
             try
             {

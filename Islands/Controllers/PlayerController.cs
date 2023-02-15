@@ -1,8 +1,6 @@
-﻿using BLL.DTOs;
-using BLL.Services.PlayerInformationService;
-using DAL.Models.Enums;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
+﻿using Islands.DTOs;
+using Islands.Models.Enums;
+using Islands.Services.PlayerInformationService;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -27,7 +25,7 @@ namespace Web.Controllers
             try
             {
                 string username = User.Claims.First(c => c.Type == "Username").Value;
-                PlayerDto playerInformation = _playerService.GetPlayer(username);
+                PlayerDTO playerInformation = _playerService.GetPlayer(username);
 
                 return Ok();
             }
@@ -67,7 +65,7 @@ namespace Web.Controllers
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status202Accepted)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public IActionResult UpdateSkillPoints(SkillsDto skillPoints)
+        public IActionResult UpdateSkillPoints(SkillsDTO skillPoints)
         {
             try
             {
