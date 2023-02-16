@@ -2,6 +2,7 @@
 using Islands.Exceptions;
 using Islands.Filters;
 using Islands.Services.AuthService;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -24,7 +25,7 @@ namespace Web.Controllers
         {
             try
             {
-                await _authService.Registration(userRegistrationResquest);
+                await _authService.RegistrationAsync(userRegistrationResquest);
 
                 return StatusCode(201, "User successfully created.");
             }
@@ -39,7 +40,7 @@ namespace Web.Controllers
         {
             try
             {
-                if (await _authService.VerifyEmail(token))
+                if (await _authService.VerifyEmailAsync(token))
                 {
                     return StatusCode(201, "Email verified.");
                 }
@@ -57,7 +58,7 @@ namespace Web.Controllers
         {
             try
             {
-                await _authService.ResendEmailVerificationEmail(username);
+                await _authService.ResendVerifyEmailAsync(username);
 
                 return StatusCode(200, "Email verification email sended.");
             }
@@ -73,7 +74,7 @@ namespace Web.Controllers
         {
             try
             {
-                string token = await _authService.Login(userLoginRequest);
+                string token = await _authService.LoginAsync(userLoginRequest);
 
                 return StatusCode(200, token);
             }
@@ -92,7 +93,7 @@ namespace Web.Controllers
         {
             try
             {
-                await _authService.GenerateTemporaryPassword(email);
+                await _authService.SetTemporaryPasswordAsync(email);
 
                 return StatusCode(201, "Email with temporary password sended.");
             }
@@ -103,13 +104,14 @@ namespace Web.Controllers
         }
 
         [HttpPut]
+        [Authorize]
         [ValidateModel]
         public async Task<IActionResult> ResetPassword(PasswordResetDTO passwordReset)
         {
             try
             {
                 string username = User.Claims.First(c => c.Type == "Username").Value;
-                await _authService.ResetPassword(username, passwordReset.Password);
+                await _authService.UpdatePasswordAsync(username, passwordReset);
 
                 return Ok("Password successfully reseted.");
             }

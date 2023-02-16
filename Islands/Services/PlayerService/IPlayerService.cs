@@ -5,8 +5,8 @@ namespace Islands.Services.PlayerInformationService
 {
     public interface IPlayerService
     {
-        public PlayerDTO GetPlayer(string username);
-        public void CreatePlayer(string username, IslandType island);
-        public void UpdateSkillPoints(string username, SkillsDTO skills);
+        Task<PlayerDTO> GetByUsernameAsync(string username);
+        Task AddAsync(string username, IslandType island);
+        Task UpdateSkillsAsync(string username, SkillsDTO skills);
     }
 }

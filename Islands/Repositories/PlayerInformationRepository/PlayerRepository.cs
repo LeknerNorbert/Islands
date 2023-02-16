@@ -1,4 +1,5 @@
-﻿using Islands.Models;
+﻿using Islands.Exceptions;
+using Islands.Models;
 using Islands.Models.Context;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,41 +14,58 @@ namespace Islands.Repositories.PlayerInformationRepository
             _context = context;
         }
 
-        public Player GetPlayerByUsername(string username) 
+        public async Task AddAsync(Player player)
         {
-            return _context.Players
-                .Include(p => p.User)
-                .First(p => p.User.Username == username);
+            try
+            {
+                await _context.Players.AddAsync(player);
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateException ex)
+            {
+                throw new RepositoryException("Error adding player", ex);
+            }
         }
 
-        public void CreatePlayer(Player player)
+        public async Task<Player> GetByUsernameAsync(string username) 
         {
-            _context.Players.Add(player);
-            _context.SaveChanges();
+            try
+            {
+                return await _context.Players.Include(p => p.User).FirstAsync(p => p.User.Username == username);
+            }
+            catch (Exception ex)
+            {
+                throw new RepositoryException("Error getting player", ex);
+            }
         }
 
-        public void UpdatePlayerCoins(Player player, int amount)
+        public async Task<Player> GetByForAd(int adId)
         {
-            player.Coins += amount;
-            _context.SaveChanges();
+            try
+            {
+                Ad ad = await _context.Ads
+                    .Include(a => a.PlayerInformation)
+                    .FirstAsync(a => a.Id == adId);
+
+                return await _context.Players.FirstAsync(p => p.Id == ad.PlayerInformation.Id);
+            }
+            catch (Exception ex)
+            {
+                throw new RepositoryException("Error getting player", ex);
+            }
         }
 
-        public void UpdatePlayerIrons(Player player, int amount)
+        public async Task UpdateAsync(Player player)
         {
-            player.Irons += amount;
-            _context.SaveChanges();
-        }
-
-        public void UpdatePlayerStones(Player player, int amount)
-        {
-            player.Stones += amount;
-            _context.SaveChanges();
-        }
-
-        public void UpdatePlayerWoods(Player player, int amount)
-        {
-            player.Woods += amount;
-            _context.SaveChanges();
+            try
+            {
+                _context.Entry(player).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateException ex)
+            {
+                throw new RepositoryException("Error updating player", ex);
+            }
         }
     }
 }

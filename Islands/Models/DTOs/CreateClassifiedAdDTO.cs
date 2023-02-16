@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Islands.DTOs
 {
-    public class CreateClassifiedAdDTO
+    public class NewAdDTO
     {
         [Required]
         public Item Item { get; set; }

@@ -53,12 +53,12 @@ builder.Services.AddEndpointsApiExplorer();
 // Dependency injections
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IEmailService, EmailService>();
-builder.Services.AddScoped<IClassifiedAdService, ClassifiedAdService>();
+builder.Services.AddScoped<IAdService, AdService>();
 builder.Services.AddScoped<IPlayerService, PlayerService>();
 builder.Services.AddSingleton<IGameConfigurationService, GameConfigurationService>();
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
-builder.Services.AddScoped<IClassifiedAdRepository, ClassifiedAdRepository>();
+builder.Services.AddScoped<IAdRepository, AdRepository>();
 builder.Services.AddScoped<IPlayerRepository, PlayerRepository>();
 
 // Authentication

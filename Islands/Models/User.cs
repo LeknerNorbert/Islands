@@ -5,7 +5,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Islands.Models
 {
-    // Csak egyedi nevet és emailt lehet megadni, ami még nem szerepel az adatbázisban
     [Index(nameof(Username), IsUnique = true)]
     [Index(nameof(Email), IsUnique = true)]
     public class User

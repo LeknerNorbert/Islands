@@ -1,6 +1,7 @@
 ﻿using Islands.DTOs;
 using Islands.Models.Enums;
 using Islands.Services.PlayerInformationService;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -18,65 +19,54 @@ namespace Web.Controllers
         }
 
         [HttpGet]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public IActionResult GetPlayer()
+        [Authorize]
+        public async Task<IActionResult> GetPlayer()
         {
             try
             {
                 string username = User.Claims.First(c => c.Type == "Username").Value;
-                PlayerDTO playerInformation = _playerService.GetPlayer(username);
+                PlayerDTO player = await _playerService.GetByUsernameAsync(username);
 
-                return Ok();
-            }
-            catch (InvalidOperationException)
-            {
-                return BadRequest("No player created yet.");
+                return StatusCode(200, player);
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return StatusCode(500, ex.Message);
             }
         }
 
         [HttpPost]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public IActionResult CreatePlayer([FromBody] IslandType island)
+        [Authorize]
+        public async Task<IActionResult> CreatePlayer([FromBody] IslandType island)
         {
             try
             {
                 string username = User.Claims.First(c => c.Type == "Username").Value;
-                _playerService.CreatePlayer(username, island);
+                await _playerService.AddAsync(username, island);
 
-                return Ok("Player has been created.");
-            }
-            catch (DbUpdateException)
-            {
-                return BadRequest("Database error during create.");
+                return StatusCode(201, "Player has been created.");
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return StatusCode(500, ex.Message);
             }
         }
 
 
         [HttpPut]
-        [ProducesResponseType(StatusCodes.Status202Accepted)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public IActionResult UpdateSkillPoints(SkillsDTO skillPoints)
+        [Authorize]
+        public async Task<IActionResult> UpdateSkillPoints(SkillsDTO skillPoints)
         {
             try
             {
                 string username = User.Claims.First(c => c.Type == "Username").Value;
-                _playerService.UpdateSkillPoints(username, skillPoints);
+                await _playerService.UpdateSkillsAsync(username, skillPoints);
 
-                return Ok();
+                return StatusCode(200, "Skill points has been updated");
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return BadRequest();
+                return StatusCode(500, ex.Message);
             }
         }
     }

@@ -16,12 +16,15 @@ namespace Islands.Models
         public IslandType SelectedIsland { get; set; }
         public DateTime LastExpeditionDate { get; set; }
         public DateTime LastBattleDate { get; set; }
+        [Range(0, 10)]
         public int Strength { get; set; }
+        [Range(0, 10)]
         public int Intelligence { get; set; }
+        [Range(0, 10)]
         public int Ability { get; set; }
         public virtual User? User { get; set; }
         public ICollection<Building>? Buildings { get; set; }
-        public ICollection<ClassifiedAd>? ClassifiedAds { get; set; }
+        public ICollection<Ad>? ClassifiedAds { get; set; }
         public ICollection<Notification>? Notifications { get; set; }
     }
 }

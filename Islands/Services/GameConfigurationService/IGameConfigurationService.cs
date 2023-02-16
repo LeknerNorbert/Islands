@@ -10,5 +10,6 @@ namespace Islands.Services.IslandService
         public SkillsDTO GetDefaultSkillsByIsland(IslandType island);
         public SkillsDTO GetMaximumSkillPoints();
         public IslandDTO GetIsland(IslandType island);
+        public int GetSkillPointsByLevel(int experiences);
     }
 }

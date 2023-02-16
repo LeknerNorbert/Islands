@@ -93,6 +93,11 @@ namespace Islands.Services.IslandService
             return _islands[island.ToString()];
         }
 
+        public int GetSkillPointsByLevel(int experiences)
+        {
+            return Convert.ToInt32(Math.Floor(Math.Sqrt(experiences)));
+        }
+
         private void SetConfigFiles()
         {
             foreach (string buildingPath in _buildingPaths)

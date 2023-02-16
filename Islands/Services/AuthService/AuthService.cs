@@ -27,7 +27,7 @@ namespace Islands.Services.AuthService
             _emailService = emailService;
         }
 
-        public async Task<string> Login(LoginRequestWithUsernameDTO login)
+        public async Task<string> LoginAsync(LoginRequestWithUsernameDTO login)
         {
             try
             {
@@ -46,7 +46,7 @@ namespace Islands.Services.AuthService
             throw new LoginFailedException("Credentials are incorrect.");
         }
 
-        public async Task Registration(RegistrationRequestDTO registration)
+        public async Task RegistrationAsync(RegistrationRequestDTO registration)
         {
             try
             {
@@ -73,7 +73,7 @@ namespace Islands.Services.AuthService
             }
         }
 
-        public async Task ResendEmailVerificationEmail(string username)
+        public async Task ResendVerifyEmailAsync(string username)
         {
             try
             {
@@ -89,11 +89,11 @@ namespace Islands.Services.AuthService
             }
             catch (Exception ex)
             {
-                throw new ServiceException("Failed to update user, user does not exist.", ex);
+                throw new ServiceException("There is no user with this email.", ex);
             }
         }
 
-        public async Task<bool> VerifyEmail(string token)
+        public async Task<bool> VerifyEmailAsync(string token)
         {
             try
             {
@@ -115,7 +115,7 @@ namespace Islands.Services.AuthService
             }
         }
 
-        public async Task GenerateTemporaryPassword(string email)
+        public async Task SetTemporaryPasswordAsync(string email)
         {
             try
             {
@@ -137,12 +137,12 @@ namespace Islands.Services.AuthService
             }
         }
 
-        public async Task ResetPassword(string username, string password)
+        public async Task UpdatePasswordAsync(string username, PasswordResetDTO password)
         {
             try
             {
                 User user = await _userRepository.GetByUsernameAsync(username);
-                CreatePasswordHash(password, out byte[] passwordHash, out byte[] passwordSalt);
+                CreatePasswordHash(password.Password, out byte[] passwordHash, out byte[] passwordSalt);
 
                 user.PasswordHash = passwordHash;
                 user.PasswordSalt = passwordSalt;

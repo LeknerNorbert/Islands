@@ -8,51 +8,51 @@ namespace Islands.Repositories.UserRepository
 {
     public class UserRepository : IUserRepository
     {
-        private readonly ApplicationDbContext _dbContext;
+        private readonly ApplicationDbContext _context;
 
         public UserRepository(ApplicationDbContext dbContext)
         {
-            _dbContext = dbContext;
+            _context = dbContext;
         }
 
         public async Task AddAsync(User user)
         {
             try
             {
-                await _dbContext.Users.AddAsync(user);
-                await _dbContext.SaveChangesAsync();
+                await _context.Users.AddAsync(user);
+                await _context.SaveChangesAsync();
             }
             catch (DbUpdateException ex)
             {
-                throw new RepositoryException("Error adding entity.", ex);
+                throw new RepositoryException("Error adding user.", ex);
             }
         }
 
         public async Task<User> GetByEmailAsync(string email)
         {
-            return await _dbContext.Users.FirstAsync(u => u.Email == email);
+            return await _context.Users.FirstAsync(u => u.Email == email);
         }
 
         public async Task<User> GetByUsernameAsync(string username)
         {
-            return await _dbContext.Users.FirstAsync(u => u.Username == username);
+            return await _context.Users.FirstAsync(u => u.Username == username);
         }
 
         public async Task<User> GetByValidationTokenAsync(string token)
         {
-            return await _dbContext.Users.FirstAsync(u => u.EmailValidationToken == token);
+            return await _context.Users.FirstAsync(u => u.EmailValidationToken == token);
         }
 
         public async Task UpdateAsync(User user)
         {
             try
             {
-                _dbContext.Entry(user).State = EntityState.Modified;
-                await _dbContext.SaveChangesAsync();
+                _context.Entry(user).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
             }
             catch (DbUpdateException ex)
             {
-                throw new RepositoryException("Error updating entity.", ex);
+                throw new RepositoryException("Error updating user.", ex);
             }
         }
 
