@@ -1,64 +1,59 @@
-﻿using Islands.Models;
+﻿using Islands.Exceptions;
+using Islands.Models;
 using Islands.Models.Context;
 using Islands.Models.Enums;
+using Microsoft.EntityFrameworkCore;
 
 namespace Islands.Repositories.UserRepository
 {
     public class UserRepository : IUserRepository
     {
-        private readonly ApplicationDbContext _context;
+        private readonly ApplicationDbContext _dbContext;
 
-        public UserRepository(ApplicationDbContext context)
+        public UserRepository(ApplicationDbContext dbContext)
         {
-            _context = context;
+            _dbContext = dbContext;
         }
 
-        public void CreateUser(User user)
+        public async Task AddAsync(User user)
         {
-            _context.Users.Add(user);
-            _context.SaveChanges();
+            try
+            {
+                await _dbContext.Users.AddAsync(user);
+                await _dbContext.SaveChangesAsync();
+            }
+            catch (DbUpdateException ex)
+            {
+                throw new RepositoryException("Error adding entity.", ex);
+            }
         }
 
-        public User GetUserByEmail(string email)
+        public async Task<User> GetByEmailAsync(string email)
         {
-            return _context.Users.First(u => u.Email == email);
+            return await _dbContext.Users.FirstAsync(u => u.Email == email);
         }
 
-        public User GetUserByUsername(string username)
+        public async Task<User> GetByUsernameAsync(string username)
         {
-            return _context.Users.First(u => u.Username == username);
+            return await _dbContext.Users.FirstAsync(u => u.Username == username);
         }
 
-        public User GetUserByValidationToken(string token)
+        public async Task<User> GetByValidationTokenAsync(string token)
         {
-            return _context.Users.First(u => u.EmailValidationToken == token);
+            return await _dbContext.Users.FirstAsync(u => u.EmailValidationToken == token);
         }
 
-        public void UpdateUserPassword(User user, byte[] passwordHash, byte[] passwordSalt)
+        public async Task UpdateAsync(User user)
         {
-            user.PasswordHash = passwordHash;
-            user.PasswordSalt = passwordSalt;
-            _context.SaveChanges();
-        }
-
-        public void ResetUserEmailValidationToken(User user, string validationToken, DateTime expiration)
-        {
-            user.EmailValidationToken = validationToken;
-            user.EmailValidationTokenExpiration = expiration;
-            _context.SaveChanges();
-        }
-
-        public void SetUserEmailToValidated(User user)
-        {
-            user.Role = Role.User;
-            _context.SaveChanges();
-        }
-
-        public void SetNewPassword(User user, byte[] passwordHash, byte[] passwordSalt)
-        {
-            user.PasswordHash = passwordHash;
-            user.PasswordSalt = passwordSalt;
-            _context.SaveChanges();
+            try
+            {
+                _dbContext.Entry(user).State = EntityState.Modified;
+                await _dbContext.SaveChangesAsync();
+            }
+            catch (DbUpdateException ex)
+            {
+                throw new RepositoryException("Error updating entity.", ex);
+            }
         }
 
     }

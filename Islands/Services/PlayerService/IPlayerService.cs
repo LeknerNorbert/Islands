@@ -7,6 +7,6 @@ namespace Islands.Services.PlayerInformationService
     {
         public PlayerDTO GetPlayer(string username);
         public void CreatePlayer(string username, IslandType island);
-        public void UpdateSkillPoints(SkillsDTO skills);
+        public void UpdateSkillPoints(string username, SkillsDTO skills);
     }
 }

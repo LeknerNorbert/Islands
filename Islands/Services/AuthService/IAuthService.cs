@@ -4,11 +4,11 @@ namespace Islands.Services.AuthService
 {
     public interface IAuthService
     {
-        public void Login(LoginRequestDTO userLoginRequest, out string token);
-        public void Registration(RegistrationRequestDTO userRegistrationRequest);
-        public void VerifyEmail(string token);
-        public void ResendEmailValidationEmail(string username);
-        public void GenerateTemporaryPassword(string email);
-        public void ResetPassword(string username, string password);
+        Task<string> Login(LoginRequestWithUsernameDTO login);
+        Task Registration(RegistrationRequestDTO registration);
+        Task<bool> VerifyEmail(string token);
+        Task ResendEmailVerificationEmail(string username);
+        Task GenerateTemporaryPassword(string email);
+        Task ResetPassword(string username, string password);
     }
 }

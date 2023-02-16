@@ -10,8 +10,8 @@ namespace Islands.DTOs
         public int YCoordinate { get; set; }
         public int Level { get; set; }
         public int MaxLevel { get; set; }
-        public string? Description { get; set; }
-        public string? ImagePath { get; set; }
+        public string Description { get; set; } = string.Empty;
+        public string ImagePath { get; set; } = string.Empty;
         public int CoinsForUpdate { get; set; }
         public int IronsForUpdate { get; set; }
         public int StonesForUpdate { get; set; }

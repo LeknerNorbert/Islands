@@ -19,141 +19,99 @@ namespace Web.Controllers
         }
 
         [HttpPost]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ValidateModel]
-        public IActionResult Registration([FromBody] RegistrationRequestDTO userRegistrationResquest)
+        public async Task<IActionResult> Registration([FromBody] RegistrationRequestDTO userRegistrationResquest)
         {
             try
             {
-                _authService.Registration(userRegistrationResquest);
-                return Ok("User successfully created.");
+                await _authService.Registration(userRegistrationResquest);
+
+                return StatusCode(201, "User successfully created.");
             }
-            catch (DbUpdateException ex)
+            catch (ServiceException ex)
             {
-                if (ex.InnerException != null && ex.InnerException.Message.Contains("Email")) 
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> VerifyEmail([FromBody] string token)
+        {
+            try
+            {
+                if (await _authService.VerifyEmail(token))
                 {
-                    return BadRequest("A user with this email address already exists.");
+                    return StatusCode(201, "Email verified.");
                 }
 
-                if (ex.InnerException != null && ex.InnerException.Message.Contains("Username"))
-                {
-                    return BadRequest("A user with this username already exists.");
-                }
-
-                return BadRequest(ex.Message);
+                return StatusCode(500, "Validation token expired");
             }
-            catch (Exception ex)
+            catch (ServiceException ex)
             {
-                return BadRequest(ex.Message);
+                return StatusCode(500, ex.Message);
             }
         }
 
-        // Ellenőrizni, hogy csak akkor erősíthethesse meg a user az emailt, ha még nem tette
         [HttpPost]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> ResendVerifyEmail([FromBody] string username)
+        {
+            try
+            {
+                await _authService.ResendEmailVerificationEmail(username);
+
+                return StatusCode(200, "Email verification email sended.");
+            }
+            catch (ServiceException ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        [HttpPost]
         [ValidateModel]
-        public IActionResult VerifyEmail([FromBody] string token)
+        public async Task<IActionResult> Login(LoginRequestWithUsernameDTO userLoginRequest)
         {
             try
             {
-                _authService.VerifyEmail(token);
-                return Ok("Email successfully confirmed.");
-            }
-            catch (EmailValidationTokenExpiredException ex)
-            {
-                return BadRequest(ex.Message);
-            }
-            catch (InvalidOperationException)
-            {
-                return BadRequest("Token does not exist.");
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
+                string token = await _authService.Login(userLoginRequest);
 
-        // Csak a már belépett, de még nem megeőrsített emaillel rendelkezőknek elérhető
-        [HttpPost]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public IActionResult ResendValidationEmail([FromBody] string username)
-        {
-            try
-            {
-                _authService.ResendEmailValidationEmail(username);
-                return Ok("Email Validation email sended.");
+                return StatusCode(200, token);
             }
-            catch (InvalidOperationException)
+            catch (LoginFailedException ex)
             {
-                return BadRequest("User does not exist.");
+                return StatusCode(401, ex.Message);
             }
-            catch (Exception ex)
+            catch (ServiceException ex)
             {
-                return BadRequest(ex.Message);
-            }
-        }
-
-        [HttpPost]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ValidateModel]
-        public IActionResult Login(LoginRequestDTO userLoginRequest)
-        {
-            try
-            {
-                _authService.Login(userLoginRequest, out string token);
-                return Ok(token);
-            }
-            catch (LoginValidationException ex)
-            {
-                return BadRequest(ex.Message);
-            }
-            catch (InvalidOperationException)
-            {
-                return BadRequest("User does not exist.");
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
+                return StatusCode(500, ex.Message);
             }
         }
 
         [HttpPut]
-        [ProducesResponseType(StatusCodes.Status202Accepted)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public IActionResult SetTemporaryPassword([FromBody] string email)
+        public async Task<IActionResult> SetTemporaryPassword([FromBody] string email)
         {
             try
             {
-                _authService.GenerateTemporaryPassword(email);
-                return Ok("Email with temporary password sended.");
+                await _authService.GenerateTemporaryPassword(email);
+
+                return StatusCode(201, "Email with temporary password sended.");
             }
-            catch (InvalidOperationException)
+            catch (ServiceException ex)
             {
-                return NotFound("User does not exist with this email.");
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
+                return StatusCode(500, ex.Message);
             }
         }
 
-        [HttpPut, /*Authorize(Roles = "User")*/]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [HttpPut]
         [ValidateModel]
-        public IActionResult ResetPassword(PasswordResetDTO changePassword)
+        public async Task<IActionResult> ResetPassword(PasswordResetDTO passwordReset)
         {
             try
             {
                 string username = User.Claims.First(c => c.Type == "Username").Value;
-                _authService.ResetPassword(username, changePassword.Password);
+                await _authService.ResetPassword(username, passwordReset.Password);
 
-                return Ok("Password successfully changed.");
+                return Ok("Password successfully reseted.");
             }
             catch (Exception ex)
             {

@@ -6,7 +6,7 @@ namespace Islands.Services.IslandService
 {
     public class GameConfigurationService : IGameConfigurationService
     {
-        private Dictionary<string, BuildingDefaultValuesDTO> _buildings;
+        private Dictionary<string, BuildingWithDefaultValuesDTO> _buildings;
         private List<UnconstructedBuildingDTO> _unconstructedBuildings;
         private Dictionary<string, SkillsDTO> _defaultSkills;
         private Dictionary<string, IslandDTO> _islands;
@@ -60,7 +60,7 @@ namespace Islands.Services.IslandService
 
         public GameConfigurationService()
         {
-            _buildings = new Dictionary<string, BuildingDefaultValuesDTO>();
+            _buildings = new Dictionary<string, BuildingWithDefaultValuesDTO>();
             _unconstructedBuildings = new();
             _defaultSkills = new Dictionary<string, SkillsDTO>();
             _islands = new Dictionary<string, IslandDTO>();
@@ -68,7 +68,7 @@ namespace Islands.Services.IslandService
             SetConfigFiles();
         }
 
-        public BuildingDefaultValuesDTO GetBuildingDefaultValue(BuildingType building, int level)
+        public BuildingWithDefaultValuesDTO GetBuildingDefaultValue(BuildingType building, int level)
         {
             return _buildings[$"{building}-{level}"];
         }
@@ -102,7 +102,7 @@ namespace Islands.Services.IslandService
                     string configurationFile = File.ReadAllText(buildingPath);
                     string key = Path.GetFileNameWithoutExtension(buildingPath);
 
-                    BuildingDefaultValuesDTO? building = JsonConvert.DeserializeObject<BuildingDefaultValuesDTO>(configurationFile);
+                    BuildingWithDefaultValuesDTO? building = JsonConvert.DeserializeObject<BuildingWithDefaultValuesDTO>(configurationFile);
                     _buildings.Add(key, building);
                 }
                 else

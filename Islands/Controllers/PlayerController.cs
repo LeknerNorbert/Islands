@@ -69,6 +69,9 @@ namespace Web.Controllers
         {
             try
             {
+                string username = User.Claims.First(c => c.Type == "Username").Value;
+                _playerService.UpdateSkillPoints(username, skillPoints);
+
                 return Ok();
             }
             catch (Exception)

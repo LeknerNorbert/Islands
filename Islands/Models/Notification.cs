@@ -7,8 +7,8 @@ namespace Islands.Models
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        public string? Title { get; set; }
-        public string? Message { get; set; }
+        public string Title { get; set; } = string.Empty;
+        public string Message { get; set; } = string.Empty;    
         public bool IsOpened { get; set; }
         public Player? PlayerInformation { get; set; }
     }

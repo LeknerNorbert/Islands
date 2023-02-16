@@ -13,7 +13,10 @@ namespace Islands.Services.PlayerInformationService
         private readonly IUserRepository _userRepository;
         private readonly IGameConfigurationService _gameConfigurationService;
 
-        public PlayerService(IPlayerRepository playerRepository, IUserRepository userRepository, IGameConfigurationService gameConfigurationService)
+        public PlayerService(
+            IPlayerRepository playerRepository, 
+            IUserRepository userRepository, 
+            IGameConfigurationService gameConfigurationService)
         {
             _playerRepository = playerRepository;
             _userRepository = userRepository; 
@@ -43,7 +46,7 @@ namespace Islands.Services.PlayerInformationService
 
         public void CreatePlayer(string username, IslandType island)
         {
-            User user = _userRepository.GetUserByUsername(username);
+            User user = _userRepository.GetByUsernameAsync(username);
             SkillsDTO defaultSkills = _gameConfigurationService.GetDefaultSkillsByIsland(island);
 
             Player player = new()
@@ -65,9 +68,9 @@ namespace Islands.Services.PlayerInformationService
             _playerRepository.CreatePlayer(player);
         }
 
-        public void UpdateSkillPoints(SkillsDTO skills)
+        public void UpdateSkillPoints(string username, SkillsDTO skills)
         {
-            throw new NotImplementedException();
+            Player player = _playerRepository.GetPlayerByUsername(username);
         }
     }
 }

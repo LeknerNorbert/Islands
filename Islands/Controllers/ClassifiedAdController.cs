@@ -7,11 +7,11 @@ namespace Web.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-    public class MarketController : ControllerBase
+    public class ClassifiedAdController : ControllerBase
     {
         private readonly IClassifiedAdService _classifiedAdService;
 
-        public MarketController(IClassifiedAdService classifiedAdService)
+        public ClassifiedAdController(IClassifiedAdService classifiedAdService)
         {
             _classifiedAdService = classifiedAdService;
         }
