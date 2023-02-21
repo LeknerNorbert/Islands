@@ -1,5 +1,6 @@
 ﻿using Islands.Models;
 using Islands.Models.DTOs;
+using Islands.Repositories.NotificationRepository;
 using Islands.Repositories.PlayerInformationRepository;
 
 namespace Islands.Services.BattleService
@@ -7,11 +8,13 @@ namespace Islands.Services.BattleService
     public class BattleService : IBattleService
     {
         private readonly IPlayerRepository playerRepository;
+        private readonly INotificationRepository notificationRepository;
         private readonly Random rng;
 
-        public BattleService(IPlayerRepository playerRepository)
+        public BattleService(IPlayerRepository playerRepository, INotificationRepository notificationRepository)
         {
             this.playerRepository = playerRepository;
+            this.notificationRepository = notificationRepository;
             rng = new();
         }
 
@@ -125,12 +128,26 @@ namespace Islands.Services.BattleService
 
             }
 
+
             Player? winnerPlayer = await playerRepository.GetPlayerByIdAsync(winnerId);
 
             if (winnerPlayer == null)
             {
                 throw new ArgumentNullException();
             }
+
+            Notification winnerNotification = new Notification()
+            {
+                Player = winnerPlayer,
+                Title = "Győztes csata",
+                Wood = lootWood,
+                Stone = lootStone,
+                Iron = lootIron,
+                Coin = lootCoin,
+                ExperiencePoint = lootExperiencePoints,
+                Date = DateTime.Now
+            };
+
 
             winnerPlayer.Woods += lootWood;
             winnerPlayer.Stones += lootStone;
@@ -139,6 +156,7 @@ namespace Islands.Services.BattleService
             winnerPlayer.ExperiencePoint += lootExperiencePoints;
 
             await playerRepository.UpdateAsync(winnerPlayer);
+            await notificationRepository.AddNotificationAsync(winnerNotification);
 
             return battleResult;
         }

@@ -3,6 +3,7 @@ using System;
 using Islands.Models.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Islands.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230221224040_nev-fix")]
+    partial class nevfix
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -102,7 +104,7 @@ namespace Islands.Migrations
                     b.Property<int>("Iron")
                         .HasColumnType("int");
 
-                    b.Property<int?>("PlayerId")
+                    b.Property<int?>("PlayerInformationId")
                         .HasColumnType("int");
 
                     b.Property<int>("Stone")
@@ -117,7 +119,7 @@ namespace Islands.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PlayerId");
+                    b.HasIndex("PlayerInformationId");
 
                     b.ToTable("Notifications");
                 });
@@ -232,11 +234,11 @@ namespace Islands.Migrations
 
             modelBuilder.Entity("Islands.Models.Notification", b =>
                 {
-                    b.HasOne("Islands.Models.Player", "Player")
+                    b.HasOne("Islands.Models.Player", "PlayerInformation")
                         .WithMany("Notifications")
-                        .HasForeignKey("PlayerId");
+                        .HasForeignKey("PlayerInformationId");
 
-                    b.Navigation("Player");
+                    b.Navigation("PlayerInformation");
                 });
 
             modelBuilder.Entity("Islands.Models.Player", b =>

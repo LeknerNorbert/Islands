@@ -11,7 +11,7 @@ namespace Islands.Repositories.NotificationRepository
         {
             this.context = context;
         }
-        public async Task AddNotification(Notification notification)
+        public async Task AddNotificationAsync(Notification notification)
         {
             await context.Notifications.AddAsync(notification);
             await context.SaveChangesAsync();
