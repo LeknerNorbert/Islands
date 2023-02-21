@@ -38,16 +38,16 @@ namespace Islands.Services.BattleService
             //Szövegek megadása
             List<string> battleText = new()
             {
-                "Bekerítette az ellenfél csapatait! Sebzés: ",
-                "Tervei sikeresek voltak! Sebzés: ",
-                "Megfelelő stratégiát választott! Sebzés: ",
-                "Kritikus helyet foglalt el! Sebzés: ",
-                "Az ellenfél rosszul védekezett! Sebzés: ",
-                "Az ellenség sok embert vesztett! Sebzés : ",
-                "A meglepetés támadás sikeres volt! Sebzés: ",
-                "Elkerülhetetlen csapást mért! Sebzés: ",
-                "Isten megjutalmazott az imádságaidért! Sebzés: ",
-                "Az egyik embere magával rántott a pokolba sok ellenfelet! Sebzés: "
+                "Bekerítette az ellenfél csapatait!",
+                "Tervei sikeresek voltak!",
+                "Megfelelő stratégiát választott!",
+                "Kritikus helyet foglalt el!",
+                "Az ellenfél rosszul védekezett!",
+                "Az ellenség sok embert vesztett!",
+                "A meglepetés támadás sikeres volt!",
+                "Elkerülhetetlen csapást mért!",
+                "Isten megjutalmazott az imádságaidért!",
+                "Az egyik embere magával rántott a pokolba sok ellenfelet!"
             };
 
             //Csata szimuláció
@@ -91,8 +91,8 @@ namespace Islands.Services.BattleService
                         lootWood = LootCalc(enemy.Intelligence);
                         lootStone = LootCalc(enemy.Intelligence);
                         lootIron = LootCalc(enemy.Intelligence);
-                        lootCoin = LootCalc(enemy.Intelligence);
-                        lootExperiencePoints = LootCalc(enemy.Intelligence);
+                        lootCoin = CoinCalc(enemy.Intelligence);
+                        lootExperiencePoints = CoinCalc(enemy.Intelligence);
 
                         battleResult.IsWinner = true;
                         battleResult.Woods = lootWood;
@@ -110,8 +110,8 @@ namespace Islands.Services.BattleService
                     lootWood = LootCalc(enemy.Intelligence);
                     lootStone = LootCalc(enemy.Intelligence);
                     lootIron = LootCalc(enemy.Intelligence);
-                    lootCoin = LootCalc(enemy.Intelligence);
-                    lootExperiencePoints = LootCalc(enemy.Intelligence);
+                    lootCoin = CoinCalc(enemy.Intelligence);
+                    lootExperiencePoints = CoinCalc(enemy.Intelligence);
 
                     battleResult.IsWinner = false;
                     battleResult.Woods = 0;

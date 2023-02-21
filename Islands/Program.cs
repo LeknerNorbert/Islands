@@ -1,6 +1,7 @@
 using Islands.Filters;
 using Islands.Models.Context;
 using Islands.Repositories.ClassifiedAdRepository;
+using Islands.Repositories.NotificationRepository;
 using Islands.Repositories.PlayerInformationRepository;
 using Islands.Repositories.UserRepository;
 using Islands.Services.AuthService;
@@ -62,6 +63,7 @@ builder.Services.AddSingleton<IGameConfigurationService, GameConfigurationServic
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IAdRepository, AdRepository>();
 builder.Services.AddScoped<IPlayerRepository, PlayerRepository>();
+builder.Services.AddScoped<INotificationRepository, NotificationRepository>();
 
 // Authentication
 builder.Services.AddSwaggerGen(options =>
