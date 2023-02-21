@@ -15,6 +15,6 @@ namespace Islands.DTOs
         public DateTime LastBattleDate { get; set; }
         public int Strength { get; set; }
         public int Intelligence { get; set; }
-        public int Ability { get; set; }
+        public int Agility { get; set; }
     }
 }

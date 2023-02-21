@@ -4,6 +4,7 @@ using Islands.Repositories.ClassifiedAdRepository;
 using Islands.Repositories.PlayerInformationRepository;
 using Islands.Repositories.UserRepository;
 using Islands.Services.AuthService;
+using Islands.Services.BattleService;
 using Islands.Services.ClassifiedAdService;
 using Islands.Services.EmailService;
 using Islands.Services.IslandService;
@@ -55,6 +56,7 @@ builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddScoped<IAdService, AdService>();
 builder.Services.AddScoped<IPlayerService, PlayerService>();
+builder.Services.AddScoped<IBattleService, BattleService>();
 builder.Services.AddSingleton<IGameConfigurationService, GameConfigurationService>();
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();

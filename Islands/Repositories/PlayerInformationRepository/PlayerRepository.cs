@@ -1,6 +1,8 @@
 ﻿using Islands.Exceptions;
 using Islands.Models;
 using Islands.Models.Context;
+using Islands.Models.DTOs;
+using Islands.Models.Enums;
 using Microsoft.EntityFrameworkCore;
 
 namespace Islands.Repositories.PlayerInformationRepository
@@ -53,6 +55,62 @@ namespace Islands.Repositories.PlayerInformationRepository
             {
                 throw new RepositoryException("Error getting player", ex);
             }
+        }
+
+        public async Task<PlayerForBattleDto?> GetPlayerForBattleByIdAsync(int id)
+        {
+            PlayerForBattleDto playerForBattle = new();
+
+            Player? player = await _context.Players
+                .Include(p => p.User)
+                .FirstOrDefaultAsync(p => p.Id == id);
+
+            Building? church = await _context.Buildings
+                .Include(b => b.PlayerInformation)
+                .FirstOrDefaultAsync(b => b.PlayerInformation.Id == id && b.Type == BuildingType.Church);
+
+            Building? practiceRange = await _context.Buildings
+                .Include(b => b.PlayerInformation)
+                .FirstOrDefaultAsync(b => b.PlayerInformation.Id == id && b.Type == BuildingType.PracticeRange);
+
+            if (church != null)
+            {
+                playerForBattle.ChurchLevel = church.Level;
+            }
+            else
+            {
+                playerForBattle.ChurchLevel = 0;
+            }
+
+            if (practiceRange != null)
+            {
+                playerForBattle.PracticeRangeLevel = practiceRange.Level;
+            }
+            else
+            {
+                playerForBattle.PracticeRangeLevel = 0;
+            }
+
+            if (player != null)
+            {
+                playerForBattle.Id = player.Id;
+                playerForBattle.Username = player.User.Username;
+                playerForBattle.Intelligence = player.Intelligence;
+                playerForBattle.Strength = player.Strength;
+                playerForBattle.Agility = player.Agility;
+                playerForBattle.Health = 170;
+            }
+            else
+            {
+                return null;
+            }
+
+            return playerForBattle; 
+        }
+
+        public async Task<Player?> GetPlayerByIdAsync(int id)
+        {
+            return await _context.Players.FirstOrDefaultAsync(p => p.Id == id);
         }
 
         public async Task UpdateAsync(Player player)

@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Islands.Models.DTOs;
+using Islands.Services.BattleService;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Org.BouncyCastle.Math;
@@ -9,11 +11,24 @@ namespace Web.Controllers
     [ApiController]
     public class BattleController : ControllerBase
     {
-        [Authorize]
-        [HttpGet]
-        public IActionResult Battlefield(int enemyId)
+        private readonly IBattleService battleService;
+        public BattleController(IBattleService battleService)
         {
-            return StatusCode(200);
+            this.battleService = battleService;
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Battle()
+        {
+            try
+            {
+                BattleResultDto battleResult = await battleService.GetBattleResultAsync(1, 2);
+                return StatusCode(200, battleResult);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.ToString());
+            }
         }
     }
 }

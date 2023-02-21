@@ -43,7 +43,7 @@ namespace Islands.Services.PlayerInformationService
                     LastBattleDate = player.LastBattleDate,
                     Strength = player.Strength,
                     Intelligence = player.Intelligence,
-                    Ability = player.Ability,
+                    Agility = player.Agility,
                 };
             }
             catch (Exception ex)
@@ -71,7 +71,7 @@ namespace Islands.Services.PlayerInformationService
                     LastExpeditionDate = DateTime.MinValue,
                     Strength = defaultSkills.Strength,
                     Intelligence = defaultSkills.Intelligence,
-                    Ability = defaultSkills.Ability,
+                    Agility = defaultSkills.Ability,
                     User = user,
                 };
 
@@ -90,12 +90,12 @@ namespace Islands.Services.PlayerInformationService
                 Player player = await _playerRepository.GetByUsernameAsync(username);
                 int skillPointsByLevel = _gameConfigurationService.GetSkillPointsByLevel(player.ExperiencePoint);
 
-                int availableSkillPoints = skillPointsByLevel - player.Intelligence - player.Strength - player.Ability;
+                int availableSkillPoints = skillPointsByLevel - player.Intelligence - player.Strength - player.Agility;
                 int allSkillPoints = skills.Intelligence + skills.Strength + skills.Ability;
 
                 if (availableSkillPoints >= allSkillPoints)
                 {
-                    player.Ability += skills.Ability;
+                    player.Agility += skills.Ability;
                     player.Strength += skills.Strength;
                     player.Intelligence += skills.Intelligence;
 
