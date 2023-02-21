@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Org.BouncyCastle.Math;
 
 namespace Web.Controllers
 {
@@ -7,6 +9,11 @@ namespace Web.Controllers
     [ApiController]
     public class BattleController : ControllerBase
     {
-
+        [Authorize]
+        [HttpGet]
+        public IActionResult Battlefield(int enemyId)
+        {
+            return StatusCode(200);
+        }
     }
 }
