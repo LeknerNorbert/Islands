@@ -23,12 +23,12 @@ namespace Islands.Repositories.ClassifiedAdRepository
                 .FirstAsync(c => c.Id == id);
         }
 
-        public async Task<List<AdDTO>> GetAllAsync()
+        public async Task<List<AdDto>> GetAllAsync()
         {
             return await _context.Ads
                 .Where(c => c.PublishDate >= DateTime.Now.AddDays(-7))
                 .OrderBy(c => c.PublishDate)
-                .Select(c => new AdDTO()
+                .Select(c => new AdDto()
                 {
                     Id = c.Id,
                     Item = c.Item,
@@ -40,7 +40,7 @@ namespace Islands.Repositories.ClassifiedAdRepository
                 .ToListAsync();
         }
 
-        public async Task<List<AdDTO>> GetAllByUsernameAsync(string username)
+        public async Task<List<AdDto>> GetAllByUsernameAsync(string username)
         {
             try
             {
@@ -49,7 +49,7 @@ namespace Islands.Repositories.ClassifiedAdRepository
                         .ThenInclude(p => p.User)
                     .Where(c => c.PlayerInformation.User.Username == username)
                     .OrderBy(c => c.PublishDate)
-                    .Select(c => new AdDTO()
+                    .Select(c => new AdDto()
                     {
                         Id = c.Id,
                         Item = c.Item,

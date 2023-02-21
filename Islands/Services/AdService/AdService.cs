@@ -18,7 +18,7 @@ namespace Islands.Services.ClassifiedAdService
             _playerRepository = playerRepository; 
         }
 
-        public async Task AddAsync(string username, NewAdDTO newAd)
+        public async Task AddAsync(string username, NewAdDto newAd)
         {
             try
             {
@@ -110,7 +110,7 @@ namespace Islands.Services.ClassifiedAdService
         
         }
 
-        public async Task<List<AdDTO>> GetAllAsync()
+        public async Task<List<AdDto>> GetAllAsync()
         {
             try
             {
@@ -122,7 +122,7 @@ namespace Islands.Services.ClassifiedAdService
             }
         }
 
-        public async Task<List<AdDTO>> GetAllByUsernameAsync(string username)
+        public async Task<List<AdDto>> GetAllByUsernameAsync(string username)
         {
             try
             {

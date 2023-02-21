@@ -24,13 +24,13 @@ namespace Islands.Services.PlayerInformationService
             _gameConfigurationService = gameConfigurationService;
         }
 
-        public async Task<PlayerDTO> GetByUsernameAsync(string username)
+        public async Task<PlayerDto> GetByUsernameAsync(string username)
         {
             try
             {
                 Player player = await _playerRepository.GetByUsernameAsync(username);
 
-                return new PlayerDTO()
+                return new PlayerDto()
                 {
                     Id = player.Id,
                     ExperiencePoint = player.ExperiencePoint,
@@ -57,7 +57,7 @@ namespace Islands.Services.PlayerInformationService
             try
             {
                 User user = await _userRepository.GetByUsernameAsync(username);
-                SkillsDTO defaultSkills = _gameConfigurationService.GetDefaultSkillsByIsland(island);
+                SkillsDto defaultSkills = _gameConfigurationService.GetDefaultSkillsByIsland(island);
 
                 Player player = new()
                 {
@@ -83,7 +83,7 @@ namespace Islands.Services.PlayerInformationService
             }
         }
 
-        public async Task UpdateSkillsAsync(string username, SkillsDTO skills)
+        public async Task UpdateSkillsAsync(string username, SkillsDto skills)
         {
             try
             {

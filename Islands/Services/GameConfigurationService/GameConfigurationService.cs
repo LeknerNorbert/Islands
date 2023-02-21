@@ -6,89 +6,89 @@ namespace Islands.Services.IslandService
 {
     public class GameConfigurationService : IGameConfigurationService
     {
-        private Dictionary<string, BuildingWithDefaultValuesDTO> _buildings;
-        private List<UnconstructedBuildingDTO> _unconstructedBuildings;
-        private Dictionary<string, SkillsDTO> _defaultSkills;
-        private Dictionary<string, IslandDTO> _islands;
-        private SkillsDTO _maxSkillPoints;
+        private readonly Dictionary<string, BuildingWithDefaultValuesDto> _buildings;
+        private readonly List<UnconstructedBuildingDto> _unconstructedBuildings;
+        private readonly Dictionary<string, SkillsDto> _defaultSkills;
+        private readonly Dictionary<string, IslandDto> _islands;
+        private SkillsDto _maxSkillPoints;
 
-        private string[] _buildingPaths = new string[]
+        private readonly string[] _buildingPaths = new string[]
         {
-            @"..\BLL\GameConfigurationFiles\Buildings\Church-1.json",
-            @"..\BLL\GameConfigurationFiles\Buildings\Church-2.json",
-            @"..\BLL\GameConfigurationFiles\Buildings\Church-3.json",
-            @"..\BLL\GameConfigurationFiles\Buildings\Factory-1.json",
-            @"..\BLL\GameConfigurationFiles\Buildings\Factory-2.json",
-            @"..\BLL\GameConfigurationFiles\Buildings\Factory-3.json",
-            @"..\BLL\GameConfigurationFiles\Buildings\LumberYard-1.json",
-            @"..\BLL\GameConfigurationFiles\Buildings\LumberYard-2.json",
-            @"..\BLL\GameConfigurationFiles\Buildings\LumberYard-3.json",
-            @"..\BLL\GameConfigurationFiles\Buildings\Mine-1.json",
-            @"..\BLL\GameConfigurationFiles\Buildings\Mine-2.json",
-            @"..\BLL\GameConfigurationFiles\Buildings\Mine-3.json",
-            @"..\BLL\GameConfigurationFiles\Buildings\PracticeRange-1.json",
-            @"..\BLL\GameConfigurationFiles\Buildings\PracticeRange-2.json",
-            @"..\BLL\GameConfigurationFiles\Buildings\PracticeRange-3.json",
+            @"..\Islands\GameConfigurationFiles\Buildings\Church-1.json",
+            @"..\Islands\GameConfigurationFiles\Buildings\Church-2.json",
+            @"..\Islands\GameConfigurationFiles\Buildings\Church-3.json",
+            @"..\Islands\GameConfigurationFiles\Buildings\Factory-1.json",
+            @"..\Islands\GameConfigurationFiles\Buildings\Factory-2.json",
+            @"..\Islands\GameConfigurationFiles\Buildings\Factory-3.json",
+            @"..\Islands\GameConfigurationFiles\Buildings\LumberYard-1.json",
+            @"..\Islands\GameConfigurationFiles\Buildings\LumberYard-2.json",
+            @"..\Islands\GameConfigurationFiles\Buildings\LumberYard-3.json",
+            @"..\Islands\GameConfigurationFiles\Buildings\Mine-1.json",
+            @"..\Islands\GameConfigurationFiles\Buildings\Mine-2.json",
+            @"..\Islands\GameConfigurationFiles\Buildings\Mine-3.json",
+            @"..\Islands\GameConfigurationFiles\Buildings\PracticeRange-1.json",
+            @"..\Islands\GameConfigurationFiles\Buildings\PracticeRange-2.json",
+            @"..\Islands\GameConfigurationFiles\Buildings\PracticeRange-3.json",
         };
 
-        private string[] _unconstructedBuildingPaths = new string[]
+        private readonly string[] _unconstructedBuildingPaths = new string[]
         {
-            @"..\BLL\GameConfigurationFiles\UnconstructedBuildings\Church.json",
-            @"..\BLL\GameConfigurationFiles\UnconstructedBuildings\Factory.json",
-            @"..\BLL\GameConfigurationFiles\UnconstructedBuildings\LumberYard.json",
-            @"..\BLL\GameConfigurationFiles\UnconstructedBuildings\Mine.json",
-            @"..\BLL\GameConfigurationFiles\UnconstructedBuildings\PracticeRange.json",
+            @"..\Islands\GameConfigurationFiles\UnconstructedBuildings\Church.json",
+            @"..\Islands\GameConfigurationFiles\UnconstructedBuildings\Factory.json",
+            @"..\Islands\GameConfigurationFiles\UnconstructedBuildings\LumberYard.json",
+            @"..\Islands\GameConfigurationFiles\UnconstructedBuildings\Mine.json",
+            @"..\Islands\GameConfigurationFiles\UnconstructedBuildings\PracticeRange.json",
         };
 
-        private string[] _defaultSkillsPaths = new string[]
+        private readonly string[] _defaultSkillsPaths = new string[]
         {
-            @"..\BLL\GameConfigurationFiles\DefaultSkills\Europian.json",
-            @"..\BLL\GameConfigurationFiles\DefaultSkills\Indian.json",
-            @"..\BLL\GameConfigurationFiles\DefaultSkills\Japan.json",
-            @"..\BLL\GameConfigurationFiles\DefaultSkills\Viking.json",
+            @"..\Islands\GameConfigurationFiles\DefaultSkills\Europian.json",
+            @"..\Islands\GameConfigurationFiles\DefaultSkills\Indian.json",
+            @"..\Islands\GameConfigurationFiles\DefaultSkills\Japan.json",
+            @"..\Islands\GameConfigurationFiles\DefaultSkills\Viking.json",
         };
 
-        private string[] _islandPaths = new string[]
+        private readonly string[] _islandPaths = new string[]
         {
-            @"..\BLL\GameConfigurationFiles\Islands\Europian.json",
-            @"..\BLL\GameConfigurationFiles\Islands\Indian.json",
-            @"..\BLL\GameConfigurationFiles\Islands\Japan.json",
-            @"..\BLL\GameConfigurationFiles\Islands\Viking.json",
+            @"..\Islands\GameConfigurationFiles\Islands\Europian.json",
+            @"..\Islands\GameConfigurationFiles\Islands\Indian.json",
+            @"..\Islands\GameConfigurationFiles\Islands\Japan.json",
+            @"..\Islands\GameConfigurationFiles\Islands\Viking.json",
         };
 
-        private string _maxSkillPointsPath = @"..\BLL\GameConfigurationFiles\MaxSkillPoints\MaxSkillPoints.json";
+        private string _maxSkillPointsPath = @"..\Islands\GameConfigurationFiles\MaxSkillPoints\MaxSkillPoints.json";
 
         public GameConfigurationService()
         {
-            _buildings = new Dictionary<string, BuildingWithDefaultValuesDTO>();
+            _buildings = new Dictionary<string, BuildingWithDefaultValuesDto>();
             _unconstructedBuildings = new();
-            _defaultSkills = new Dictionary<string, SkillsDTO>();
-            _islands = new Dictionary<string, IslandDTO>();
+            _defaultSkills = new Dictionary<string, SkillsDto>();
+            _islands = new Dictionary<string, IslandDto>();
 
             SetConfigFiles();
         }
 
-        public BuildingWithDefaultValuesDTO GetBuildingDefaultValue(BuildingType building, int level)
+        public BuildingWithDefaultValuesDto GetBuildingDefaultValue(BuildingType building, int level)
         {
             return _buildings[$"{building}-{level}"];
         }
 
-        public List<UnconstructedBuildingDTO> GetUnconstructedBuildings()
+        public List<UnconstructedBuildingDto> GetUnconstructedBuildings()
         {
             return _unconstructedBuildings;
         }
 
-        public SkillsDTO GetDefaultSkillsByIsland(IslandType island)
+        public SkillsDto GetDefaultSkillsByIsland(IslandType island)
         {
             return _defaultSkills[island.ToString()];
         }
 
-        public SkillsDTO GetMaximumSkillPoints()
+        public SkillsDto GetMaximumSkillPoints()
         {
             return _maxSkillPoints;
         }
 
-        public IslandDTO GetIsland(IslandType island)
+        public IslandDto GetIsland(IslandType island)
         {
             return _islands[island.ToString()];
         }
@@ -107,7 +107,7 @@ namespace Islands.Services.IslandService
                     string configurationFile = File.ReadAllText(buildingPath);
                     string key = Path.GetFileNameWithoutExtension(buildingPath);
 
-                    BuildingWithDefaultValuesDTO? building = JsonConvert.DeserializeObject<BuildingWithDefaultValuesDTO>(configurationFile);
+                    BuildingWithDefaultValuesDto? building = JsonConvert.DeserializeObject<BuildingWithDefaultValuesDto>(configurationFile);
                     _buildings.Add(key, building);
                 }
                 else
@@ -122,7 +122,7 @@ namespace Islands.Services.IslandService
                 {
                     string configurationFile = File.ReadAllText(unconstructedBuildingPath);
 
-                    UnconstructedBuildingDTO? unconstructedBuilding = JsonConvert.DeserializeObject<UnconstructedBuildingDTO>(configurationFile);
+                    UnconstructedBuildingDto? unconstructedBuilding = JsonConvert.DeserializeObject<UnconstructedBuildingDto>(configurationFile);
                     _unconstructedBuildings.Add(unconstructedBuilding);
                 }
                 else
@@ -138,7 +138,7 @@ namespace Islands.Services.IslandService
                     string configurationFile = File.ReadAllText(defaultSkillsPath);
                     string key = Path.GetFileNameWithoutExtension(defaultSkillsPath);
 
-                    SkillsDTO? defaultSkills = JsonConvert.DeserializeObject<SkillsDTO>(configurationFile);
+                    SkillsDto? defaultSkills = JsonConvert.DeserializeObject<SkillsDto>(configurationFile);
                     _defaultSkills.Add(key, defaultSkills);
                 }
                 else
@@ -150,7 +150,7 @@ namespace Islands.Services.IslandService
             if(File.Exists(_maxSkillPointsPath))
             {
                 string configurationFile = File.ReadAllText(_maxSkillPointsPath);
-                _maxSkillPoints = JsonConvert.DeserializeObject<SkillsDTO>(configurationFile);
+                _maxSkillPoints = JsonConvert.DeserializeObject<SkillsDto>(configurationFile);
             }
             else
             {
@@ -164,7 +164,7 @@ namespace Islands.Services.IslandService
                     string configurationFile = File.ReadAllText(islandPath);
                     string key = Path.GetFileNameWithoutExtension(islandPath);
 
-                    IslandDTO? island = JsonConvert.DeserializeObject<IslandDTO>(configurationFile);
+                    IslandDto? island = JsonConvert.DeserializeObject<IslandDto>(configurationFile);
                     _islands.Add(key, island);
                 }
                 else

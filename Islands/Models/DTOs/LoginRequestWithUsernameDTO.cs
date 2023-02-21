@@ -2,7 +2,7 @@
 
 namespace Islands.DTOs
 {
-    public class LoginRequestWithUsernameDTO
+    public class LoginRequestWithUsernameDto
     {
         [Required]
         public string Username { get; set; } = string.Empty;

@@ -24,7 +24,7 @@ namespace Web.Controllers
         {
             try
             {
-                List<AdDTO> ads = await _adService.GetAllAsync();
+                List<AdDto> ads = await _adService.GetAllAsync();
                 return StatusCode(200, ads);
             }
             catch (Exception ex)
@@ -40,7 +40,7 @@ namespace Web.Controllers
             try
             {
                 string username = User.Claims.First(c => c.Type == "Username").Value;
-                List<AdDTO> ads = await _adService.GetAllByUsernameAsync(username);
+                List<AdDto> ads = await _adService.GetAllByUsernameAsync(username);
 
                 return StatusCode(200, ads);
             }
@@ -53,7 +53,7 @@ namespace Web.Controllers
         [HttpPost]
         [Authorize]
         [ValidateModel]
-        public async Task<IActionResult> CreateAd(NewAdDTO createClassifiedAd)
+        public async Task<IActionResult> CreateAd(NewAdDto createClassifiedAd)
         {
             try
             {

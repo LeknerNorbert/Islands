@@ -21,7 +21,7 @@ namespace Web.Controllers
 
         [HttpPost]
         [ValidateModel]
-        public async Task<IActionResult> Registration([FromBody] RegistrationRequestDTO userRegistrationResquest)
+        public async Task<IActionResult> Registration([FromBody] RegistrationRequestDto userRegistrationResquest)
         {
             try
             {
@@ -70,7 +70,7 @@ namespace Web.Controllers
 
         [HttpPost]
         [ValidateModel]
-        public async Task<IActionResult> Login(LoginRequestWithUsernameDTO userLoginRequest)
+        public async Task<IActionResult> Login(LoginRequestWithUsernameDto userLoginRequest)
         {
             try
             {
@@ -106,7 +106,7 @@ namespace Web.Controllers
         [HttpPut]
         [Authorize]
         [ValidateModel]
-        public async Task<IActionResult> ResetPassword(PasswordResetDTO passwordReset)
+        public async Task<IActionResult> ResetPassword(PasswordResetDto passwordReset)
         {
             try
             {

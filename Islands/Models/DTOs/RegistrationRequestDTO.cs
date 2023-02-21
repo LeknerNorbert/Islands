@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Islands.DTOs
 {
-    public class RegistrationRequestDTO
+    public class RegistrationRequestDto
     {
         [Required]
         [StringLength(255, MinimumLength = 3)]

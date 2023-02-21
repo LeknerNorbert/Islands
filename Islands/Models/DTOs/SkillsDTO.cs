@@ -2,7 +2,7 @@
 
 namespace Islands.DTOs
 {
-    public class SkillsDTO
+    public class SkillsDto
     {
         [Required]
         public int Strength { get; set; }

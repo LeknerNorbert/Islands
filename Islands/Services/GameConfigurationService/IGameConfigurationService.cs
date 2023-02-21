@@ -5,11 +5,11 @@ namespace Islands.Services.IslandService
 {
     public interface IGameConfigurationService
     {
-        public BuildingWithDefaultValuesDTO GetBuildingDefaultValue(BuildingType building, int level);
-        public List<UnconstructedBuildingDTO> GetUnconstructedBuildings();
-        public SkillsDTO GetDefaultSkillsByIsland(IslandType island);
-        public SkillsDTO GetMaximumSkillPoints();
-        public IslandDTO GetIsland(IslandType island);
+        public BuildingWithDefaultValuesDto GetBuildingDefaultValue(BuildingType building, int level);
+        public List<UnconstructedBuildingDto> GetUnconstructedBuildings();
+        public SkillsDto GetDefaultSkillsByIsland(IslandType island);
+        public SkillsDto GetMaximumSkillPoints();
+        public IslandDto GetIsland(IslandType island);
         public int GetSkillPointsByLevel(int experiences);
     }
 }

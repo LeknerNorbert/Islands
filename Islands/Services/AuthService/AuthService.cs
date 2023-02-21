@@ -27,7 +27,7 @@ namespace Islands.Services.AuthService
             _emailService = emailService;
         }
 
-        public async Task<string> LoginAsync(LoginRequestWithUsernameDTO login)
+        public async Task<string> LoginAsync(LoginRequestWithUsernameDto login)
         {
             try
             {
@@ -46,7 +46,7 @@ namespace Islands.Services.AuthService
             throw new LoginFailedException("Credentials are incorrect.");
         }
 
-        public async Task RegistrationAsync(RegistrationRequestDTO registration)
+        public async Task RegistrationAsync(RegistrationRequestDto registration)
         {
             try
             {
@@ -137,7 +137,7 @@ namespace Islands.Services.AuthService
             }
         }
 
-        public async Task UpdatePasswordAsync(string username, PasswordResetDTO password)
+        public async Task UpdatePasswordAsync(string username, PasswordResetDto password)
         {
             try
             {

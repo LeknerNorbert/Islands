@@ -2,7 +2,7 @@
 
 namespace Islands.DTOs
 {
-    public class BuildingDTO
+    public class BuildingDto
     {
         public int Id { get; set; }
         public BuildingType Name { get; set; }

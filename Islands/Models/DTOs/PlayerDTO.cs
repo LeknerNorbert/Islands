@@ -2,7 +2,7 @@
 
 namespace Islands.DTOs
 {
-    public class PlayerDTO
+    public class PlayerDto
     {
         public int Id { get; set; }
         public int ExperiencePoint { get; set; }

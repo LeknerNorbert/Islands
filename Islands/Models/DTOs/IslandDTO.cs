@@ -2,7 +2,7 @@
 
 namespace Islands.DTOs
 {
-    public class IslandDTO
+    public class IslandDto
     {
         public string Background { get; set; } = string.Empty;
         public Vector2[]? ConstructionAreas { get; set; } = Array.Empty<Vector2>();

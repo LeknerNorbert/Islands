@@ -2,7 +2,7 @@
 
 namespace Islands.DTOs
 {
-    public class UnconstructedBuildingDTO
+    public class UnconstructedBuildingDto
     {
         public BuildingType Name { get; set; }
         public string Description { get; set; } = string.Empty;

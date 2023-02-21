@@ -25,7 +25,7 @@ namespace Web.Controllers
             try
             {
                 string username = User.Claims.First(c => c.Type == "Username").Value;
-                PlayerDTO player = await _playerService.GetByUsernameAsync(username);
+                PlayerDto player = await _playerService.GetByUsernameAsync(username);
 
                 return StatusCode(200, player);
             }
@@ -55,7 +55,7 @@ namespace Web.Controllers
 
         [HttpPut]
         [Authorize]
-        public async Task<IActionResult> UpdateSkillPoints(SkillsDTO skillPoints)
+        public async Task<IActionResult> UpdateSkillPoints(SkillsDto skillPoints)
         {
             try
             {

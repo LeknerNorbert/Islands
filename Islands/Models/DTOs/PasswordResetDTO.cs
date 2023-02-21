@@ -2,7 +2,7 @@
 
 namespace Islands.DTOs
 {
-    public class PasswordResetDTO
+    public class PasswordResetDto
     {
         [Required]
         [RegularExpression(@"^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$", ErrorMessage = "Password must be at least eight characters long and contain uppercase letters and numbers.")]
