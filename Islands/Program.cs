@@ -8,6 +8,7 @@ using Islands.Services.AuthService;
 using Islands.Services.BattleService;
 using Islands.Services.ClassifiedAdService;
 using Islands.Services.EmailService;
+using Islands.Services.ExpeditionService;
 using Islands.Services.IslandService;
 using Islands.Services.PlayerInformationService;
 using Microsoft.AspNetCore.Authentication.JwtBearer;

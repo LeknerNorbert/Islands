@@ -3,6 +3,7 @@ using System;
 using Islands.Models.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Islands.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230223161058_island")]
+    partial class island
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -246,7 +248,7 @@ namespace Islands.Migrations
             modelBuilder.Entity("Islands.Models.Player", b =>
                 {
                     b.HasOne("Islands.Models.User", "User")
-                        .WithOne("Player")
+                        .WithOne("PlayerInformation")
                         .HasForeignKey("Islands.Models.Player", "Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -265,7 +267,7 @@ namespace Islands.Migrations
 
             modelBuilder.Entity("Islands.Models.User", b =>
                 {
-                    b.Navigation("Player");
+                    b.Navigation("PlayerInformation");
                 });
 #pragma warning restore 612, 618
         }
