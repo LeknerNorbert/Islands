@@ -8,6 +8,7 @@ namespace Islands.Models
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public string Title { get; set; } = string.Empty;
+        public string Message { get; set; } = string.Empty;
         public int Wood { get; set; }
         public int Stone { get; set; }
         public int Iron { get; set; }
@@ -15,5 +16,6 @@ namespace Islands.Models
         public int ExperiencePoint { get; set; }
         public DateTime Date { get; set; }
         public Player? Player { get; set; }
+
     }
 }

@@ -8,6 +8,7 @@ using Islands.Services.AuthService;
 using Islands.Services.BattleService;
 using Islands.Services.ClassifiedAdService;
 using Islands.Services.EmailService;
+using Islands.Services.ExpeditionService;
 using Islands.Services.IslandService;
 using Islands.Services.PlayerInformationService;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -58,6 +59,7 @@ builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddScoped<IAdService, AdService>();
 builder.Services.AddScoped<IPlayerService, PlayerService>();
 builder.Services.AddScoped<IBattleService, BattleService>();
+builder.Services.AddScoped<IExpeditionService, ExpeditionService>();
 builder.Services.AddSingleton<IGameConfigurationService, GameConfigurationService>();
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
