@@ -9,19 +9,19 @@ namespace Islands.Repositories.PlayerInformationRepository
 {
     public class PlayerRepository : IPlayerRepository
     {
-        private readonly ApplicationDbContext _context;
+        private readonly ApplicationDbContext context;
 
         public PlayerRepository(ApplicationDbContext context)
         {
-            _context = context;
+            this.context = context;
         }
 
         public async Task AddAsync(Player player)
         {
             try
             {
-                await _context.Players.AddAsync(player);
-                await _context.SaveChangesAsync();
+                await context.Players.AddAsync(player);
+                await context.SaveChangesAsync();
             }
             catch (DbUpdateException ex)
             {
@@ -33,7 +33,7 @@ namespace Islands.Repositories.PlayerInformationRepository
         {
             try
             {
-                return await _context.Players.Include(p => p.User).FirstAsync(p => p.User.Username == username);
+                return await context.Players.Include(p => p.User).FirstAsync(p => p.User.Username == username);
             }
             catch (Exception ex)
             {
@@ -45,11 +45,11 @@ namespace Islands.Repositories.PlayerInformationRepository
         {
             try
             {
-                Ad ad = await _context.Ads
+                Ad ad = await context.Ads
                     .Include(a => a.PlayerInformation)
                     .FirstAsync(a => a.Id == adId);
 
-                return await _context.Players.FirstAsync(p => p.Id == ad.PlayerInformation.Id);
+                return await context.Players.FirstAsync(p => p.Id == ad.PlayerInformation.Id);
             }
             catch (Exception ex)
             {
@@ -57,19 +57,28 @@ namespace Islands.Repositories.PlayerInformationRepository
             }
         }
 
+        public async Task<IslandType> GetIslandTypeByUsernameAsync(string username)
+        {
+            return await context.Users
+                .Include(user => user.Player)
+                .Where(user => user.Username == username)
+                .Select(user => user.Player.SelectedIsland)
+                .FirstAsync();
+        }
+
         public async Task<PlayerForBattleDto?> GetPlayerForBattleByIdAsync(int id)
         {
             PlayerForBattleDto playerForBattle = new();
 
-            Player? player = await _context.Players
+            Player? player = await context.Players
                 .Include(p => p.User)
                 .FirstOrDefaultAsync(p => p.Id == id);
 
-            Building? church = await _context.Buildings
+            Building? church = await context.Buildings
                 .Include(b => b.PlayerInformation)
                 .FirstOrDefaultAsync(b => b.PlayerInformation.Id == id && b.Type == BuildingType.Church);
 
-            Building? practiceRange = await _context.Buildings
+            Building? practiceRange = await context.Buildings
                 .Include(b => b.PlayerInformation)
                 .FirstOrDefaultAsync(b => b.PlayerInformation.Id == id && b.Type == BuildingType.PracticeRange);
 
@@ -110,15 +119,15 @@ namespace Islands.Repositories.PlayerInformationRepository
 
         public async Task<Player?> GetPlayerByIdAsync(int id)
         {
-            return await _context.Players.FirstOrDefaultAsync(p => p.Id == id);
+            return await context.Players.FirstOrDefaultAsync(p => p.Id == id);
         }
 
         public async Task UpdateAsync(Player player)
         {
             try
             {
-                _context.Entry(player).State = EntityState.Modified;
-                await _context.SaveChangesAsync();
+                context.Entry(player).State = EntityState.Modified;
+                await context.SaveChangesAsync();
             }
             catch (DbUpdateException ex)
             {

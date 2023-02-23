@@ -19,6 +19,6 @@ namespace Islands.Models
         public DateTime EmailValidationTokenExpiration { get; set; }
         public DateTime EmailValidationDate { get; set; }
         public Role Role { get; set; }
-        public virtual Player? PlayerInformation { get; set; } 
+        public virtual Player? Player { get; set; } 
     }
 }

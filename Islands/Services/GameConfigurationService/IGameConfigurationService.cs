@@ -5,11 +5,11 @@ namespace Islands.Services.IslandService
 {
     public interface IGameConfigurationService
     {
-        public BuildingWithDefaultValuesDto GetBuildingDefaultValue(BuildingType building, int level);
-        public List<UnconstructedBuildingDto> GetUnconstructedBuildings();
-        public SkillsDto GetDefaultSkillsByIsland(IslandType island);
-        public SkillsDto GetMaximumSkillPoints();
-        public IslandDto GetIsland(IslandType island);
-        public int GetSkillPointsByLevel(int experiences);
+        Task<BuildingWithDefaultValuesDto> GetBuildingDefaultValueAsync(BuildingType building, int level);
+        Task<List<UnconstructedBuildingDto>> GetUnconstructedBuildingsAsync();
+        Task<SkillsDto> GetDefaultSkillsByIslandAsync(IslandType island);
+        Task<SkillsDto> GetMaximumSkillPointsAsync();
+        Task<IslandDto> GetIslandAsync(IslandType island);
+        int GetSkillPointsByLevel(int experiences);
     }
 }

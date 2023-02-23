@@ -57,7 +57,7 @@ namespace Islands.Services.PlayerInformationService
             try
             {
                 User user = await _userRepository.GetByUsernameAsync(username);
-                SkillsDto defaultSkills = _gameConfigurationService.GetDefaultSkillsByIsland(island);
+                SkillsDto defaultSkills = await _gameConfigurationService.GetDefaultSkillsByIslandAsync(island);
 
                 Player player = new()
                 {

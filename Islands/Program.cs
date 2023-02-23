@@ -58,7 +58,8 @@ builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddScoped<IAdService, AdService>();
 builder.Services.AddScoped<IPlayerService, PlayerService>();
 builder.Services.AddScoped<IBattleService, BattleService>();
-builder.Services.AddSingleton<IGameConfigurationService, GameConfigurationService>();
+builder.Services.AddScoped<IIslandService, IslandService>();
+builder.Services.AddScoped<IGameConfigurationService, GameConfigurationService>();
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IAdRepository, AdRepository>();
