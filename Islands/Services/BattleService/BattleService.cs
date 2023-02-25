@@ -1,4 +1,5 @@
-﻿using Islands.Models;
+﻿using Islands.Exceptions;
+using Islands.Models;
 using Islands.Models.DTOs;
 using Islands.Repositories.NotificationRepository;
 using Islands.Repositories.PlayerInformationRepository;
@@ -9,19 +10,19 @@ namespace Islands.Services.BattleService
     {
         private readonly IPlayerRepository playerRepository;
         private readonly INotificationRepository notificationRepository;
-        private readonly Random rng;
+        private readonly Random random;
 
         public BattleService(IPlayerRepository playerRepository, INotificationRepository notificationRepository)
         {
             this.playerRepository = playerRepository;
             this.notificationRepository = notificationRepository;
-            rng = new();
+            random = new();
         }
 
-        public async Task<BattleResultDto> GetBattleResultAsync(int id, int enemyId)
+        public async Task<BattleResultDto> GetBattleResultAsync(string username, int enemyId)
         {
-            PlayerForBattleDto? player = await playerRepository.GetPlayerForBattleByIdAsync(id);
-            PlayerForBattleDto? enemy = await playerRepository.GetPlayerForBattleByIdAsync(enemyId);
+            PlayerForBattleDto player = await playerRepository.GetPlayerForBattleByUsernameAsync(username);
+            PlayerForBattleDto enemy = await playerRepository.GetPlayerForBattleByIdAsync(enemyId);
             
             int winnerId = 0;
             int lootWood = 0;
@@ -30,15 +31,7 @@ namespace Islands.Services.BattleService
             int lootCoin = 0;
             int lootExperiencePoints = 0; 
 
-            if (player == null || enemy == null)
-            {
-                throw new ArgumentNullException("There is no player or enemy.");
-            }
-
             BattleResultDto battleResult = new();
-
-
-            //Szövegek megadása
             List<string> battleText = new()
             {
                 "Bekerítette az ellenfél csapatait!",
@@ -53,16 +46,15 @@ namespace Islands.Services.BattleService
                 "Az egyik embere magával rántott a pokolba sok ellenfelet!"
             };
 
-            //Csata szimuláció
-            bool tester = false;
-            while (tester != true)
+            bool isBattleOver = false;
+            while (isBattleOver != true)
             {
                 if (player.Health > 0)
                 {
 
                     int damage = AttackDamage(player.Strength, player.Agility, player.ChurchLevel, player.PracticeRangeLevel);
                     enemy.Health -= damage;
-                    int txt = rng.Next(0, 9);
+                    int txt = random.Next(0, 9);
 
                     BattleReportDto battleReport = new();
 
@@ -77,7 +69,7 @@ namespace Islands.Services.BattleService
                     {
                         int damage2 = AttackDamage(enemy.Strength, enemy.Agility, enemy.ChurchLevel, enemy.PracticeRangeLevel);
                         player.Health -= damage2;
-                        int txt2 = rng.Next(0, 9);
+                        int txt2 = random.Next(0, 9);
 
                         BattleReportDto battleReport2 = new();
 
@@ -104,7 +96,7 @@ namespace Islands.Services.BattleService
                         battleResult.Coins = lootCoin;
                         battleResult.ExperiencePoints = lootExperiencePoints;
 
-                        tester = true;
+                        isBattleOver = true;
                     }
                 }
                 else
@@ -123,20 +115,20 @@ namespace Islands.Services.BattleService
                     battleResult.Coins = 0;
                     battleResult.ExperiencePoints = 0;
 
-                    tester = true;
+                    isBattleOver = true;
                 }
 
             }
 
+            Player winnerPlayer = await playerRepository.GetPlayerByIdAsync(winnerId);
 
-            Player? winnerPlayer = await playerRepository.GetPlayerByIdAsync(winnerId);
+            winnerPlayer.Woods += lootWood;
+            winnerPlayer.Stones += lootStone;
+            winnerPlayer.Irons += lootIron;
+            winnerPlayer.Coins += lootCoin;
+            winnerPlayer.ExperiencePoint += lootExperiencePoints;
 
-            if (winnerPlayer == null)
-            {
-                throw new ArgumentNullException();
-            }
-
-            Notification winnerNotification = new Notification()
+            Notification winnerNotification = new()
             {
                 Player = winnerPlayer,
                 Title = "Győztes csata",
@@ -148,14 +140,7 @@ namespace Islands.Services.BattleService
                 Date = DateTime.Now
             };
 
-
-            winnerPlayer.Woods += lootWood;
-            winnerPlayer.Stones += lootStone;
-            winnerPlayer.Irons += lootIron;
-            winnerPlayer.Coins += lootCoin;
-            winnerPlayer.ExperiencePoint += lootExperiencePoints;
-
-            await playerRepository.UpdateAsync(winnerPlayer);
+            await playerRepository.UpdatePlayerAsync(winnerPlayer);
             await notificationRepository.AddNotificationAsync(winnerNotification);
 
             return battleResult;
@@ -169,7 +154,7 @@ namespace Islands.Services.BattleService
             //church level plusz sebzés %os alapon
 
             double critChance = 10 + (agi / 2);
-            int crit = rng.Next(0, 100);
+            int crit = random.Next(0, 100);
 
             if (crit <= critChance)
             {
@@ -199,7 +184,7 @@ namespace Islands.Services.BattleService
         {
             int min = (5 + str);
             int max = (10 + str);
-            int randomDamage = rng.Next(min, max);
+            int randomDamage = random.Next(min, max);
             //templomos dmg növelés
             double calculator = randomDamage * (1 + (churchLvl / 10));
             int churchDmg = Convert.ToInt32(Math.Round(calculator));
@@ -213,7 +198,7 @@ namespace Islands.Services.BattleService
         {
             //intellect növeli a loot mennyiséget az alap intelligencia érték ötszörösével. pl 10nél 50 + anyagot kap, 30nál 150et stb.
             //random alap loot
-            int baseLoot = rng.Next(50, 100);
+            int baseLoot = random.Next(50, 100);
 
             double calculator = baseLoot + (intellect * 5);
             int loot = Convert.ToInt32(Math.Round(calculator));
@@ -223,7 +208,7 @@ namespace Islands.Services.BattleService
 
         private int CoinCalc(int intellect)
         {
-            int baseLoot = rng.Next(100, 200);
+            int baseLoot = random.Next(100, 200);
 
             double calculator = baseLoot + (intellect * 5);
             int coin = Convert.ToInt32(Math.Round(calculator));

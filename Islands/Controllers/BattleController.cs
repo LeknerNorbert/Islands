@@ -18,11 +18,13 @@ namespace Web.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Battle()
+        public async Task<IActionResult> Battle(int enemyId)
         {
             try
             {
-                BattleResultDto battleResult = await battleService.GetBattleResultAsync(1, 2);
+                string username = User.Claims.First(c => c.Type == "Username").Value;
+
+                BattleResultDto battleResult = await battleService.GetBattleResultAsync(username, enemyId);
                 return StatusCode(200, battleResult);
             }
             catch (Exception ex)

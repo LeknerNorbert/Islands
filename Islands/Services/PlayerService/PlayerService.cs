@@ -28,7 +28,7 @@ namespace Islands.Services.PlayerInformationService
         {
             try
             {
-                Player player = await _playerRepository.GetByUsernameAsync(username);
+                Player player = await _playerRepository.GetPlayerByUsernameAsync(username);
 
                 return new PlayerDto()
                 {
@@ -75,7 +75,7 @@ namespace Islands.Services.PlayerInformationService
                     User = user,
                 };
 
-                await _playerRepository.AddAsync(player);
+                await _playerRepository.AddPlayerAsync(player);
             }
             catch (Exception ex)
             {
@@ -85,35 +85,23 @@ namespace Islands.Services.PlayerInformationService
 
         public async Task UpdateSkillsAsync(string username, SkillsDto skills)
         {
-            try
+            Player player = await _playerRepository.GetPlayerByUsernameAsync(username);
+            int currentLevel = _gameConfigurationService.GetLevelByExperience(player.ExperiencePoint);
+
+            int availableSkillPoints = currentLevel - player.Intelligence - player.Strength - player.Agility;
+            int updateSkillPointsQuantity = skills.Intelligence + skills.Strength + skills.Ability;
+
+            if (availableSkillPoints >= updateSkillPointsQuantity)
             {
-                Player player = await _playerRepository.GetByUsernameAsync(username);
-                int skillPointsByLevel = _gameConfigurationService.GetSkillPointsByLevel(player.ExperiencePoint);
+                player.Agility += skills.Ability;
+                player.Strength += skills.Strength;
+                player.Intelligence += skills.Intelligence;
 
-                int availableSkillPoints = skillPointsByLevel - player.Intelligence - player.Strength - player.Agility;
-                int allSkillPoints = skills.Intelligence + skills.Strength + skills.Ability;
-
-                if (availableSkillPoints >= allSkillPoints)
-                {
-                    player.Agility += skills.Ability;
-                    player.Strength += skills.Strength;
-                    player.Intelligence += skills.Intelligence;
-
-                    await _playerRepository.UpdateAsync(player);
-                }
-                else
-                {
-                    throw new InsufficientSkillPointsException();
-                }
+                await _playerRepository.UpdatePlayerAsync(player);
             }
-            catch (Exception ex)
+            else
             {
-                if (ex is InsufficientSkillPointsException)
-                {
-                    throw new InsufficientSkillPointsException("No enough skill points.");    
-                }
-
-                throw new ServiceException("Failed to update player.", ex);
+                throw new InsufficientSkillPointsException("No enough skill point.");
             }
         }
     }

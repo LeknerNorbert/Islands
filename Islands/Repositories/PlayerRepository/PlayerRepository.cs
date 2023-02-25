@@ -16,7 +16,7 @@ namespace Islands.Repositories.PlayerInformationRepository
             this.context = context;
         }
 
-        public async Task AddAsync(Player player)
+        public async Task AddPlayerAsync(Player player)
         {
             try
             {
@@ -29,27 +29,22 @@ namespace Islands.Repositories.PlayerInformationRepository
             }
         }
 
-        public async Task<Player> GetByUsernameAsync(string username) 
+        public async Task<Player> GetPlayerByUsernameAsync(string username) 
         {
-            try
-            {
-                return await context.Players.Include(p => p.User).FirstAsync(p => p.User.Username == username);
-            }
-            catch (Exception ex)
-            {
-                throw new RepositoryException("Error getting player", ex);
-            }
+             return await context.Players
+                .Include(p => p.User)
+                .FirstAsync(p => p.User.Username == username);
         }
 
-        public async Task<Player> GetByForAd(int adId)
+        public async Task<Player> GetPlayerByForAdAsync(int adId)
         {
             try
             {
-                Ad ad = await context.Ads
-                    .Include(a => a.PlayerInformation)
+                Exchange exchange = await context.Exchanges
+                    .Include(a => a.Player)
                     .FirstAsync(a => a.Id == adId);
 
-                return await context.Players.FirstAsync(p => p.Id == ad.PlayerInformation.Id);
+                return await context.Players.FirstAsync(p => p.Id == exchange.Player.Id);
             }
             catch (Exception ex)
             {
@@ -66,63 +61,72 @@ namespace Islands.Repositories.PlayerInformationRepository
                 .FirstAsync();
         }
 
-        public async Task<PlayerForBattleDto?> GetPlayerForBattleByIdAsync(int id)
+        public async Task<PlayerForBattleDto> GetPlayerForBattleByUsernameAsync(string username)
         {
-            PlayerForBattleDto playerForBattle = new();
-
-            Player? player = await context.Players
-                .Include(p => p.User)
-                .FirstOrDefaultAsync(p => p.Id == id);
+            Player player = await context.Players
+                .Include(player => player.User)
+                .FirstAsync(player => player.User.Username == username);
 
             Building? church = await context.Buildings
-                .Include(b => b.PlayerInformation)
-                .FirstOrDefaultAsync(b => b.PlayerInformation.Id == id && b.Type == BuildingType.Church);
+                .Include(building => building.Player)
+                .FirstOrDefaultAsync(building => building.Player.Id == player.Id && building.Type == BuildingType.Church);
 
             Building? practiceRange = await context.Buildings
-                .Include(b => b.PlayerInformation)
-                .FirstOrDefaultAsync(b => b.PlayerInformation.Id == id && b.Type == BuildingType.PracticeRange);
+                .Include(building => building.Player)
+                .FirstOrDefaultAsync(building => building.Player.Id == player.Id && building.Type == BuildingType.PracticeRange);
 
-            if (church != null)
+            PlayerForBattleDto playerForBattle = new()
             {
-                playerForBattle.ChurchLevel = church.Level;
-            }
-            else
-            {
-                playerForBattle.ChurchLevel = 0;
-            }
+                Id = player.Id,
+                Username = player.User.Username,
+                Intelligence = player.Intelligence,
+                Strength = player.Strength,
+                Agility = player.Agility,
+                Health = 170,
+                ChurchLevel = church != null ? church.Level : 0,
+                PracticeRangeLevel = practiceRange != null ? practiceRange.Level : 0,
+                LastBattleDate = player.LastBattleDate
+            };
 
-            if (practiceRange != null)
-            {
-                playerForBattle.PracticeRangeLevel = practiceRange.Level;
-            }
-            else
-            {
-                playerForBattle.PracticeRangeLevel = 0;
-            }
+            return playerForBattle;
+        }
 
-            if (player != null)
+        public async Task<PlayerForBattleDto> GetPlayerForBattleByIdAsync(int id)
+        {
+            Player player = await context.Players
+                .Include(p => p.User)
+                .FirstAsync(p => p.Id == id);
+
+            Building? church = await context.Buildings
+                .Include(building => building.Player)
+                .FirstOrDefaultAsync(building => building.Player.Id == player.Id && building.Type == BuildingType.Church);
+
+            Building? practiceRange = await context.Buildings
+                .Include(building => building.Player)
+                .FirstOrDefaultAsync(building => building.Player.Id == player.Id && building.Type == BuildingType.PracticeRange);
+
+            PlayerForBattleDto playerForBattle = new()
             {
-                playerForBattle.Id = player.Id;
-                playerForBattle.Username = player.User.Username;
-                playerForBattle.Intelligence = player.Intelligence;
-                playerForBattle.Strength = player.Strength;
-                playerForBattle.Agility = player.Agility;
-                playerForBattle.Health = 170;
-            }
-            else
-            {
-                return null;
-            }
+                Id = player.Id,
+                Username = player.User.Username,
+                Intelligence = player.Intelligence,
+                Strength = player.Strength,
+                Agility = player.Agility,
+                Health = 170,
+                ChurchLevel = church != null ? church.Level : 0,
+                PracticeRangeLevel = practiceRange != null ? practiceRange.Level : 0,
+                LastBattleDate = player.LastBattleDate
+            };
 
             return playerForBattle; 
         }
 
-        public async Task<Player?> GetPlayerByIdAsync(int id)
+        public async Task<Player> GetPlayerByIdAsync(int id)
         {
-            return await context.Players.FirstOrDefaultAsync(p => p.Id == id);
+            return await context.Players.FirstAsync(p => p.Id == id);
         }
 
-        public async Task UpdateAsync(Player player)
+        public async Task UpdatePlayerAsync(Player player)
         {
             try
             {

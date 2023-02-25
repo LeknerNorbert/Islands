@@ -1,14 +1,15 @@
 using Islands.Filters;
 using Islands.Models.Context;
+using Islands.Repositories.BuildingRepository;
 using Islands.Repositories.ClassifiedAdRepository;
 using Islands.Repositories.NotificationRepository;
 using Islands.Repositories.PlayerInformationRepository;
 using Islands.Repositories.UserRepository;
 using Islands.Services.AuthService;
 using Islands.Services.BattleService;
+using Islands.Services.BuildingService;
 using Islands.Services.ClassifiedAdService;
 using Islands.Services.EmailService;
-using Islands.Services.ExpeditionService;
 using Islands.Services.IslandService;
 using Islands.Services.PlayerInformationService;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -56,16 +57,17 @@ builder.Services.AddEndpointsApiExplorer();
 // Dependency injections
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IEmailService, EmailService>();
-builder.Services.AddScoped<IAdService, AdService>();
+builder.Services.AddScoped<IExchangeService, ExchangeService>();
 builder.Services.AddScoped<IPlayerService, PlayerService>();
 builder.Services.AddScoped<IBattleService, BattleService>();
-builder.Services.AddScoped<IIslandService, IslandService>();
-builder.Services.AddScoped<IGameConfigurationService, GameConfigurationService>();
+builder.Services.AddScoped<IBuildingService, BuildingService>();
+builder.Services.AddSingleton<IGameConfigurationService, GameConfigurationService>();
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
-builder.Services.AddScoped<IAdRepository, AdRepository>();
+builder.Services.AddScoped<IExchangeRepository, ExchangeRepository>();
 builder.Services.AddScoped<IPlayerRepository, PlayerRepository>();
 builder.Services.AddScoped<INotificationRepository, NotificationRepository>();
+builder.Services.AddScoped<IBuildingRepository, BuildingRepository>();
 
 // Authentication
 builder.Services.AddSwaggerGen(options =>

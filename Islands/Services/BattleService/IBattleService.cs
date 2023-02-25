@@ -4,6 +4,6 @@ namespace Islands.Services.BattleService
 {
     public interface IBattleService
     {
-        Task<BattleResultDto> GetBattleResultAsync(int id, int enemyId);
+        Task<BattleResultDto> GetBattleResultAsync(string username, int enemyId);
     }
 }

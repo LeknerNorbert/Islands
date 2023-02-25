@@ -202,7 +202,7 @@ namespace Islands.Services.ExpeditionService
             player.Coins += lootCoin;
             player.ExperiencePoint += lootExperiencePoints;
 
-            await playerRepository.UpdateAsync(player);
+            await playerRepository.UpdatePlayerAsync(player);
             await notificationRepository.AddNotificationAsync(expeditionNotification);
 
             return expeditionResult;

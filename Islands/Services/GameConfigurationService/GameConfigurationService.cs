@@ -120,9 +120,13 @@ namespace Islands.Services.IslandService
             return island;
         }
 
-        public int GetSkillPointsByLevel(int experiences)
+        public int GetExperienceByLevel(int level)
         {
-            return Convert.ToInt32(Math.Floor(Math.Sqrt(experiences)));
+            return Convert.ToInt32(Math.Pow((level / 0.1), 2));
+        }
+        public int GetLevelByExperience(int experiences)
+        {
+            return Convert.ToInt32(0.1 * Math.Sqrt(experiences));
         }
     }
 }

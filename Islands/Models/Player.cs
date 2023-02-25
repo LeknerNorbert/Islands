@@ -24,7 +24,7 @@ namespace Islands.Models
         public int Agility { get; set; }
         public virtual User? User { get; set; }
         public ICollection<Building>? Buildings { get; set; }
-        public ICollection<Ad>? ClassifiedAds { get; set; }
+        public ICollection<Exchange>? Exchanges { get; set; }
         public ICollection<Notification>? Notifications { get; set; }
     }
 }

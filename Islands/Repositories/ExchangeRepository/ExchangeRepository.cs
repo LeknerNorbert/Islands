@@ -6,29 +6,29 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Islands.Repositories.ClassifiedAdRepository
 {
-    public class AdRepository : IAdRepository
+    public class ExchangeRepository : IExchangeRepository
     {
-        private readonly ApplicationDbContext _context;
+        private readonly ApplicationDbContext context;
 
-        public AdRepository(ApplicationDbContext context)
+        public ExchangeRepository(ApplicationDbContext context)
         {
-            _context = context;
+            this.context = context;
         }
 
-        public async Task<Ad> GetByIdAsync(int id)
+        public async Task<Exchange> GetByIdAsync(int id)
         {
-            return await _context.Ads
-                .Include(c => c.PlayerInformation)
+            return await context.Exchanges
+                .Include(c => c.Player)
                     .ThenInclude(p => p.User)
                 .FirstAsync(c => c.Id == id);
         }
 
-        public async Task<List<AdDto>> GetAllAsync()
+        public async Task<List<ExchangeDto>> GetAllAsync()
         {
-            return await _context.Ads
+            return await context.Exchanges
                 .Where(c => c.PublishDate >= DateTime.Now.AddDays(-7))
                 .OrderBy(c => c.PublishDate)
-                .Select(c => new AdDto()
+                .Select(c => new ExchangeDto()
                 {
                     Id = c.Id,
                     Item = c.Item,
@@ -40,16 +40,16 @@ namespace Islands.Repositories.ClassifiedAdRepository
                 .ToListAsync();
         }
 
-        public async Task<List<AdDto>> GetAllByUsernameAsync(string username)
+        public async Task<List<ExchangeDto>> GetAllByUsernameAsync(string username)
         {
             try
             {
-                return await _context.Ads
-                    .Include(c => c.PlayerInformation)
+                return await context.Exchanges
+                    .Include(c => c.Player)
                         .ThenInclude(p => p.User)
-                    .Where(c => c.PlayerInformation.User.Username == username)
+                    .Where(c => c.Player.User.Username == username)
                     .OrderBy(c => c.PublishDate)
-                    .Select(c => new AdDto()
+                    .Select(c => new ExchangeDto()
                     {
                         Id = c.Id,
                         Item = c.Item,
@@ -66,12 +66,12 @@ namespace Islands.Repositories.ClassifiedAdRepository
             }
         }
 
-        public async Task AddAsync(Ad classifiedAd)
+        public async Task AddAsync(Exchange classifiedAd)
         {
             try
             {
-                await _context.Ads.AddAsync(classifiedAd);
-                await _context.SaveChangesAsync();
+                await context.Exchanges.AddAsync(classifiedAd);
+                await context.SaveChangesAsync();
             }
             catch (DbUpdateException ex)
             {
@@ -79,12 +79,12 @@ namespace Islands.Repositories.ClassifiedAdRepository
             }
         }
 
-        public async Task RemoveAsync(Ad classifiedAd)
+        public async Task RemoveAsync(Exchange classifiedAd)
         {
             try
             {
-                _context.Ads.Remove(classifiedAd);
-                await _context.SaveChangesAsync();
+                context.Exchanges.Remove(classifiedAd);
+                await context.SaveChangesAsync();
             }
             catch (DbUpdateException ex)
             {

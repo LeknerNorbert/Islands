@@ -10,6 +10,7 @@ namespace Islands.Services.IslandService
         Task<SkillsDto> GetDefaultSkillsByIslandAsync(IslandType island);
         Task<SkillsDto> GetMaximumSkillPointsAsync();
         Task<IslandDto> GetIslandAsync(IslandType island);
-        int GetSkillPointsByLevel(int experiences);
+        int GetExperienceByLevel(int level);    
+        int GetLevelByExperience(int experiences);
     }
 }

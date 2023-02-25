@@ -2,10 +2,10 @@
 
 namespace Islands.Services.ClassifiedAdService
 {
-    public interface IAdService
+    public interface IExchangeService
     {
-        Task<List<AdDto>> GetAllAsync();
-        Task<List<AdDto>> GetAllByUsernameAsync(string username);
+        Task<List<ExchangeDto>> GetAllAsync();
+        Task<List<ExchangeDto>> GetAllByUsernameAsync(string username);
         Task AddAsync(string creatorUsername, NewAdDto createClassifiedAd);
         Task RemoveAsync(int id);
         Task BuyAsync(string customerUsername, int id);

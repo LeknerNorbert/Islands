@@ -16,22 +16,22 @@ namespace Islands.Services.AuthService
 {
     public class AuthService : IAuthService
     {
-        private readonly IUserRepository _userRepository;
-        private readonly IConfiguration _configuration;
-        private readonly IEmailService _emailService;
+        private readonly IUserRepository userRepository;
+        private readonly IConfiguration configuration;
+        private readonly IEmailService emailService;
 
         public AuthService(IUserRepository userRepository,  IConfiguration configuration, IEmailService emailService)
         {
-            _userRepository = userRepository;
-            _configuration = configuration;
-            _emailService = emailService;
+            this.userRepository = userRepository;
+            this.configuration = configuration;
+            this.emailService = emailService;
         }
 
         public async Task<string> LoginAsync(LoginRequestWithUsernameDto login)
         {
             try
             {
-                User user = await _userRepository.GetByUsernameAsync(login.Username);
+                User user = await userRepository.GetByUsernameAsync(login.Username);
 
                 if (VerifyPasswordHash(login.Password, user.PasswordHash, user.PasswordSalt))
                 {
@@ -64,7 +64,7 @@ namespace Islands.Services.AuthService
                     EmailValidationTokenExpiration = DateTime.Now.AddMinutes(10)
                 };
 
-                await _userRepository.AddAsync(user);
+                await userRepository.AddAsync(user);
                 SendEmailValidationEmail(user.Email, validationToken);
             }
             catch (Exception ex)
@@ -77,13 +77,13 @@ namespace Islands.Services.AuthService
         {
             try
             {
-                User user = await _userRepository.GetByUsernameAsync(username);
+                User user = await userRepository.GetByUsernameAsync(username);
 
                 string validationToken = CreateRandomToken();
                 user.EmailValidationToken = validationToken;
                 user.EmailValidationTokenExpiration = DateTime.Now.AddMinutes(10);
 
-                await _userRepository.UpdateAsync(user);
+                await userRepository.UpdateAsync(user);
 
                 SendEmailValidationEmail(user.Email, validationToken);
             }
@@ -97,12 +97,12 @@ namespace Islands.Services.AuthService
         {
             try
             {
-                User user = await _userRepository.GetByValidationTokenAsync(token);
+                User user = await userRepository.GetByValidationTokenAsync(token);
 
                 if (user.EmailValidationTokenExpiration >= DateTime.Now)
                 {
                     user.EmailValidationDate = DateTime.Now;
-                    await _userRepository.UpdateAsync(user);
+                    await userRepository.UpdateAsync(user);
 
                     return true;
                 }
@@ -119,7 +119,7 @@ namespace Islands.Services.AuthService
         {
             try
             {
-                User user = await _userRepository.GetByEmailAsync(email);
+                User user = await userRepository.GetByEmailAsync(email);
                 string password = CreateRandomPassword();
 
                 CreatePasswordHash(password, out byte[] passwordHash, out byte[] passwordSalt);
@@ -127,7 +127,7 @@ namespace Islands.Services.AuthService
                 user.PasswordHash = passwordHash;
                 user.PasswordSalt = passwordSalt;
 
-                await _userRepository.UpdateAsync(user);
+                await userRepository.UpdateAsync(user);
 
                 SendTemporaryPasswordEmail(email, password);
             }
@@ -141,13 +141,13 @@ namespace Islands.Services.AuthService
         {
             try
             {
-                User user = await _userRepository.GetByUsernameAsync(username);
+                User user = await userRepository.GetByUsernameAsync(username);
                 CreatePasswordHash(password.Password, out byte[] passwordHash, out byte[] passwordSalt);
 
                 user.PasswordHash = passwordHash;
                 user.PasswordSalt = passwordSalt;
 
-                await _userRepository.UpdateAsync(user);
+                await userRepository.UpdateAsync(user);
             }
             catch (Exception ex)
             {
@@ -163,7 +163,7 @@ namespace Islands.Services.AuthService
                 Subject = "Erősítsd meg az email címed!",
                 Body = token
             };
-            _emailService.SendEmail(request);
+            emailService.SendEmail(request);
         }
 
         private void SendTemporaryPasswordEmail(string email, string password)
@@ -174,7 +174,7 @@ namespace Islands.Services.AuthService
                 Subject = "Ideiglenes jelszó beállítva!",
                 Body = $"Az ideiglenes jelszavad: {password} (belépés után rögtön változtasd meg)."
             };
-            _emailService.SendEmail(request);
+            emailService.SendEmail(request);
         }
 
         private string CreateToken(User user)
@@ -187,7 +187,7 @@ namespace Islands.Services.AuthService
             };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(
-                    _configuration.GetSection("AppSettings:Token").Value
+                    configuration.GetSection("AppSettings:Token").Value
                 ));
 
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);

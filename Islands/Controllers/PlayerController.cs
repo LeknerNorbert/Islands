@@ -11,11 +11,11 @@ namespace Web.Controllers
     [ApiController]
     public class PlayerController : ControllerBase
     {
-        private readonly IPlayerService _playerService;
+        private readonly IPlayerService playerService;
 
         public PlayerController(IPlayerService playerInformationService)
         {
-            _playerService = playerInformationService;
+            playerService = playerInformationService;
         }
 
         [HttpGet]
@@ -25,7 +25,7 @@ namespace Web.Controllers
             try
             {
                 string username = User.Claims.First(c => c.Type == "Username").Value;
-                PlayerDto player = await _playerService.GetByUsernameAsync(username);
+                PlayerDto player = await playerService.GetByUsernameAsync(username);
 
                 return StatusCode(200, player);
             }
@@ -42,7 +42,7 @@ namespace Web.Controllers
             try
             {
                 string username = User.Claims.First(c => c.Type == "Username").Value;
-                await _playerService.AddAsync(username, island);
+                await playerService.AddAsync(username, island);
 
                 return StatusCode(201, "Player has been created.");
             }
@@ -60,7 +60,7 @@ namespace Web.Controllers
             try
             {
                 string username = User.Claims.First(c => c.Type == "Username").Value;
-                await _playerService.UpdateSkillsAsync(username, skillPoints);
+                await playerService.UpdateSkillsAsync(username, skillPoints);
 
                 return StatusCode(200, "Skill points has been updated");
             }

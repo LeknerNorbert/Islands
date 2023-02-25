@@ -12,11 +12,11 @@ namespace Web.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-        private readonly IAuthService _authService; 
+        private readonly IAuthService authService; 
 
         public AuthController(IAuthService authService)
         {
-            _authService = authService;
+            this.authService = authService;
         }
 
         [HttpPost]
@@ -25,7 +25,7 @@ namespace Web.Controllers
         {
             try
             {
-                await _authService.RegistrationAsync(userRegistrationResquest);
+                await authService.RegistrationAsync(userRegistrationResquest);
 
                 return StatusCode(201, "User successfully created.");
             }
@@ -40,7 +40,7 @@ namespace Web.Controllers
         {
             try
             {
-                if (await _authService.VerifyEmailAsync(token))
+                if (await authService.VerifyEmailAsync(token))
                 {
                     return StatusCode(201, "Email verified.");
                 }
@@ -58,7 +58,7 @@ namespace Web.Controllers
         {
             try
             {
-                await _authService.ResendVerifyEmailAsync(username);
+                await authService.ResendVerifyEmailAsync(username);
 
                 return StatusCode(200, "Email verification email sended.");
             }
@@ -74,7 +74,7 @@ namespace Web.Controllers
         {
             try
             {
-                string token = await _authService.LoginAsync(userLoginRequest);
+                string token = await authService.LoginAsync(userLoginRequest);
 
                 return StatusCode(200, token);
             }
@@ -93,7 +93,7 @@ namespace Web.Controllers
         {
             try
             {
-                await _authService.SetTemporaryPasswordAsync(email);
+                await authService.SetTemporaryPasswordAsync(email);
 
                 return StatusCode(201, "Email with temporary password sended.");
             }
@@ -111,7 +111,7 @@ namespace Web.Controllers
             try
             {
                 string username = User.Claims.First(c => c.Type == "Username").Value;
-                await _authService.UpdatePasswordAsync(username, passwordReset);
+                await authService.UpdatePasswordAsync(username, passwordReset);
 
                 return Ok("Password successfully reseted.");
             }

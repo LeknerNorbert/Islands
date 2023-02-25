@@ -14,6 +14,6 @@ namespace Islands.Models
         public int Level { get; set; }
         public DateTime BuildDate { get; set; }
         public DateTime LastCollectDate { get; set; }
-        public Player? PlayerInformation { get; set; }
+        public Player? Player { get; set; }
     }
 }

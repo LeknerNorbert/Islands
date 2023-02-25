@@ -7,11 +7,11 @@ namespace Islands.Services.EmailService
 {
     public class EmailService : IEmailService
     {
-        private readonly IConfiguration _configuration;
+        private readonly IConfiguration configuration;
 
         public EmailService(IConfiguration configuration)
         {
-            _configuration = configuration;
+            this.configuration = configuration;
         }
 
         public void SendEmail(EmailDto request)
@@ -24,8 +24,8 @@ namespace Islands.Services.EmailService
             { Text = request.Body };
 
             using var smtp = new SmtpClient();
-            smtp.Connect(_configuration.GetSection("EmailHost").Value, 587, MailKit.Security.SecureSocketOptions.StartTls);
-            smtp.Authenticate(_configuration.GetSection("EmailUsername").Value, _configuration.GetSection("EmailPassword").Value);
+            smtp.Connect(configuration.GetSection("EmailHost").Value, 587, MailKit.Security.SecureSocketOptions.StartTls);
+            smtp.Authenticate(configuration.GetSection("EmailUsername").Value, configuration.GetSection("EmailPassword").Value);
             smtp.Send(message);
             smtp.Disconnect(true);
         }

@@ -9,22 +9,22 @@ namespace Web.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-    public class AdController : ControllerBase
+    public class ExchangeController : ControllerBase
     {
-        private readonly IAdService _adService;
+        private readonly IExchangeService exchangeService;
 
-        public AdController(IAdService adService)
+        public ExchangeController(IExchangeService exchangeService)
         {
-            _adService = adService;
+            this.exchangeService = exchangeService;
         }
 
         [HttpGet]
         [Authorize]
-        public async Task<IActionResult> GetAds()
+        public async Task<IActionResult> GetExchanges()
         {
             try
             {
-                List<AdDto> ads = await _adService.GetAllAsync();
+                List<ExchangeDto> ads = await exchangeService.GetAllAsync();
                 return StatusCode(200, ads);
             }
             catch (Exception ex)
@@ -35,12 +35,12 @@ namespace Web.Controllers
 
         [HttpGet]
         [Authorize]
-        public async Task<IActionResult> GetMyAds()
+        public async Task<IActionResult> GetMyExchanges()
         {
             try
             {
                 string username = User.Claims.First(c => c.Type == "Username").Value;
-                List<AdDto> ads = await _adService.GetAllByUsernameAsync(username);
+                List<ExchangeDto> ads = await exchangeService.GetAllByUsernameAsync(username);
 
                 return StatusCode(200, ads);
             }
@@ -53,12 +53,12 @@ namespace Web.Controllers
         [HttpPost]
         [Authorize]
         [ValidateModel]
-        public async Task<IActionResult> CreateAd(NewAdDto createClassifiedAd)
+        public async Task<IActionResult> CreateExchange(NewAdDto createClassifiedAd)
         {
             try
             {
                 string username = User.Claims.First(c => c.Type == "Username").Value;
-                await _adService.AddAsync(username, createClassifiedAd);
+                await exchangeService.AddAsync(username, createClassifiedAd);
 
                 return Ok("Classified ad successfully created.");
             }
@@ -74,14 +74,14 @@ namespace Web.Controllers
 
         [HttpDelete]
         [Authorize]
-        public async Task<IActionResult> DeleteAd(int id)
+        public async Task<IActionResult> DeleteExchange(int id)
         {
             try
             {
                 string username = User.Claims.First(c => c.Type == "Username").Value;
-                await _adService.RemoveAsync(id);
+                await exchangeService.RemoveAsync(id);
 
-                return StatusCode(200, "Ad successfully deleted.");
+                return StatusCode(200, "Exchange successfully deleted.");
             }
             catch (Exception ex)
             {
@@ -91,14 +91,14 @@ namespace Web.Controllers
 
         [HttpPut]
         [Authorize]
-        public async Task<IActionResult> BuyAd(int id)
+        public async Task<IActionResult> BuyExchange(int id)
         {
             try
             {
                 string username = User.Claims.First(c => c.Type == "Username").Value;
-                await _adService.BuyAsync(username, id);
+                await exchangeService.BuyAsync(username, id);
 
-                return StatusCode(200, "Ad successfully buyed.");
+                return StatusCode(200, "Exchange successfully buyed.");
             }
             catch (InsufficientItemsException ex)
             {

@@ -4,7 +4,6 @@ namespace Islands.DTOs
 {
     public class BuildingDto
     {
-        public int Id { get; set; }
         public BuildingType Name { get; set; }
         public int XCoordinate { get; set; }
         public int YCoordinate { get; set; }

@@ -10,5 +10,6 @@
         public int Agility { get; set; }
         public int ChurchLevel { get; set; }
         public int PracticeRangeLevel { get; set; }
+        public DateTime LastBattleDate { get; set; }
     }
 }

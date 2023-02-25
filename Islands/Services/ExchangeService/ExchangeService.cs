@@ -7,22 +7,22 @@ using Islands.Repositories.PlayerInformationRepository;
 
 namespace Islands.Services.ClassifiedAdService
 {
-    public class AdService : IAdService
+    public class ExchangeService : IExchangeService
     {
-        private readonly IAdRepository _adRepository;
-        private readonly IPlayerRepository _playerRepository;
+        private readonly IExchangeRepository exchangeRepository;
+        private readonly IPlayerRepository playerRepository;
 
-        public AdService(IAdRepository adRepository, IPlayerRepository playerRepository)
+        public ExchangeService(IExchangeRepository adRepository, IPlayerRepository playerRepository)
         {
-            _adRepository = adRepository;
-            _playerRepository = playerRepository; 
+            exchangeRepository = adRepository;
+            this.playerRepository = playerRepository; 
         }
 
         public async Task AddAsync(string username, NewAdDto newAd)
         {
             try
             {
-                Player advertiser = await _playerRepository.GetByUsernameAsync(username);
+                Player advertiser = await playerRepository.GetPlayerByUsernameAsync(username);
 
                 switch (newAd.Item)
                 {
@@ -72,18 +72,18 @@ namespace Islands.Services.ClassifiedAdService
                         break;
                 }
 
-                Ad classifiedAd = new()
+                Exchange classifiedAd = new()
                 {
                     Item = newAd.Item,
                     Amount = newAd.Amount,
                     ReplacementItem = newAd.ReplacementItem,
                     ReplacementAmount = newAd.ReplacementAmount,
                     PublishDate = DateTime.Now,
-                    PlayerInformation = advertiser
+                    Player = advertiser
                 };
 
-                await _adRepository.AddAsync(classifiedAd);
-                await _playerRepository.UpdateAsync(advertiser);
+                await exchangeRepository.AddAsync(classifiedAd);
+                await playerRepository.UpdatePlayerAsync(advertiser);
             }
             catch (Exception ex)
             {
@@ -92,7 +92,7 @@ namespace Islands.Services.ClassifiedAdService
                     throw new InsufficientItemsException("There are not enough items.");
                 }
 
-                throw new ServiceException("Failed to create ad.", ex);
+                throw new ServiceException("Failed to create exchange.", ex);
             }
         }
 
@@ -100,37 +100,37 @@ namespace Islands.Services.ClassifiedAdService
         {
             try
             {
-                Ad classifiedAd = await _adRepository.GetByIdAsync(id);
-                await _adRepository.RemoveAsync(classifiedAd);
+                Exchange classifiedAd = await exchangeRepository.GetByIdAsync(id);
+                await exchangeRepository.RemoveAsync(classifiedAd);
             }
             catch (Exception ex)
             {
-                throw new ServiceException("Failed to remove ad.", ex);
+                throw new ServiceException("Failed to remove exchange.", ex);
             }
         
         }
 
-        public async Task<List<AdDto>> GetAllAsync()
+        public async Task<List<ExchangeDto>> GetAllAsync()
         {
             try
             {
-                return await _adRepository.GetAllAsync();
+                return await exchangeRepository.GetAllAsync();
             }
             catch (Exception ex)
             {
-                throw new ServiceException("Failed to get ads.", ex);
+                throw new ServiceException("Failed to get exchanges.", ex);
             }
         }
 
-        public async Task<List<AdDto>> GetAllByUsernameAsync(string username)
+        public async Task<List<ExchangeDto>> GetAllByUsernameAsync(string username)
         {
             try
             {
-                return await _adRepository.GetAllByUsernameAsync(username);
+                return await exchangeRepository.GetAllByUsernameAsync(username);
             }
             catch (Exception ex)
             {
-                throw new ServiceException("Failed to get ads.", ex);
+                throw new ServiceException("Failed to get exchanges.", ex);
             }
         }
 
@@ -138,9 +138,9 @@ namespace Islands.Services.ClassifiedAdService
         {
             try
             {
-                Ad ad = await _adRepository.GetByIdAsync(id);
-                Player buyer = await _playerRepository.GetByUsernameAsync(customerUsername);
-                Player advertiser = await _playerRepository.GetByForAd(id);
+                Exchange ad = await exchangeRepository.GetByIdAsync(id);
+                Player buyer = await playerRepository.GetPlayerByUsernameAsync(customerUsername);
+                Player advertiser = await playerRepository.GetPlayerByForAdAsync(id);
 
                 switch (ad.ReplacementItem)
                 {
@@ -214,9 +214,9 @@ namespace Islands.Services.ClassifiedAdService
                         break;
                 }
 
-                await _playerRepository.UpdateAsync(buyer);
-                await _playerRepository.UpdateAsync(advertiser);
-                await _adRepository.RemoveAsync(ad);
+                await playerRepository.UpdatePlayerAsync(buyer);
+                await playerRepository.UpdatePlayerAsync(advertiser);
+                await exchangeRepository.RemoveAsync(ad);
             }
             catch (Exception ex)
             {
@@ -225,7 +225,7 @@ namespace Islands.Services.ClassifiedAdService
                     throw new InsufficientItemsException("There are not enough items.");
                 }
 
-                throw new ServiceException("Failed to buy ad.", ex);
+                throw new ServiceException("Failed to buy exchange.", ex);
             }
         }
     }
