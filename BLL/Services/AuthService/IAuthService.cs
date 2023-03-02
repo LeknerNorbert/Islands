@@ -1,19 +1,14 @@
-﻿using BLL.DTOs;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using DAL.DTOs;
 
 namespace BLL.Services.AuthService
 {
     public interface IAuthService
     {
-        public void Login(LoginRequestDto userLoginRequest, out string token);
-        public void Registration(RegistrationRequestDto userRegistrationRequest);
-        public void VerifyEmail(string token);
-        public void ResendEmailValidationEmail(string username);
-        public void GenerateTemporaryPassword(string email);
-        public void ResetPassword(string username, string password);
+        Task<string> LoginAsync(LoginRequestDto login);
+        Task RegistrationAsync(RegistrationRequestDto registration);
+        Task<bool> VerifyEmailAsync(string token);
+        Task ResendVerifyEmailAsync(string username);
+        Task SetTemporaryPasswordAsync(string email);
+        Task UpdatePasswordAsync(string username, PasswordChangeDto password);
     }
 }

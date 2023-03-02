@@ -26,15 +26,15 @@ namespace DAL.Migrations
                         .HasColumnType("int");
 
                     b.Property<DateTime>("BuildDate")
-                        .HasColumnType("datetime");
+                        .HasColumnType("datetime(6)");
 
                     b.Property<DateTime>("LastCollectDate")
-                        .HasColumnType("datetime");
+                        .HasColumnType("datetime(6)");
 
                     b.Property<int>("Level")
                         .HasColumnType("int");
 
-                    b.Property<int?>("PlayerInformationId")
+                    b.Property<int?>("PlayerId")
                         .HasColumnType("int");
 
                     b.Property<int>("Type")
@@ -48,12 +48,12 @@ namespace DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PlayerInformationId");
+                    b.HasIndex("PlayerId");
 
                     b.ToTable("Buildings");
                 });
 
-            modelBuilder.Entity("DAL.Models.ClassifiedAd", b =>
+            modelBuilder.Entity("DAL.Models.Exchange", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -65,11 +65,11 @@ namespace DAL.Migrations
                     b.Property<int>("Item")
                         .HasColumnType("int");
 
-                    b.Property<int?>("PlayerInformationId")
+                    b.Property<int?>("PlayerId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("PublishDate")
-                        .HasColumnType("datetime");
+                        .HasColumnType("datetime(6)");
 
                     b.Property<int>("ReplacementAmount")
                         .HasColumnType("int");
@@ -79,9 +79,9 @@ namespace DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PlayerInformationId");
+                    b.HasIndex("PlayerId");
 
-                    b.ToTable("Classifieds");
+                    b.ToTable("Exchanges");
                 });
 
             modelBuilder.Entity("DAL.Models.Notification", b =>
@@ -90,21 +90,38 @@ namespace DAL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<bool>("IsOpened")
-                        .HasColumnType("tinyint(1)");
+                    b.Property<int>("Coins")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<int>("Experience")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Irons")
+                        .HasColumnType("int");
 
                     b.Property<string>("Message")
+                        .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<int?>("PlayerInformationId")
+                    b.Property<int?>("PlayerId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Stones")
                         .HasColumnType("int");
 
                     b.Property<string>("Title")
+                        .IsRequired()
                         .HasColumnType("longtext");
+
+                    b.Property<int>("Woods")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PlayerInformationId");
+                    b.HasIndex("PlayerId");
 
                     b.ToTable("Notifications");
                 });
@@ -115,13 +132,13 @@ namespace DAL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("Ability")
+                    b.Property<int>("Agility")
                         .HasColumnType("int");
 
                     b.Property<int>("Coins")
                         .HasColumnType("int");
 
-                    b.Property<int>("ExperiencePoint")
+                    b.Property<int>("Experience")
                         .HasColumnType("int");
 
                     b.Property<int>("Intelligence")
@@ -131,10 +148,10 @@ namespace DAL.Migrations
                         .HasColumnType("int");
 
                     b.Property<DateTime>("LastBattleDate")
-                        .HasColumnType("datetime");
+                        .HasColumnType("datetime(6)");
 
                     b.Property<DateTime>("LastExpeditionDate")
-                        .HasColumnType("datetime");
+                        .HasColumnType("datetime(6)");
 
                     b.Property<int>("SelectedIsland")
                         .HasColumnType("int");
@@ -160,25 +177,30 @@ namespace DAL.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Email")
-                        .HasColumnType("varchar(95)");
+                        .IsRequired()
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<DateTime>("EmailValidationDate")
+                        .HasColumnType("datetime(6)");
 
                     b.Property<string>("EmailValidationToken")
+                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<DateTime>("EmailValidationTokenExpiration")
-                        .HasColumnType("datetime");
+                        .HasColumnType("datetime(6)");
 
                     b.Property<byte[]>("PasswordHash")
+                        .IsRequired()
                         .HasColumnType("longblob");
 
                     b.Property<byte[]>("PasswordSalt")
+                        .IsRequired()
                         .HasColumnType("longblob");
 
-                    b.Property<int>("Role")
-                        .HasColumnType("int");
-
                     b.Property<string>("Username")
-                        .HasColumnType("varchar(95)");
+                        .IsRequired()
+                        .HasColumnType("varchar(255)");
 
                     b.HasKey("Id");
 
@@ -193,35 +215,35 @@ namespace DAL.Migrations
 
             modelBuilder.Entity("DAL.Models.Building", b =>
                 {
-                    b.HasOne("DAL.Models.Player", "PlayerInformation")
+                    b.HasOne("DAL.Models.Player", "Player")
                         .WithMany("Buildings")
-                        .HasForeignKey("PlayerInformationId");
+                        .HasForeignKey("PlayerId");
 
-                    b.Navigation("PlayerInformation");
+                    b.Navigation("Player");
                 });
 
-            modelBuilder.Entity("DAL.Models.ClassifiedAd", b =>
+            modelBuilder.Entity("DAL.Models.Exchange", b =>
                 {
-                    b.HasOne("DAL.Models.Player", "PlayerInformation")
-                        .WithMany("ClassifiedAds")
-                        .HasForeignKey("PlayerInformationId");
+                    b.HasOne("DAL.Models.Player", "Player")
+                        .WithMany("Exchanges")
+                        .HasForeignKey("PlayerId");
 
-                    b.Navigation("PlayerInformation");
+                    b.Navigation("Player");
                 });
 
             modelBuilder.Entity("DAL.Models.Notification", b =>
                 {
-                    b.HasOne("DAL.Models.Player", "PlayerInformation")
+                    b.HasOne("DAL.Models.Player", "Player")
                         .WithMany("Notifications")
-                        .HasForeignKey("PlayerInformationId");
+                        .HasForeignKey("PlayerId");
 
-                    b.Navigation("PlayerInformation");
+                    b.Navigation("Player");
                 });
 
             modelBuilder.Entity("DAL.Models.Player", b =>
                 {
                     b.HasOne("DAL.Models.User", "User")
-                        .WithOne("PlayerInformation")
+                        .WithOne("Player")
                         .HasForeignKey("DAL.Models.Player", "Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -233,14 +255,14 @@ namespace DAL.Migrations
                 {
                     b.Navigation("Buildings");
 
-                    b.Navigation("ClassifiedAds");
+                    b.Navigation("Exchanges");
 
                     b.Navigation("Notifications");
                 });
 
             modelBuilder.Entity("DAL.Models.User", b =>
                 {
-                    b.Navigation("PlayerInformation");
+                    b.Navigation("Player");
                 });
 #pragma warning restore 612, 618
         }

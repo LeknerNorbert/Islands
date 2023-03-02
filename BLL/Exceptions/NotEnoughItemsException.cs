@@ -10,5 +10,6 @@ namespace BLL.Exceptions
     {
         public NotEnoughItemsException() { }
         public NotEnoughItemsException(string message) : base(message) { }
+        public NotEnoughItemsException(string message, Exception inner) : base(message, inner) { }
     }
 }

@@ -8,7 +8,7 @@ namespace DAL.Models
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity), ForeignKey("User")]
         public int Id { get; set; }
-        public int ExperiencePoint { get; set; }
+        public int Experience { get; set; }
         public int Coins { get; set; }
         public int Woods { get; set; }
         public int Stones { get; set; }
@@ -16,12 +16,15 @@ namespace DAL.Models
         public IslandType SelectedIsland { get; set; }
         public DateTime LastExpeditionDate { get; set; }
         public DateTime LastBattleDate { get; set; }
+        [Range(0, 30)]
         public int Strength { get; set; }
+        [Range(0, 30)]
         public int Intelligence { get; set; }
-        public int Ability { get; set; }
+        [Range(0, 30)]
+        public int Agility { get; set; }
         public virtual User? User { get; set; }
         public ICollection<Building>? Buildings { get; set; }
-        public ICollection<ClassifiedAd>? ClassifiedAds { get; set; }
+        public ICollection<Exchange>? Exchanges { get; set; }
         public ICollection<Notification>? Notifications { get; set; }
     }
 }

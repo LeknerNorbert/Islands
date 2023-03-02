@@ -1,4 +1,4 @@
-﻿using BLL.DTOs;
+﻿using DAL.DTOs;
 using MailKit.Net.Smtp;
 using Microsoft.Extensions.Configuration;
 using MimeKit;

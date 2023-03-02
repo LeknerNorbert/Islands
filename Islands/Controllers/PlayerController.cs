@@ -1,10 +1,9 @@
-﻿using BLL.DTOs;
-using BLL.Services.PlayerInformationService;
+﻿using BLL.Services.PlayerService;
+using DAL.DTOs;
 using DAL.Models.Enums;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace Web.Controllers
 {
@@ -20,62 +19,54 @@ namespace Web.Controllers
         }
 
         [HttpGet]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public IActionResult GetPlayer()
+        [Authorize]
+        public async Task<IActionResult> GetPlayer()
         {
             try
             {
                 string username = User.Claims.First(c => c.Type == "Username").Value;
-                PlayerDto playerInformation = _playerService.GetPlayer(username);
+                PlayerDto player = await _playerService.GetPlayerByUsernameAsync(username);
 
-                return Ok();
-            }
-            catch (InvalidOperationException)
-            {
-                return BadRequest("No player created yet.");
+                return Ok(player);
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(ex.ToString());
             }
         }
 
         [HttpPost]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public IActionResult CreatePlayer([FromBody] IslandType island)
+        [Authorize]
+        public async Task<IActionResult> CreatePlayer([FromBody] IslandType island)
         {
             try
             {
                 string username = User.Claims.First(c => c.Type == "Username").Value;
-                _playerService.CreatePlayer(username, island);
+                await _playerService.AddPlayerAsync(username, island);
 
                 return Ok("Player has been created.");
             }
-            catch (DbUpdateException)
-            {
-                return BadRequest("Database error during create.");
-            }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(ex.ToString());
             }
         }
 
 
         [HttpPut]
-        [ProducesResponseType(StatusCodes.Status202Accepted)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public IActionResult UpdateSkillPoints(SkillsDto skillPoints)
+        [Authorize]
+        public async Task<IActionResult> UpdateSkillPoints(SkillsDto skillPoints)
         {
             try
             {
-                return Ok();
+                string username = User.Claims.First(c => c.Type == "Username").Value;
+                await _playerService.UpdateSkillsAsync(username, skillPoints);
+
+                return Ok("Skill points has been updated");
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return BadRequest();
+                return BadRequest(ex.ToString());
             }
         }
     }

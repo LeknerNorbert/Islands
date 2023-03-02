@@ -1,20 +1,16 @@
-﻿using BLL.DTOs;
-using BLL.Exceptions;
+﻿using BLL.Exceptions;
 using BLL.Services.EmailService;
+using DAL.DTOs;
 using DAL.Models;
 using DAL.Models.Enums;
 using DAL.Repositories.UserRepository;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
-using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace BLL.Services.AuthService
 {
@@ -24,87 +20,99 @@ namespace BLL.Services.AuthService
         private readonly IConfiguration _configuration;
         private readonly IEmailService _emailService;
 
-        public AuthService(IUserRepository userRepository,  IConfiguration configuration, IEmailService emailService)
+        public AuthService(
+            IUserRepository userRepository, 
+            IConfiguration configuration, 
+            IEmailService emailService)
         {
             _userRepository = userRepository;
             _configuration = configuration;
             _emailService = emailService;
         }
 
-        public void Login(LoginRequestDto userLoginRequest, out string token)
+        public async Task<string> LoginAsync(LoginRequestDto login)
         {
-            User user = _userRepository.GetUserByUsername(userLoginRequest.Username);
-     
-            if (VerifyPasswordHash(userLoginRequest.Password, user.PasswordHash, user.PasswordSalt))
+            User user = await _userRepository.GetUserByUsernameAsync(login.Username);
+
+            if (VerifyPasswordHash(login.Password, user.PasswordHash, user.PasswordSalt))
             {
-                token = CreateToken(user);
+                return CreateToken(user);
             }
-            else
-            {
-                throw new LoginValidationException("Credentials are incorrect.");
-            }
+
+            throw new LoginValidationException("Credentials are incorrect.");
         }
 
-        public void Registration(RegistrationRequestDto userRegistrationRequest)
+        public async Task RegistrationAsync(RegistrationRequestDto registration)
         {
-            CreatePasswordHash(userRegistrationRequest.Password, out byte[] passwordHash, out byte[] passwordSalt);
-            
+            CreatePasswordHash(registration.Password, out byte[] passwordHash, out byte[] passwordSalt);
             string validationToken = CreateRandomToken();
 
             User user = new()
             {
-                Username = userRegistrationRequest.Username,
-                Email = userRegistrationRequest.Email,
+                Username = registration.Username,
+                Email = registration.Email,
                 PasswordHash = passwordHash,
                 PasswordSalt = passwordSalt,
-                Role = Role.Guest,
                 EmailValidationToken = validationToken,
                 EmailValidationTokenExpiration = DateTime.Now.AddMinutes(10)
             };
 
-            _userRepository.CreateUser(user);
+            await _userRepository.AddUserAsync(user);
             SendEmailValidationEmail(user.Email, validationToken);
         }
 
-        public void ResendEmailValidationEmail(string username)
+        public async Task ResendVerifyEmailAsync(string username)
         {
-            User user = _userRepository.GetUserByUsername(username);
+            User user = await _userRepository.GetUserByEmailAsync(username);
+
             string validationToken = CreateRandomToken();
+            user.EmailValidationToken = validationToken;
+            user.EmailValidationTokenExpiration = DateTime.Now.AddMinutes(10);
 
-            _userRepository.ResetUserEmailValidationToken(user, validationToken, DateTime.Now.AddMinutes(10));
+            await _userRepository.UpdateUserAsync(user);
 
             SendEmailValidationEmail(user.Email, validationToken);
         }
 
-        public void VerifyEmail(string token)
+        public async Task<bool> VerifyEmailAsync(string token)
         {
-            User user = _userRepository.GetUserByValidationToken(token);
+            User user = await _userRepository.GetUserByValidationTokenAsync(token);
 
-            if (user.EmailValidationTokenExpiration < DateTime.Now)
+            if (user.EmailValidationTokenExpiration >= DateTime.Now)
             {
-                throw new EmailValidationTokenExpiredException("Email validation token expired.");
+                user.EmailValidationDate = DateTime.Now;
+                await _userRepository.UpdateUserAsync(user);
+
+                return true;
             }
 
-            _userRepository.SetUserEmailToValidated(user);
+            return false;
         }
 
-        public void GenerateTemporaryPassword(string email)
+        public async Task SetTemporaryPasswordAsync(string email)
         {
-            User user = _userRepository.GetUserByEmail(email);
+            User user = await _userRepository.GetUserByEmailAsync(email);
             string password = CreateRandomPassword();
 
             CreatePasswordHash(password, out byte[] passwordHash, out byte[] passwordSalt);
 
-            _userRepository.SetNewPassword(user, passwordHash, passwordSalt);
+            user.PasswordHash = passwordHash;
+            user.PasswordSalt = passwordSalt;
+
+            await _userRepository.UpdateUserAsync(user);
+
             SendTemporaryPasswordEmail(email, password);
         }
 
-        public void ResetPassword(string username, string password)
+        public async Task UpdatePasswordAsync(string username, PasswordChangeDto password)
         {
-            User user = _userRepository.GetUserByUsername(username);
-            CreatePasswordHash(password, out byte[] passwordHash, out byte[] passwordSalt);
+            User user = await _userRepository.GetUserByUsernameAsync(username);
+            CreatePasswordHash(password.Password, out byte[] passwordHash, out byte[] passwordSalt);
 
-            _userRepository.SetNewPassword(user, passwordHash, passwordSalt);
+            user.PasswordHash = passwordHash;
+            user.PasswordSalt = passwordSalt;
+
+            await _userRepository.UpdateUserAsync(user);
         }
 
         private void SendEmailValidationEmail(string email, string token)
@@ -134,8 +142,7 @@ namespace BLL.Services.AuthService
             List<Claim> claims = new()
             {
                 new Claim("Email", user.Email),
-                new Claim("Username", user.Username),
-                new Claim(ClaimTypes.Role, user.Role.ToString())
+                new Claim("Username", user.Username)
             };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(
@@ -154,14 +161,14 @@ namespace BLL.Services.AuthService
             return jwt;
         }
 
-        private void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
+        private static void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
         {
             using var hmac = new HMACSHA512();
             passwordSalt = hmac.Key;
             passwordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
         }
 
-        private bool VerifyPasswordHash(string password, byte[] passwordHash, byte[] passwordSalt)
+        private static bool VerifyPasswordHash(string password, byte[] passwordHash, byte[] passwordSalt)
         {
             using var hmac = new HMACSHA512(passwordSalt);
             var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
@@ -178,7 +185,7 @@ namespace BLL.Services.AuthService
         {
             string password = "";
 
-            while(!Regex.IsMatch(password, @"^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$"))
+            while (!Regex.IsMatch(password, @"^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$"))
             {
                 password = Convert.ToBase64String(RandomNumberGenerator.GetBytes(8));
             }

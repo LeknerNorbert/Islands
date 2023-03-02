@@ -1,12 +1,18 @@
 using BLL.Services.AuthService;
-using BLL.Services.ClassifiedAdService;
+using BLL.Services.BattleService;
+using BLL.Services.BuildingService;
+using BLL.Services.ConfigurationService;
 using BLL.Services.EmailService;
+using BLL.Services.ExchangeService;
+using BLL.Services.ExpeditionService;
 using BLL.Services.IslandService;
-using BLL.Services.PlayerInformationService;
-using DAL.Models;
+using BLL.Services.NotificationService;
+using BLL.Services.PlayerService;
 using DAL.Models.Context;
-using DAL.Repositories.ClassifiedAdRepository;
-using DAL.Repositories.PlayerInformationRepository;
+using DAL.Repositories.BuildingRepository;
+using DAL.Repositories.ExchangeRepository;
+using DAL.Repositories.NotificationRepository;
+using DAL.Repositories.PlayerRepository;
 using DAL.Repositories.UserRepository;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
@@ -53,14 +59,21 @@ builder.Services.AddEndpointsApiExplorer();
 
 // Dependency injections
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IBattleService, BattleService>();
+builder.Services.AddScoped<IBuildingService, BuildingService>();
+builder.Services.AddScoped<IConfigurationService, ConfigurationService>();
 builder.Services.AddScoped<IEmailService, EmailService>();
-builder.Services.AddScoped<IClassifiedAdService, ClassifiedAdService>();
+builder.Services.AddScoped<IExchangeService, ExchangeService>();
+builder.Services.AddScoped<IExpeditionService, ExpeditionService>();
+builder.Services.AddScoped<IIslandService, IslandService>();
+builder.Services.AddScoped<INotificationService, NotificationService>();
 builder.Services.AddScoped<IPlayerService, PlayerService>();
-builder.Services.AddSingleton<IGameConfigurationService, GameConfigurationService>();
 
-builder.Services.AddScoped<IUserRepository, UserRepository>();
-builder.Services.AddScoped<IClassifiedAdRepository, ClassifiedAdRepository>();
+builder.Services.AddScoped<IBuildingRepository, BuildingRepository>();
+builder.Services.AddScoped<IExchangeRepository, ExchangeRepository>();
+builder.Services.AddScoped<INotificationRepository, NotificationRepository>();
 builder.Services.AddScoped<IPlayerRepository, PlayerRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 // Authentication
 builder.Services.AddSwaggerGen(options =>

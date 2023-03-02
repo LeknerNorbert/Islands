@@ -10,5 +10,6 @@ namespace BLL.Exceptions
     {
         public EmailValidationTokenExpiredException() { }
         public EmailValidationTokenExpiredException(string message) : base(message) { }
+        public EmailValidationTokenExpiredException(string message, Exception inner) : base(message, inner) { }
     }
 }

@@ -1,11 +1,6 @@
 ﻿using DAL.Models;
 using DAL.Models.Context;
-using DAL.Models.Enums;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace DAL.Repositories.UserRepository
 {
@@ -13,58 +8,36 @@ namespace DAL.Repositories.UserRepository
     {
         private readonly ApplicationDbContext _context;
 
-        public UserRepository(ApplicationDbContext context)
+        public UserRepository(ApplicationDbContext dbContext)
         {
-            _context = context;
+            _context = dbContext;
         }
 
-        public void CreateUser(User user)
+        public async Task AddUserAsync(User user)
         {
-            _context.Users.Add(user);
-            _context.SaveChanges();
+            await _context.Users.AddAsync(user);
+            await _context.SaveChangesAsync();
         }
 
-        public User GetUserByEmail(string email)
+        public async Task<User> GetUserByEmailAsync(string email)
         {
-            return _context.Users.First(u => u.Email == email);
+            return await _context.Users.FirstAsync(u => u.Email == email);
         }
 
-        public User GetUserByUsername(string username)
+        public async Task<User> GetUserByUsernameAsync(string username)
         {
-            return _context.Users.First(u => u.Username == username);
+            return await _context.Users.FirstAsync(u => u.Username == username);
         }
 
-        public User GetUserByValidationToken(string token)
+        public async Task<User> GetUserByValidationTokenAsync(string token)
         {
-            return _context.Users.First(u => u.EmailValidationToken == token);
+            return await _context.Users.FirstAsync(u => u.EmailValidationToken == token);
         }
 
-        public void UpdateUserPassword(User user, byte[] passwordHash, byte[] passwordSalt)
+        public async Task UpdateUserAsync(User user)
         {
-            user.PasswordHash = passwordHash;
-            user.PasswordSalt = passwordSalt;
-            _context.SaveChanges();
+            _context.Entry(user).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
         }
-
-        public void ResetUserEmailValidationToken(User user, string validationToken, DateTime expiration)
-        {
-            user.EmailValidationToken = validationToken;
-            user.EmailValidationTokenExpiration = expiration;
-            _context.SaveChanges();
-        }
-
-        public void SetUserEmailToValidated(User user)
-        {
-            user.Role = Role.User;
-            _context.SaveChanges();
-        }
-
-        public void SetNewPassword(User user, byte[] passwordHash, byte[] passwordSalt)
-        {
-            user.PasswordHash = passwordHash;
-            user.PasswordSalt = passwordSalt;
-            _context.SaveChanges();
-        }
-
     }
 }

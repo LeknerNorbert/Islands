@@ -1,17 +1,12 @@
-﻿using BLL.DTOs;
+﻿using DAL.DTOs;
 using DAL.Models.Enums;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace BLL.Services.PlayerInformationService
+namespace BLL.Services.PlayerService
 {
     public interface IPlayerService
     {
-        public PlayerDto GetPlayer(string username);
-        public void CreatePlayer(string username, IslandType island);
-        public void UpdateSkillPoints(SkillsDto skills);
+        Task<PlayerDto> GetPlayerByUsernameAsync(string username);
+        Task AddPlayerAsync(string username, IslandType name);
+        Task UpdateSkillsAsync(string username, SkillsDto skills);
     }
 }

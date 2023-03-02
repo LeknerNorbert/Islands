@@ -1,38 +1,61 @@
-﻿using BLL.DTOs;
-using BLL.Services.IslandService;
+﻿using BLL.Exceptions;
+using BLL.Services.ConfigurationService;
+using DAL.DTOs;
 using DAL.Models;
 using DAL.Models.Enums;
-using DAL.Repositories.PlayerInformationRepository;
+using DAL.Repositories.PlayerRepository;
 using DAL.Repositories.UserRepository;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace BLL.Services.PlayerInformationService
+namespace BLL.Services.PlayerService
 {
     public class PlayerService : IPlayerService
     {
         private readonly IPlayerRepository _playerRepository;
         private readonly IUserRepository _userRepository;
-        private readonly IGameConfigurationService _gameConfigurationService;
+        private readonly IConfigurationService _configurationService;
 
-        public PlayerService(IPlayerRepository playerRepository, IUserRepository userRepository, IGameConfigurationService gameConfigurationService)
+        public PlayerService(
+            IPlayerRepository playerRepository, 
+            IUserRepository userRepository, 
+            IConfigurationService configurationService)
         {
             _playerRepository = playerRepository;
             _userRepository = userRepository; 
-            _gameConfigurationService = gameConfigurationService;
+            _configurationService = configurationService;
         }
 
-        public PlayerDto GetPlayer(string username)
+        public async Task AddPlayerAsync(string username, IslandType name)
         {
-            Player player = _playerRepository.GetPlayerByUsername(username);
+            User user = await _userRepository.GetUserByUsernameAsync(username);
+            SkillsDto defaultSkills = await _configurationService.GetDefaultSkillsByIslandAsync(name);
+
+            Player player = new()
+            {
+                Experience = 0,
+                Coins = 0,
+                Woods = 0,
+                Stones = 0,
+                Irons = 0,
+                SelectedIsland = name,
+                LastBattleDate = DateTime.MinValue,
+                LastExpeditionDate = DateTime.MinValue,
+                Strength = defaultSkills.Strength,
+                Intelligence = defaultSkills.Intelligence,
+                Agility = defaultSkills.Agility,
+                User = user,
+            };
+
+            await _playerRepository.AddPlayerAsync(player);
+        }
+
+        public async Task<PlayerDto> GetPlayerByUsernameAsync(string username)
+        {
+            Player player = await _playerRepository.GetPlayerByUsernameAsync(username);
 
             return new PlayerDto()
             {
                 Id = player.Id,
-                ExperiencePoint = player.ExperiencePoint,
+                Experience = player.Experience,
                 Coins = player.Coins,
                 Woods = player.Woods,
                 Stones = player.Stones,
@@ -42,32 +65,30 @@ namespace BLL.Services.PlayerInformationService
                 LastBattleDate = player.LastBattleDate,
                 Strength = player.Strength,
                 Intelligence = player.Intelligence,
-                Ability = player.Ability,
+                Agility = player.Agility,
             };
         }
 
-        public void CreatePlayer(string username, IslandType island)
+        public async Task UpdateSkillsAsync(string username, SkillsDto skills)
         {
-            User user = _userRepository.GetUserByUsername(username);
-            SkillsDto defaultSkills = _gameConfigurationService.GetDefaultSkillsByIsland(island);
+            Player player = await _playerRepository.GetPlayerByUsernameAsync(username);
+            int currentLevel = _configurationService.GetLevelByExperience(player.Experience);
 
-            Player player = new()
+            int availableSkillPoints = currentLevel - player.Intelligence - player.Strength - player.Agility;
+            int updateSkillPointsQuantity = skills.Intelligence + skills.Strength + skills.Agility;
+
+            if (availableSkillPoints >= updateSkillPointsQuantity)
             {
-                ExperiencePoint = 0,
-                Coins = 0,
-                Woods = 0,
-                Stones = 0,
-                Irons = 0,
-                SelectedIsland = island,
-                LastBattleDate = DateTime.MinValue,
-                LastExpeditionDate = DateTime.MinValue,
-                Strength = defaultSkills.Strength,
-                Intelligence = defaultSkills.Intelligence,
-                Ability = defaultSkills.Ability,
-                User = user,
-            };
-            
-            _playerRepository.CreatePlayer(player);
+                player.Agility += skills.Agility;
+                player.Strength += skills.Strength;
+                player.Intelligence += skills.Intelligence;
+
+                await _playerRepository.UpdatePlayerAsync(player);
+            }
+            else
+            {
+                throw new NotEnoughSkillPointsException("No enough skill points.");
+            }
         }
     }
 }

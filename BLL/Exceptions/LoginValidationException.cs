@@ -10,5 +10,6 @@ namespace BLL.Exceptions
     {
         public LoginValidationException() { }
         public LoginValidationException(string message) : base(message) { }
+        public LoginValidationException(string message, Exception inner) : base(message, inner) { }
     }
 }
