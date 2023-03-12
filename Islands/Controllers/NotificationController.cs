@@ -23,7 +23,7 @@ namespace Web.Controllers
         {
             try
             {
-                string username = User.Claims.First(c => c.Type == "Username").Value;
+                string username = User.Claims.First(claim => claim.Type == "Username").Value;
                 List<NotificationDto> notifications = await _notificationService.GetAllNotificationByUsernameAsync(username);
 
                 return Ok(notifications);

@@ -1,4 +1,5 @@
-﻿using BLL.Services.PlayerService;
+﻿using BLL.Exceptions;
+using BLL.Services.PlayerService;
 using DAL.DTOs;
 using DAL.Models.Enums;
 using Microsoft.AspNetCore.Authorization;
@@ -24,10 +25,14 @@ namespace Web.Controllers
         {
             try
             {
-                string username = User.Claims.First(c => c.Type == "Username").Value;
+                string username = User.Claims.First(claim => claim.Type == "Username").Value;
                 PlayerDto player = await _playerService.GetPlayerByUsernameAsync(username);
 
                 return Ok(player);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return NotFound(ex.ToString());
             }
             catch (Exception ex)
             {
@@ -37,14 +42,14 @@ namespace Web.Controllers
 
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> CreatePlayer([FromBody] IslandType island)
+        public async Task<IActionResult> CreatePlayer(IslandType island)
         {
             try
             {
-                string username = User.Claims.First(c => c.Type == "Username").Value;
-                await _playerService.AddPlayerAsync(username, island);
+                string username = User.Claims.First(claim => claim.Type == "Username").Value;
+                PlayerDto player = await _playerService.AddPlayerAsync(username, island);
 
-                return Ok("Player has been created.");
+                return Ok(player);
             }
             catch (Exception ex)
             {
@@ -59,7 +64,7 @@ namespace Web.Controllers
         {
             try
             {
-                string username = User.Claims.First(c => c.Type == "Username").Value;
+                string username = User.Claims.First(claim => claim.Type == "Username").Value;
                 await _playerService.UpdateSkillsAsync(username, skillPoints);
 
                 return Ok("Skill points has been updated");

@@ -24,7 +24,7 @@ namespace BLL.Services.PlayerService
             _configurationService = configurationService;
         }
 
-        public async Task AddPlayerAsync(string username, IslandType name)
+        public async Task<PlayerDto> AddPlayerAsync(string username, IslandType name)
         {
             User user = await _userRepository.GetUserByUsernameAsync(username);
             SkillsDto defaultSkills = await _configurationService.GetDefaultSkillsByIslandAsync(name);
@@ -45,7 +45,23 @@ namespace BLL.Services.PlayerService
                 User = user,
             };
 
-            await _playerRepository.AddPlayerAsync(player);
+            int id = await _playerRepository.AddPlayerAsync(player);
+
+            return new PlayerDto()
+            {
+                Id = id,
+                Experience = 0,
+                Coins = 0,
+                Woods = 0,
+                Stones = 0,
+                Irons = 0,
+                SelectedIsland = name.ToString(),
+                LastBattleDate = DateTime.MinValue,
+                LastExpeditionDate = DateTime.MinValue,
+                Strength = defaultSkills.Strength,
+                Intelligence = defaultSkills.Intelligence,
+                Agility = defaultSkills.Agility,
+            };
         }
 
         public async Task<PlayerDto> GetPlayerByUsernameAsync(string username)
@@ -60,7 +76,7 @@ namespace BLL.Services.PlayerService
                 Woods = player.Woods,
                 Stones = player.Stones,
                 Irons = player.Irons,
-                SelectedIsland = player.SelectedIsland,
+                SelectedIsland = player.SelectedIsland.ToString(),
                 LastExpeditionDate = player.LastExpeditionDate,
                 LastBattleDate = player.LastBattleDate,
                 Strength = player.Strength,

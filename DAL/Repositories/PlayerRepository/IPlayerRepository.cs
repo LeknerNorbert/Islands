@@ -13,7 +13,7 @@ namespace DAL.Repositories.PlayerRepository
         Task<Player> GetPlayerByUsernameAsync(string username);
         Task<List<Player>> GetTopSixPlayerByExperience(string username, int minExperience, int maxExperience);
         Task<Player> GetPlayerByForAdAsync(int adId);
-        Task AddPlayerAsync(Player player);
+        Task<int> AddPlayerAsync(Player player);
         Task UpdatePlayerAsync(Player player);
     }
 }

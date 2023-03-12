@@ -10,7 +10,7 @@ namespace DAL.DTOs
         public int Woods { get; set; }
         public int Stones { get; set; }
         public int Irons { get; set; }
-        public IslandType SelectedIsland { get; set; }
+        public string SelectedIsland { get; set; } = string.Empty;
         public DateTime LastExpeditionDate { get; set; }
         public DateTime LastBattleDate { get; set; }
         public int Strength { get; set; }
