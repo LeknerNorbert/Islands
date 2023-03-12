@@ -1,6 +1,12 @@
+<<<<<<<< HEAD:DAL/DTOs/ExchangeDto.cs
 ﻿using DAL.Models.Enums;
 
 namespace DAL.DTOs
+========
+﻿using Islands.Models.Enums;
+
+namespace Islands.DTOs
+>>>>>>>> master:Islands/Models/DTOs/ExchangeDto.cs
 {
     public class ExchangeDto
     {

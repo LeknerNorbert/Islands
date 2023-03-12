@@ -1,0 +1,87 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Remove="GameConfigurationFiles\Buildings\Church-1.json" />
+    <Content Remove="GameConfigurationFiles\Buildings\Church-2.json" />
+    <Content Remove="GameConfigurationFiles\Buildings\Church-3.json" />
+    <Content Remove="GameConfigurationFiles\Buildings\Factory-1.json" />
+    <Content Remove="GameConfigurationFiles\Buildings\Factory-2.json" />
+    <Content Remove="GameConfigurationFiles\Buildings\Factory-3.json" />
+    <Content Remove="GameConfigurationFiles\Buildings\LumberYard-1.json" />
+    <Content Remove="GameConfigurationFiles\Buildings\LumberYard-2.json" />
+    <Content Remove="GameConfigurationFiles\Buildings\LumberYard-3.json" />
+    <Content Remove="GameConfigurationFiles\Buildings\Mine-1.json" />
+    <Content Remove="GameConfigurationFiles\Buildings\Mine-2.json" />
+    <Content Remove="GameConfigurationFiles\Buildings\Mine-3.json" />
+    <Content Remove="GameConfigurationFiles\Buildings\PracticeRange-1.json" />
+    <Content Remove="GameConfigurationFiles\Buildings\PracticeRange-2.json" />
+    <Content Remove="GameConfigurationFiles\Buildings\PracticeRange-3.json" />
+    <Content Remove="GameConfigurationFiles\DefaultSkills\Europian.json" />
+    <Content Remove="GameConfigurationFiles\DefaultSkills\Indian.json" />
+    <Content Remove="GameConfigurationFiles\DefaultSkills\Japan.json" />
+    <Content Remove="GameConfigurationFiles\DefaultSkills\Viking.json" />
+    <Content Remove="GameConfigurationFiles\Islands\Europian.json" />
+    <Content Remove="GameConfigurationFiles\Islands\Indian.json" />
+    <Content Remove="GameConfigurationFiles\Islands\Japan.json" />
+    <Content Remove="GameConfigurationFiles\Islands\Viking.json" />
+    <Content Remove="GameConfigurationFiles\UnconstructedBuildings\Church.json" />
+    <Content Remove="GameConfigurationFiles\UnconstructedBuildings\Factory.json" />
+    <Content Remove="GameConfigurationFiles\UnconstructedBuildings\LumberYard.json" />
+    <Content Remove="GameConfigurationFiles\UnconstructedBuildings\Mine.json" />
+    <Content Remove="GameConfigurationFiles\UnconstructedBuildings\PracticeRange.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Catel.Core" Version="5.12.22" />
+    <PackageReference Include="MailKit" Version="3.5.0" />
+    <PackageReference Include="Microsoft.AspNet.WebApi.Core" Version="5.2.9" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.13" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.14" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.14">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="6.0.1" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore.Filters" Version="7.0.6" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="GameConfigurationFiles\Buildings\Church-1.json" />
+    <None Include="GameConfigurationFiles\Buildings\Church-2.json" />
+    <None Include="GameConfigurationFiles\Buildings\Church-3.json" />
+    <None Include="GameConfigurationFiles\Buildings\Factory-1.json" />
+    <None Include="GameConfigurationFiles\Buildings\Factory-2.json" />
+    <None Include="GameConfigurationFiles\Buildings\Factory-3.json" />
+    <None Include="GameConfigurationFiles\Buildings\LumberYard-1.json" />
+    <None Include="GameConfigurationFiles\Buildings\LumberYard-2.json" />
+    <None Include="GameConfigurationFiles\Buildings\LumberYard-3.json" />
+    <None Include="GameConfigurationFiles\Buildings\Mine-1.json" />
+    <None Include="GameConfigurationFiles\Buildings\Mine-2.json" />
+    <None Include="GameConfigurationFiles\Buildings\Mine-3.json" />
+    <None Include="GameConfigurationFiles\Buildings\PracticeRange-1.json" />
+    <None Include="GameConfigurationFiles\Buildings\PracticeRange-2.json" />
+    <None Include="GameConfigurationFiles\Buildings\PracticeRange-3.json" />
+    <None Include="GameConfigurationFiles\DefaultSkills\Europian.json" />
+    <None Include="GameConfigurationFiles\DefaultSkills\Indian.json" />
+    <None Include="GameConfigurationFiles\DefaultSkills\Japan.json" />
+    <None Include="GameConfigurationFiles\DefaultSkills\Viking.json" />
+    <None Include="GameConfigurationFiles\Islands\Europian.json" />
+    <None Include="GameConfigurationFiles\Islands\Indian.json" />
+    <None Include="GameConfigurationFiles\Islands\Japan.json" />
+    <None Include="GameConfigurationFiles\Islands\Viking.json" />
+    <None Include="GameConfigurationFiles\UnconstructedBuildings\Church.json" />
+    <None Include="GameConfigurationFiles\UnconstructedBuildings\Factory.json" />
+    <None Include="GameConfigurationFiles\UnconstructedBuildings\LumberYard.json" />
+    <None Include="GameConfigurationFiles\UnconstructedBuildings\Mine.json" />
+    <None Include="GameConfigurationFiles\UnconstructedBuildings\PracticeRange.json" />
+  </ItemGroup>
+
+</Project>

@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using System.Net;
 using System.Web.Http.Controllers;
 
-namespace Web.Filters
+namespace Islands.Filters
 {
     public class ValidateModelAttribute : Attribute, IActionFilter
     {
