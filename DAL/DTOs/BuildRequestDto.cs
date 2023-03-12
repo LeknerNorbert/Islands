@@ -6,6 +6,7 @@ namespace DAL.DTOs
     {
         public BuildingType Type { get; set; }
         public int XCoordinate { get; set; }
+
         public int YCoordinate { get; set; }
     }
 }
