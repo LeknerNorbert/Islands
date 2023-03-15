@@ -71,7 +71,7 @@ namespace Web.Controllers
 
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> UpgradeBuilding([FromBody] BuildingType type)
+        public async Task<IActionResult> UpgradeBuilding(BuildingType type)
         {
             try
             {
@@ -88,7 +88,7 @@ namespace Web.Controllers
 
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> CollectItems([FromBody] BuildingType type)
+        public async Task<IActionResult> CollectItems(BuildingType type)
         {
             try
             {

@@ -21,7 +21,7 @@ namespace Web.Controllers
 
         [HttpPost]
         [ValidateModel]
-        public async Task<IActionResult> Registration([FromBody] RegistrationRequestDto userRegistrationResquest)
+        public async Task<IActionResult> Registration(RegistrationRequestDto userRegistrationResquest)
         {
             try
             {
@@ -36,7 +36,7 @@ namespace Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> VerifyEmail([FromBody] string token)
+        public async Task<IActionResult> VerifyEmail(string token)
         {
             try
             {
@@ -54,7 +54,7 @@ namespace Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> ResendVerifyEmail([FromBody] string username)
+        public async Task<IActionResult> ResendVerifyEmail(string username)
         {
             try
             {
@@ -89,7 +89,7 @@ namespace Web.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> SetTemporaryPassword([FromBody] string email)
+        public async Task<IActionResult> SetTemporaryPassword(string email)
         {
             try
             {
