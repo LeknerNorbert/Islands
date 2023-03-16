@@ -1,53 +1,186 @@
 {
-  "Background": "",
-  "NPCSprites": [
-    "",
-    "",
-    "",
-    ""
+  "SpritePath": "/assets/europian_island.png",
+  "ConstructionAreas": [
+    {
+      "XCoordinate": 0,
+      "YCoordinate": 0
+    },
+    {
+      "XCoordinate": 1,
+      "YCoordinate": 1
+    },
+    {
+      "XCoordinate": 2,
+      "YCoordinate": 2
+    },
+    {
+      "XCoordinate": 3,
+      "YCoordinate": 3
+    },
+    {
+      "XCoordinate": 4,
+      "YCoordinate": 4
+    }
   ],
   "NPCRoutes": [
     {
-      "X": 0,
-      "Y": 0
+      "XCoordinate": 12,
+      "YCoordinate": 3
     },
     {
-      "X": 0,
-      "Y": 0
+      "XCoordinate": 12,
+      "YCoordinate": 4
     },
     {
-      "X": 0,
-      "Y": 0
+      "XCoordinate": 12,
+      "YCoordinate": 5
     },
     {
-      "X": 0,
-      "Y": 0
+      "XCoordinate": 13,
+      "YCoordinate": 5
     },
     {
-      "X": 0,
-      "Y": 0
+      "XCoordinate": 14,
+      "YCoordinate": 5
+    },
+    {
+      "XCoordinate": 14,
+      "YCoordinate": 6
+    },
+    {
+      "XCoordinate": 14,
+      "YCoordinate": 7
+    },
+    {
+      "XCoordinate": 14,
+      "YCoordinate": 8
+    },
+    {
+      "XCoordinate": 13,
+      "YCoordinate": 8
+    },
+    {
+      "XCoordinate": 12,
+      "Y": 8
+    },
+    {
+      "XCoordinate": 11,
+      "YCoordinate": 8
+    },
+    {
+      "XCoordinate": 10,
+      "YCoordinate": 8
+    },
+    {
+      "XCoordinate": 9,
+      "YCoordinate": 8
+    },
+    {
+      "XCoordinate": 10,
+      "YCoordinate": 7
+    },
+    {
+      "XCoordinate": 11,
+      "YCoordinate": 9
+    },
+    {
+      "XCoordinate": 14,
+      "YCoordinate": 9
+    },
+    {
+      "XCoordinate": 15,
+      "YCoordinate": 9
+    },
+    {
+      "XCoordinate": 16,
+      "YCoordinate": 9
+    },
+    {
+      "XCoordinate": 17,
+      "YCoordinate": 9
+    },
+    {
+      "XCoordinate": 14,
+      "YCoordinate": 10
+    },
+    {
+      "XCoordinate": 14,
+      "YCoordinate": 11
+    },
+    {
+      "XCoordinate": 14,
+      "YCoordinate": 13
+    },
+    {
+      "XCoordinate": 14,
+      "YCoordinate": 14
+    },
+    {
+      "XCoordinate": 14,
+      "YCoordinate": 15
+    },
+    {
+      "XCoordinate": 14,
+      "YCoordinate": 16
+    },
+    {
+      "XCoordinate": 13,
+      "YCoordinate": 15
+    },
+    {
+      "XCoordinate": 12,
+      "YCoordinate": 15
+    },
+    {
+      "XCoordinate": 15,
+      "YCoordinate": 14
+    },
+    {
+      "XCoordinate": 16,
+      "YCoordinate": 14
+    },
+    {
+      "XCoordinate": 17,
+      "YCoordinate": 14
+    },
+    {
+      "XCoordinate": 18,
+      "YCoordinate": 14
+    },
+    {
+      "XCoordinate": 21,
+      "YCoordinate": 10
+    },
+    {
+      "XCoordinate": 21,
+      "YCoordinate": 11
+    },
+    {
+      "XCoordinate": 21,
+      "YCoordinate": 12
+    },
+    {
+      "XCoordinate": 21,
+      "YCoordinate": 13
+    },
+    {
+      "XCoordinate": 21,
+      "YCoordinate": 14
+    },
+    {
+      "XCoordinate": 20,
+      "YCoordinate": 14
+    },
+    {
+      "XCoordinate": 22,
+      "YCoordinate": 12
+    },
+    {
+      "XCoordinate": 23,
+      "YCoordinate": 12
     }
   ],
-  "ConstructionAreas": [
-    {
-      "X": 0,
-      "Y": 0
-    },
-    {
-      "X": 0,
-      "Y": 0
-    },
-    {
-      "X": 0,
-      "Y": 0
-    },
-    {
-      "X": 0,
-      "Y": 0
-    },
-    {
-      "X": 0,
-      "Y": 0
-    }
+  "NPCSprites": [
+    "/assets/sprites/sprite-0001.png"
   ]
 }
