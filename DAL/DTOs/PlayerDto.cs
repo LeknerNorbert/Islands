@@ -11,6 +11,7 @@ namespace DAL.DTOs
         public int Stones { get; set; }
         public int Irons { get; set; }
         public string SelectedIsland { get; set; } = string.Empty;
+        public string ProfileImagePath { get; set; } = string.Empty;
         public DateTime LastExpeditionDate { get; set; }
         public DateTime LastBattleDate { get; set; }
         public int Strength { get; set; }
