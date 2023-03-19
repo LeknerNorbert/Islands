@@ -54,12 +54,12 @@ namespace Web.Controllers
 
         [HttpGet]
         [Authorize]
-        public async Task<IActionResult> GetAllUnconstructedBuilding()
+        public async Task<IActionResult> GetAllUnbuiltBuilding()
         {
             try
             {
                 string username = User.Claims.First(c => c.Type == "Username").Value;
-                List<UnconstructedBuildingDto> buildings = await _buildingService.GetAllUnconstructedBuildingAsync();
+                List<UnbuiltBuildingDto> buildings = await _buildingService.GetAllUnbuiltBuildingAsync();
 
                 return Ok(buildings);
             }

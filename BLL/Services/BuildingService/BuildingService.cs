@@ -50,7 +50,7 @@ namespace BLL.Services.BuildingService
             }
 
             Player player = await _playerRepository.GetPlayerByUsernameAsync(username);
-            BuildingConfigurationDto buildingConfiguration =
+            BuildingConfigurationDto configuration =
                 await _configurationService.GetBuildingAsync(buildingRequest.Type, 1);
 
             Building building = new()
@@ -59,31 +59,33 @@ namespace BLL.Services.BuildingService
                 XCoordinate = buildingRequest.XCoordinate,
                 YCoordinate = buildingRequest.YCoordinate,
                 Level = 1,
-                BuildDate = DateTime.Now.AddMilliseconds(buildingConfiguration.BuildTime),
+                BuildDate = DateTime.Now.AddMilliseconds(configuration.BuildTime),
                 LastCollectDate = DateTime.Now,
                 Player = player,
             };
 
-            await _buildingRepository.AddBuildingAsync(building);
+            int id = await _buildingRepository.AddBuildingAsync(building);
 
             return new BuildingDto()
             {
-                Name = building.Type.ToString(),
+                Id = id,
+                BuildingType = building.Type.ToString(),
+                Name = configuration.Name,
                 XCoordinate = building.XCoordinate,
                 YCoordinate = building.YCoordinate,
                 Level = building.Level,
-                MaxLevel = buildingConfiguration.MaxLevel,
-                Description = buildingConfiguration.Description,
-                SpritePath = buildingConfiguration.SpritePath,
-                CoinsForUpdate = buildingConfiguration.CoinsForUpdate,
-                IronsForUpdate = buildingConfiguration.IronsForUpdate,
-                StonesForUpdate = buildingConfiguration.StonesForUpdate,
-                WoodsForUpdate = buildingConfiguration.WoodsForUpdate,
-                ProducedCoins = buildingConfiguration.ProducedCoins,
-                ProducedIrons = buildingConfiguration.ProducedIrons,
-                ProducedStones = buildingConfiguration.ProducedStones,
-                ProducedWoods = buildingConfiguration.ProducedWoods,
-                ExperienceReward = buildingConfiguration.ExperienceReward,
+                MaxLevel = configuration.MaxLevel,
+                Description = configuration.Description,
+                SpritePath = configuration.SpritePath,
+                CoinsForUpdate = configuration.CoinsForUpdate,
+                IronsForUpdate = configuration.IronsForUpdate,
+                StonesForUpdate = configuration.StonesForUpdate,
+                WoodsForUpdate = configuration.WoodsForUpdate,
+                ProducedCoins = configuration.ProducedCoins,
+                ProducedIrons = configuration.ProducedIrons,
+                ProducedStones = configuration.ProducedStones,
+                ProducedWoods = configuration.ProducedWoods,
+                ExperienceReward = configuration.ExperienceReward,
                 BuildDate = building.BuildDate,
                 LastCollectDate = building.LastCollectDate
             };
@@ -100,7 +102,9 @@ namespace BLL.Services.BuildingService
 
                 buildingsWithConfiguration.Add(new BuildingDto
                 {
-                    Name = building.Type.ToString(),
+                    Id = building.Id,
+                    BuildingType = building.Type.ToString(),
+                    Name = configuration.Name,
                     XCoordinate = building.XCoordinate,
                     YCoordinate = building.YCoordinate,
                     Level = building.Level,
@@ -124,9 +128,9 @@ namespace BLL.Services.BuildingService
             return buildingsWithConfiguration;
         }
 
-        public async Task<List<UnconstructedBuildingDto>> GetAllUnconstructedBuildingAsync()
+        public async Task<List<UnbuiltBuildingDto>> GetAllUnbuiltBuildingAsync()
         {
-            return await _configurationService.GetAllUnconstructedBuildingAsync();
+            return await _configurationService.GetAllUnbuiltBuildingAsync();
         }
 
         public async Task<BuildingDto> UpgradeBuildingAsync(string username, BuildingType type)
@@ -164,6 +168,7 @@ namespace BLL.Services.BuildingService
 
             return new BuildingDto()
             {
+                Id = building.Id,
                 Name = building.Type.ToString(),
                 XCoordinate = building.XCoordinate,
                 YCoordinate = building.YCoordinate,

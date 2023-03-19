@@ -1,6 +1,6 @@
 {
   "SpritePath": "/assets/europian_island.png",
-  "ConstructionAreas": [
+  "BuildingAreas": [
     {
       "XCoordinate": 0,
       "YCoordinate": 0

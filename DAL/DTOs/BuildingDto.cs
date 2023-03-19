@@ -2,6 +2,8 @@
 {
     public class BuildingDto
     {
+        public int Id { get; set; }
+        public string BuildingType { get; set; } = string.Empty;
         public string Name { get; set; } = string.Empty;
         public int XCoordinate { get; set; }
         public int YCoordinate { get; set; }

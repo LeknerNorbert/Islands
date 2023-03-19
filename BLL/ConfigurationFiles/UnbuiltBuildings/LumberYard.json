@@ -1,5 +1,6 @@
 {
-  "BuildingType": 1,
+  "BuildingType": "LumberYard",
+  "Name": "Fatelep",
   "Description": "",
   "CoinsForBuild": 0,
   "IronsForBuild": 0,

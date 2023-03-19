@@ -2,8 +2,9 @@
 
 namespace DAL.DTOs
 {
-    public class UnconstructedBuildingDto
+    public class UnbuiltBuildingDto
     {
+        public string BuildingType { get; set; } = string.Empty;
         public string Name { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
         public int CoinsForBuild { get; set; }

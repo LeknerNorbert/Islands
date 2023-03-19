@@ -5,14 +5,8 @@ namespace DAL.DTOs
     public class IslandDto
     {
         public string SpritePath { get; set; } = string.Empty;
-        public List<CoordinateDto> ConstructionAreas { get; set; } = new List<CoordinateDto>();
-        public List<CoordinateDto> NPCRoutes { get; set; }
+        public CoordinateDto[] BuildingAreas { get; set; } = Array.Empty<CoordinateDto>();
+        public CoordinateDto[] NPCRoutes { get; set; } = Array.Empty<CoordinateDto>();
         public string[] NPCSprites { get; set; } = Array.Empty<string>();
-
-        public IslandDto()
-        {
-            ConstructionAreas = new();
-            NPCRoutes = new();
-        }
     }
 }

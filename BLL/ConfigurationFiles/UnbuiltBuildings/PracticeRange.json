@@ -1,6 +1,7 @@
 {
-  "BuildingType": 0, 
-  "Description": "",
+  "BuildingType": "PracticeRange",
+  "Name": "Kiképző",
+  "Description": "Leírás",
   "CoinsForBuild": 0,
   "IronsForBuild": 0,
   "StonesForBuild": 0,

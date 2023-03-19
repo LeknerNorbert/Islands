@@ -6,20 +6,20 @@ namespace BLL.Services.ConfigurationService
 {
     public class ConfigurationService : IConfigurationService
     {
-        private readonly string[] unconstructedPaths = new string[]
+        private readonly string[] unbuiltPaths = new string[]
 {
-            @"..\BLL\ConfigurationFiles\UnconstructedBuildings\Church.json",
-            @"..\BLL\ConfigurationFiles\UnconstructedBuildings\Factory.json",
-            @"..\BLL\ConfigurationFiles\UnconstructedBuildings\LumberYard.json",
-            @"..\BLL\ConfigurationFiles\UnconstructedBuildings\Mine.json",
-            @"..\BLL\ConfigurationFiles\UnconstructedBuildings\PracticeRange.json",
+            @"..\BLL\ConfigurationFiles\UnbuiltBuildings\Church.json",
+            @"..\BLL\ConfigurationFiles\UnbuiltBuildings\Factory.json",
+            @"..\BLL\ConfigurationFiles\UnbuiltBuildings\LumberYard.json",
+            @"..\BLL\ConfigurationFiles\UnbuiltBuildings\Mine.json",
+            @"..\BLL\ConfigurationFiles\UnbuiltBuildings\PracticeRange.json",
         };
 
-        public async Task<List<UnconstructedBuildingDto>> GetAllUnconstructedBuildingAsync()
+        public async Task<List<UnbuiltBuildingDto>> GetAllUnbuiltBuildingAsync()
         {
-            List<UnconstructedBuildingDto> unconstructedBuildings = new();
+            List<UnbuiltBuildingDto> unbuiltBuildings = new();
 
-            foreach (string path in unconstructedPaths)
+            foreach (string path in unbuiltPaths)
             {
                 if (!File.Exists(path))
                 {
@@ -27,17 +27,17 @@ namespace BLL.Services.ConfigurationService
                 }
 
                 string json = await File.ReadAllTextAsync(path);
-                UnconstructedBuildingDto? unconstructedBuilding = JsonConvert.DeserializeObject<UnconstructedBuildingDto>(json);
+                UnbuiltBuildingDto? unbuiltBuilding = JsonConvert.DeserializeObject<UnbuiltBuildingDto>(json);
 
-                if (unconstructedBuilding == null)
+                if (unbuiltBuilding == null)
                 {
                     throw new FileNotFoundException("File not found.");
                 }
 
-                unconstructedBuildings.Add(unconstructedBuilding);
+                unbuiltBuildings.Add(unbuiltBuilding);
             }
 
-            return unconstructedBuildings;
+            return unbuiltBuildings;
         }
 
         public async Task<BuildingConfigurationDto> GetBuildingAsync(BuildingType name, int level)

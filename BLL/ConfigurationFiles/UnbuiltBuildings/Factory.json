@@ -1,6 +1,7 @@
 {
-  "BuildingType": 4,
-  "Description": "",
+  "BUildingType": "Factory",
+  "Name": "Gyár",
+  "Description": "Leírás",
   "CoinsForBuild": 0,
   "IronsForBuild": 0,
   "StonesForBuild": 0,

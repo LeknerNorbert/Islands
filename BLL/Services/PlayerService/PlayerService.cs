@@ -3,6 +3,7 @@ using BLL.Services.ConfigurationService;
 using DAL.DTOs;
 using DAL.Models;
 using DAL.Models.Enums;
+using DAL.Repositories.NotificationRepository;
 using DAL.Repositories.PlayerRepository;
 using DAL.Repositories.UserRepository;
 
@@ -13,15 +14,18 @@ namespace BLL.Services.PlayerService
         private readonly IPlayerRepository _playerRepository;
         private readonly IUserRepository _userRepository;
         private readonly IConfigurationService _configurationService;
+        private readonly INotificationRepository _notificationRepository;
 
         public PlayerService(
             IPlayerRepository playerRepository, 
             IUserRepository userRepository, 
-            IConfigurationService configurationService)
+            IConfigurationService configurationService,
+            INotificationRepository notificationRepository)
         {
             _playerRepository = playerRepository;
             _userRepository = userRepository; 
             _configurationService = configurationService;
+            _notificationRepository = notificationRepository;
         }
 
         public async Task<PlayerDto> AddPlayerAsync(string username, IslandType name)
@@ -31,11 +35,11 @@ namespace BLL.Services.PlayerService
 
             Player player = new()
             {
-                Experience = 0,
-                Coins = 0,
-                Woods = 0,
-                Stones = 0,
-                Irons = 0,
+                Experience = 100,
+                Coins = 100,
+                Woods = 100,
+                Stones = 100,
+                Irons = 100,
                 SelectedIsland = name,
                 LastBattleDate = DateTime.MinValue,
                 LastExpeditionDate = DateTime.MinValue,
@@ -45,22 +49,45 @@ namespace BLL.Services.PlayerService
                 User = user,
             };
 
-            int id = await _playerRepository.AddPlayerAsync(player);
+            Player createdPlayer = await _playerRepository.AddPlayerAsync(player);
+
+            Notification notification = new()
+            {
+                Title = "Gratulálunk a sikeres sziget választásodhoz - ajándékokkal!",
+                Message = @"Kedves Islander,
+
+                Gratulálunk, hogy sikerült kiválasztanod a tökéletes szigetet, hogy kezdetét vegye a varázslatos kalandod! Reméljük, hogy élvezed az élményt, és izgalommal várod, hogy felfedezd a szigeted rejtelmeit.
+                Az indulásodhoz szeretnénk néhány hasznos tárggyal segíteni, amelyek megkönnyítik az első lépéseket a szigeten.
+                Az Islanders csapata mindig itt van, hogy támogasson téged az utazásod során, és segítsen minden kérdésben vagy problémában. Ne habozz megkeresni minket bármikor, ha szükséged van rá!
+                Köszönjük, hogy velünk tartasz a kalandban, és jó szórakozást kívánunk a szigeten!
+
+                Üdvözlettel,
+                Az Islanders csapata",
+                Experience = 100,
+                Coins = 100,
+                Woods = 100,
+                Stones = 100,
+                Irons = 100,
+                CreateDate = DateTime.Now,
+                Player = createdPlayer
+            };
+
+            await _notificationRepository.AddNotificationAsync(notification);
 
             return new PlayerDto()
             {
-                Id = id,
-                Experience = 0,
-                Coins = 0,
-                Woods = 0,
-                Stones = 0,
-                Irons = 0,
+                Id = createdPlayer.Id,
+                Experience = createdPlayer.Experience,
+                Coins = createdPlayer.Coins,
+                Woods = createdPlayer.Woods,
+                Stones = createdPlayer.Stones,
+                Irons = createdPlayer.Irons,
                 SelectedIsland = name.ToString(),
-                LastBattleDate = DateTime.MinValue,
-                LastExpeditionDate = DateTime.MinValue,
-                Strength = defaultSkills.Strength,
-                Intelligence = defaultSkills.Intelligence,
-                Agility = defaultSkills.Agility,
+                LastBattleDate = createdPlayer.LastBattleDate,
+                LastExpeditionDate = createdPlayer.LastExpeditionDate,
+                Strength = createdPlayer.Strength,
+                Intelligence = createdPlayer.Intelligence,
+                Agility = createdPlayer.Agility,
             };
         }
 

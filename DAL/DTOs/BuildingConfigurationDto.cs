@@ -2,6 +2,7 @@
 {
     public class BuildingConfigurationDto
     {
+        public string Name { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
         public string SpritePath { get; set; } = string.Empty;
         public int MaxLevel { get; set; }

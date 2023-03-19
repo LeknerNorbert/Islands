@@ -15,10 +15,12 @@ namespace DAL.Repositories.BuildingRepository
             _context = context;
         }
 
-        public async Task AddBuildingAsync(Building building)
+        public async Task<int> AddBuildingAsync(Building building)
         {
             await _context.Buildings.AddAsync(building);
             await _context.SaveChangesAsync();
+
+            return building.Id;
         }
 
         public async Task<Building> GetBuildingAsync(string username, BuildingType name)

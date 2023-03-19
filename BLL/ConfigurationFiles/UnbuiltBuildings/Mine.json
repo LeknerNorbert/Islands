@@ -1,6 +1,7 @@
 {
-  "BuildingType": 2,
-  "Description": "",
+  "BuildingType": "Mine",
+  "Name": "Bánya",
+  "Description": "Leírás",
   "CoinsForBuild": 0,
   "IronsForBuild": 0,
   "StonesForBuild": 0,

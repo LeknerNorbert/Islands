@@ -15,12 +15,12 @@ namespace DAL.Repositories.PlayerRepository
             _context = context;
         }
 
-        public async Task<int> AddPlayerAsync(Player player)
+        public async Task<Player> AddPlayerAsync(Player player)
         {
             await _context.Players.AddAsync(player);
             await _context.SaveChangesAsync();
 
-            return player.Id;
+            return player;
         }
 
         public async Task<IslandType> GetIslandTypeByUsernameAsync(string username)

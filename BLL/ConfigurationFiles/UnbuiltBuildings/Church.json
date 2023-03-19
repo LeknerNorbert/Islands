@@ -1,6 +1,7 @@
 {
-  "BuildingType": 3,
-  "Description": "",
+  "BuildingType": "Church",
+  "Name": "Templom",
+  "Description": "Leírás",
   "CoinsForBuild": 0,
   "IronsForBuild": 0,
   "StonesForBuild": 0,
