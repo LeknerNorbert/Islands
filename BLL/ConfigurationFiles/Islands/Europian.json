@@ -2,101 +2,69 @@
   "SpritePath": "/assets/europian_island.png",
   "BuildingAreas": [
     {
-      "XCoordinate": 0,
-      "YCoordinate": 0
-    },
-    {
-      "XCoordinate": 1,
-      "YCoordinate": 1
-    },
-    {
-      "XCoordinate": 2,
-      "YCoordinate": 2
-    },
-    {
-      "XCoordinate": 3,
-      "YCoordinate": 3
-    },
-    {
-      "XCoordinate": 4,
-      "YCoordinate": 4
-    }
-  ],
-  "NPCRoutes": [
-    {
-      "XCoordinate": 12,
-      "YCoordinate": 3
-    },
-    {
-      "XCoordinate": 12,
+      "XCoordinate": 7,
       "YCoordinate": 4
     },
     {
-      "XCoordinate": 12,
-      "YCoordinate": 5
-    },
-    {
-      "XCoordinate": 13,
-      "YCoordinate": 5
-    },
-    {
-      "XCoordinate": 14,
-      "YCoordinate": 5
-    },
-    {
-      "XCoordinate": 14,
-      "YCoordinate": 6
-    },
-    {
-      "XCoordinate": 14,
-      "YCoordinate": 7
-    },
-    {
-      "XCoordinate": 14,
+      "XCoordinate": 6,
       "YCoordinate": 8
-    },
-    {
-      "XCoordinate": 13,
-      "YCoordinate": 8
-    },
-    {
-      "XCoordinate": 12,
-      "Y": 8
     },
     {
       "XCoordinate": 11,
-      "YCoordinate": 8
+      "YCoordinate": 10
     },
     {
-      "XCoordinate": 10,
-      "YCoordinate": 8
+      "XCoordinate": 16,
+      "YCoordinate": 12
     },
+    {
+      "XCoordinate": 13,
+      "YCoordinate": 7
+    }
+  ],
+  "NPCRoutes": [
     {
       "XCoordinate": 9,
       "YCoordinate": 8
     },
     {
       "XCoordinate": 10,
+      "YCoordinate": 8
+    },
+    {
+      "XCoordinate": 10,
       "YCoordinate": 7
+    },
+    {
+      "XCoordinate": 11,
+      "YCoordinate": 8
     },
     {
       "XCoordinate": 11,
       "YCoordinate": 9
     },
     {
+      "XCoordinate": 12,
+      "YCoordinate": 8
+    },
+    {
+      "XCoordinate": 13,
+      "YCoordinate": 8
+    },
+    {
       "XCoordinate": 14,
-      "YCoordinate": 9
+      "YCoordinate": 8
     },
     {
-      "XCoordinate": 15,
-      "YCoordinate": 9
+      "XCoordinate": 14,
+      "YCoordinate": 7
     },
     {
-      "XCoordinate": 16,
-      "YCoordinate": 9
+      "XCoordinate": 14,
+      "YCoordinate": 7
     },
     {
-      "XCoordinate": 17,
+      "XCoordinate": 14,
       "YCoordinate": 9
     },
     {
@@ -106,6 +74,10 @@
     {
       "XCoordinate": 14,
       "YCoordinate": 11
+    },
+    {
+      "XCoordinate": 14,
+      "YCoordinate": 12
     },
     {
       "XCoordinate": 14,
@@ -120,16 +92,108 @@
       "YCoordinate": 15
     },
     {
-      "XCoordinate": 14,
-      "YCoordinate": 16
-    },
-    {
       "XCoordinate": 13,
       "YCoordinate": 15
     },
     {
       "XCoordinate": 12,
       "YCoordinate": 15
+    },
+    {
+      "XCoordinate": 14,
+      "YCoordinate": 16
+    },
+    {
+      "XCoordinate": 14,
+      "YCoordinate": 17
+    },
+    {
+      "XCoordinate": 14,
+      "YCoordinate": 18
+    },
+    {
+      "XCoordinate": 14,
+      "YCoordinate": 19
+    },
+    {
+      "XCoordinate": 14,
+      "YCoordinate": 20
+    },
+    {
+      "XCoordinate": 15,
+      "YCoordinate": 20
+    },
+    {
+      "XCoordinate": 16,
+      "YCoordinate": 20
+    },
+    {
+      "XCoordinate": 17,
+      "YCoordinate": 20
+    },
+    {
+      "XCoordinate": 18,
+      "YCoordinate": 20
+    },
+    {
+      "XCoordinate": 19,
+      "YCoordinate": 20
+    },
+    {
+      "XCoordinate": 20,
+      "YCoordinate": 20
+    },
+    {
+      "XCoordinate": 21,
+      "YCoordinate": 20
+    },
+    {
+      "XCoordinate": 22,
+      "YCoordinate": 20
+    },
+    {
+      "XCoordinate": 23,
+      "YCoordinate": 20
+    },
+    {
+      "XCoordinate": 24,
+      "YCoordinate": 20
+    },
+    {
+      "XCoordinate": 24,
+      "YCoordinate": 19
+    },
+    {
+      "XCoordinate": 25,
+      "YCoordinate": 19
+    },
+    {
+      "XCoordinate": 26,
+      "YCoordinate": 19
+    },
+    {
+      "XCoordinate": 26,
+      "YCoordinate": 20
+    },
+    {
+      "XCoordinate": 27,
+      "YCoordinate": 20
+    },
+    {
+      "XCoordinate": 28,
+      "YCoordinate": 20
+    },
+    {
+      "XCoordinate": 29,
+      "YCoordinate": 20
+    },
+    {
+      "XCoordinate": 29,
+      "YCoordinate": 21
+    },
+    {
+      "XCoordinate": 29,
+      "YCoordinate": 22
     },
     {
       "XCoordinate": 15,
@@ -148,16 +212,16 @@
       "YCoordinate": 14
     },
     {
-      "XCoordinate": 21,
-      "YCoordinate": 10
+      "XCoordinate": 19,
+      "YCoordinate": 14
+    },
+    {
+      "XCoordinate": 20,
+      "YCoordinate": 14
     },
     {
       "XCoordinate": 21,
-      "YCoordinate": 11
-    },
-    {
-      "XCoordinate": 21,
-      "YCoordinate": 12
+      "YCoordinate": 14
     },
     {
       "XCoordinate": 21,
@@ -165,11 +229,15 @@
     },
     {
       "XCoordinate": 21,
-      "YCoordinate": 14
+      "YCoordinate": 12
     },
     {
-      "XCoordinate": 20,
-      "YCoordinate": 14
+      "XCoordinate": 21,
+      "YCoordinate": 11
+    },
+    {
+      "XCoordinate": 21,
+      "YCoordinate": 10
     },
     {
       "XCoordinate": 22,

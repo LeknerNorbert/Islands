@@ -1,8 +1,376 @@
 {
   "SpritePath": "",
   "BuildingAreas": [
+    {
+      "XCoordinate": 13,
+      "YCoordinate": 3
+    },
+    {
+      "XCoordinate": 16,
+      "YCoordinate": 5
+    },
+    {
+      "XCoordinate": 17,
+      "YCoordinate": 9
+    },
+    {
+      "XCoordinate": 14,
+      "YCoordinate": 11
+    },
+    {
+      "XCoordinate": 10,
+      "YCoordinate": 8
+    }
   ],
   "NPCRoutes": [
+    {
+      "XCoordinate": 12,
+      "YCoordinate": 3
+    },
+    {
+      "XCoordinate": 12,
+      "YCoordinate": 4
+    },
+    {
+      "XCoordinate": 12,
+      "YCoordinate": 5
+    },
+    {
+      "XCoordinate": 12,
+      "YCoordinate": 6
+    },
+    {
+      "XCoordinate": 11,
+      "YCoordinate": 6
+    },
+    {
+      "XCoordinate": 11,
+      "YCoordinate": 7
+    },
+    {
+      "XCoordinate": 11,
+      "YCoordinate": 15
+    },
+    {
+      "XCoordinate": 11,
+      "YCoordinate": 16
+    },
+    {
+      "XCoordinate": 10,
+      "YCoordinate": 16
+    },
+    {
+      "XCoordinate": 10,
+      "YCoordinate": 17
+    },
+    {
+      "XCoordinate": 10,
+      "YCoordinate": 18
+    },
+    {
+      "XCoordinate": 10,
+      "YCoordinate": 19
+    },
+    {
+      "XCoordinate": 10,
+      "YCoordinate": 20
+    },
+    {
+      "XCoordinate": 10,
+      "YCoordinate": 21
+    },
+    {
+      "XCoordinate": 26,
+      "YCoordinate": 4
+    },
+    {
+      "XCoordinate": 27,
+      "YCoordinate": 4
+    },
+    {
+      "XCoordinate": 28,
+      "YCoordinate": 4
+    },
+    {
+      "XCoordinate": 29,
+      "YCoordinate": 4
+    },
+    {
+      "XCoordinate": 30,
+      "YCoordinate": 4
+    },
+    {
+      "XCoordinate": 31,
+      "YCoordinate": 4
+    },
+    {
+      "XCoordinate": 32,
+      "YCoordinate": 4
+    },
+    {
+      "XCoordinate": 32,
+      "YCoordinate": 5
+    },
+    {
+      "XCoordinate": 32,
+      "YCoordinate": 6
+    },
+    {
+      "XCoordinate": 32,
+      "YCoordinate": 7
+    },
+    {
+      "XCoordinate": 32,
+      "YCoordinate": 8
+    },
+    {
+      "XCoordinate": 32,
+      "YCoordinate": 9
+    },
+    {
+      "XCoordinate": 33,
+      "YCoordinate": 9
+    },
+    {
+      "XCoordinate": 34,
+      "YCoordinate": 9
+    },
+    {
+      "XCoordinate": 34,
+      "YCoordinate": 10
+    },
+    {
+      "XCoordinate": 35,
+      "YCoordinate": 10
+    },
+    {
+      "XCoordinate": 35,
+      "YCoordinate": 11
+    },
+    {
+      "XCoordinate": 35,
+      "YCoordinate": 12
+    },
+    {
+      "XCoordinate": 35,
+      "YCoordinate": 13
+    },
+    {
+      "XCoordinate": 35,
+      "YCoordinate": 14
+    },
+    {
+      "XCoordinate": 34,
+      "YCoordinate": 14
+    },
+    {
+      "XCoordinate": 33,
+      "YCoordinate": 14
+    },
+    {
+      "XCoordinate": 32,
+      "YCoordinate": 14
+    },
+    {
+      "XCoordinate": 31,
+      "YCoordinate": 14
+    },
+    {
+      "XCoordinate": 31,
+      "YCoordinate": 15
+    },
+    {
+      "XCoordinate": 31,
+      "YCoordinate": 16
+    },
+    {
+      "XCoordinate": 31,
+      "YCoordinate": 17
+    },
+    {
+      "XCoordinate": 31,
+      "YCoordinate": 18
+    },
+    {
+      "XCoordinate": 30,
+      "YCoordinate": 18
+    },
+    {
+      "XCoordinate": 29,
+      "YCoordinate": 18
+    },
+    {
+      "XCoordinate": 28,
+      "YCoordinate": 18
+    },
+    {
+      "XCoordinate": 27,
+      "YCoordinate": 18
+    },
+    {
+      "XCoordinate": 27,
+      "YCoordinate": 17
+    },
+    {
+      "XCoordinate": 26,
+      "YCoordinate": 17
+    },
+    {
+      "XCoordinate": 25,
+      "YCoordinate": 17
+    },
+    {
+      "XCoordinate": 24,
+      "YCoordinate": 17
+    },
+    {
+      "XCoordinate": 24,
+      "YCoordinate": 18
+    },
+    {
+      "XCoordinate": 24,
+      "YCoordinate": 19
+    },
+    {
+      "XCoordinate": 24,
+      "YCoordinate": 20
+    },
+    {
+      "XCoordinate": 24,
+      "YCoordinate": 16
+    },
+    {
+      "XCoordinate": 24,
+      "YCoordinate": 15
+    },
+    {
+      "XCoordinate": 24,
+      "YCoordinate": 14
+    },
+    {
+      "XCoordinate": 23,
+      "YCoordinate": 14
+    },
+    {
+      "XCoordinate": 22,
+      "YCoordinate": 14
+    },
+    {
+      "XCoordinate": 21,
+      "YCoordinate": 14
+    },
+    {
+      "XCoordinate": 20,
+      "YCoordinate": 14
+    },
+    {
+      "XCoordinate": 22,
+      "YCoordinate": 13
+    },
+    {
+      "XCoordinate": 22,
+      "YCoordinate": 12
+    },
+    {
+      "XCoordinate": 23,
+      "YCoordinate": 12
+    },
+    {
+      "XCoordinate": 24,
+      "YCoordinate": 12
+    },
+    {
+      "XCoordinate": 25,
+      "YCoordinate": 12
+    },
+    {
+      "XCoordinate": 26,
+      "YCoordinate": 12
+    },
+    {
+      "XCoordinate": 27,
+      "YCoordinate": 12
+    },
+    {
+      "XCoordinate": 27,
+      "YCoordinate": 11
+    },
+    {
+      "XCoordinate": 27,
+      "YCoordinate": 10
+    },
+    {
+      "XCoordinate": 27,
+      "YCoordinate": 9
+    },
+    {
+      "XCoordinate": 27,
+      "YCoordinate": 8
+    },
+    {
+      "XCoordinate": 27,
+      "YCoordinate": 7
+    },
+    {
+      "XCoordinate": 28,
+      "YCoordinate": 7
+    },
+    {
+      "XCoordinate": 29,
+      "YCoordinate": 7
+    },
+    {
+      "XCoordinate": 30,
+      "YCoordinate": 7
+    },
+    {
+      "XCoordinate": 42,
+      "YCoordinate": 16
+    },
+    {
+      "XCoordinate": 42,
+      "YCoordinate": 17
+    },
+    {
+      "XCoordinate": 42,
+      "YCoordinate": 18
+    },
+    {
+      "XCoordinate": 41,
+      "YCoordinate": 18
+    },
+    {
+      "XCoordinate": 40,
+      "YCoordinate": 18
+    },
+    {
+      "XCoordinate": 40,
+      "YCoordinate": 19
+    },
+    {
+      "XCoordinate": 40,
+      "YCoordinate": 20
+    },
+    {
+      "XCoordinate": 40,
+      "YCoordinate": 21
+    },
+    {
+      "XCoordinate": 40,
+      "YCoordinate": 22
+    },
+    {
+      "XCoordinate": 40,
+      "YCoordinate": 23
+    },
+    {
+      "XCoordinate": 40,
+      "YCoordinate": 24
+    },
+    {
+      "XCoordinate": 40,
+      "YCoordinate": 25
+    }
   ],
   "NPCSprites": [
   ]
