@@ -1,5 +1,5 @@
 {
-  "SpritePath": "",
+  "SpritePath": "/assets/viking_island.png",
   "BuildingAreas": [
     {
       "XCoordinate": 13,
