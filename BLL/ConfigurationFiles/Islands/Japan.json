@@ -353,5 +353,7 @@
     }
   ],
   "NPCSprites": [
+    "/assets/sprites/characters/japanese_female.png",
+    "/assets/sprites/characters/japanese_male.png"
   ]
 }

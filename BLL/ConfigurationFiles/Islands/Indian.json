@@ -265,5 +265,7 @@
     }
   ],
   "NPCSprites": [
+    "/assets/sprites/characters/indian_female.png",
+    "/assets/sprites/characters/indian_male.png"
   ]
 }

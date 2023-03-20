@@ -373,5 +373,7 @@
     }
   ],
   "NPCSprites": [
+    "/assets/sprites/characters/viking_female.png",
+    "/assets/sprites/characters/viking_male.png"
   ]
 }

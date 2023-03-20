@@ -249,6 +249,7 @@
     }
   ],
   "NPCSprites": [
-    "/assets/sprites/sprite-0001.png"
+    "/assets/sprites/characters/eu_female.png",
+    "/assets/sprites/characters/eu_male.png"
   ]
 }
