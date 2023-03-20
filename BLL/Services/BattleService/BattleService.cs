@@ -42,7 +42,7 @@ namespace BLL.Services.BattleService
 
             foreach (Player enemyPlayer in enemyPlayers)
             {
-                EnemyConfigurationDto configuration = await _configurationService.GetEnemy(enemyPlayer.SelectedIsland);
+                EnemyConfigurationDto configuration = await _configurationService.GetEnemyByIslandAsync(enemyPlayer.SelectedIsland);
 
                 enemies.Add(new EnemyDto()
                 {

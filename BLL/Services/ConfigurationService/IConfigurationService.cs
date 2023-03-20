@@ -5,12 +5,13 @@ namespace BLL.Services.ConfigurationService
 {
     public interface IConfigurationService
     {
-        Task<BuildingConfigurationDto> GetBuildingAsync(BuildingType name, int level);
-        Task<List<UnbuiltBuildingDto>> GetAllUnbuiltBuildingAsync();
-        Task<SkillsDto> GetDefaultSkillsByIslandAsync(IslandType name);
+        Task<BuildingConfigurationDto> GetBuildingByIslandAsync(IslandType islandType, BuildingType buildingType, int level);
+        Task<List<UnbuiltBuildingDto>> GetAllUnbuiltBuildingsByIslandAsync(IslandType islandType);
+        Task<SkillsDto> GetDefaultSkillsByIslandAsync(IslandType islandType);
         Task<SkillsDto> GetMaximumSkillPointsAsync();
-        Task<IslandDto> GetIslandAsync(IslandType name);
-        Task<EnemyConfigurationDto> GetEnemy(IslandType name);
+        Task<IslandDto> GetIslandAsync(IslandType islandType);
+        Task<EnemyConfigurationDto> GetEnemyByIslandAsync(IslandType islandType);
+        Task<ProfileImageConfigurationDto> GetProfileImageByIslandAsync(IslandType islandType);
         int GetExperienceByLevel(int level);
         int GetLevelByExperience(int experiences);
     }

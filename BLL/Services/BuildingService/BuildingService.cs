@@ -51,7 +51,7 @@ namespace BLL.Services.BuildingService
 
             Player player = await _playerRepository.GetPlayerByUsernameAsync(username);
             BuildingConfigurationDto configuration =
-                await _configurationService.GetBuildingAsync(buildingRequest.Type, 1);
+                await _configurationService.GetBuildingByIslandAsync(player.SelectedIsland, buildingRequest.Type, 1);
 
             Building building = new()
             {
@@ -95,10 +95,12 @@ namespace BLL.Services.BuildingService
             List<Building> buildings = await _buildingRepository.GetAllBuildingByUsernameAsync(username);
             List<BuildingDto> buildingsWithConfiguration = new();
 
+            Player player = await _playerRepository.GetPlayerByUsernameAsync(username);
+
             foreach (Building building in buildings)
             {
                 BuildingConfigurationDto configuration =
-                    await _configurationService.GetBuildingAsync(building.Type, building.Level);
+                    await _configurationService.GetBuildingByIslandAsync(player.SelectedIsland, building.Type, building.Level);
 
                 buildingsWithConfiguration.Add(new BuildingDto
                 {
@@ -128,16 +130,19 @@ namespace BLL.Services.BuildingService
             return buildingsWithConfiguration;
         }
 
-        public async Task<List<UnbuiltBuildingDto>> GetAllUnbuiltBuildingAsync()
+        public async Task<List<UnbuiltBuildingDto>> GetAllUnbuiltBuildingsAsync(string username)
         {
-            return await _configurationService.GetAllUnbuiltBuildingAsync();
+            Player player = await _playerRepository.GetPlayerByUsernameAsync(username);
+
+            return await _configurationService.GetAllUnbuiltBuildingsByIslandAsync(player.SelectedIsland);
         }
 
         public async Task<BuildingDto> UpgradeBuildingAsync(string username, BuildingType type)
         {
             Player player = await _playerRepository.GetPlayerByUsernameAsync(username);
             Building building = await _buildingRepository.GetBuildingAsync(username, type);
-            BuildingConfigurationDto currentConfiguration = await _configurationService.GetBuildingAsync(building.Type, building.Level);
+            BuildingConfigurationDto currentConfiguration = 
+                await _configurationService.GetBuildingByIslandAsync(player.SelectedIsland, building.Type, building.Level);
 
             if (currentConfiguration.MaxLevel <= building.Level)
             {
@@ -164,7 +169,8 @@ namespace BLL.Services.BuildingService
             await _buildingRepository.UpdateBuildingAsync(building);
             await _playerRepository.UpdatePlayerAsync(player);
 
-            BuildingConfigurationDto nextLevelConfiguration = await _configurationService.GetBuildingAsync(building.Type, building.Level);
+            BuildingConfigurationDto nextLevelConfiguration = 
+                await _configurationService.GetBuildingByIslandAsync(player.SelectedIsland, building.Type, building.Level);
 
             return new BuildingDto()
             {
@@ -193,7 +199,7 @@ namespace BLL.Services.BuildingService
         {
             Player player = await _playerRepository.GetPlayerByUsernameAsync(username);
             Building building = await _buildingRepository.GetBuildingAsync(username, type);
-            BuildingConfigurationDto configuration = await _configurationService.GetBuildingAsync(building.Type, building.Level);
+            BuildingConfigurationDto configuration = await _configurationService.GetBuildingByIslandAsync(player.SelectedIsland, building.Type, building.Level);
 
             int ticks = Convert.ToInt32((DateTime.Now - building.LastCollectDate).TotalMilliseconds / configuration.ProductionInterval);
 

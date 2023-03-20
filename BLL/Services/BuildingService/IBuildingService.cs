@@ -7,7 +7,7 @@ namespace BLL.Services.BuildingService
     {
         Task<BuildingDto> AddBuildingAsync(string username, BuildRequestDto buildingRequest);
         Task<List<BuildingDto>> GetAllBuildingAsync(string username);
-        Task<List<UnbuiltBuildingDto>> GetAllUnbuiltBuildingAsync();
+        Task<List<UnbuiltBuildingDto>> GetAllUnbuiltBuildingsAsync(string username);
         Task<BuildingDto> UpgradeBuildingAsync(string username, BuildingType building);
         Task<ItemsDto> CollectItemsAsync(string username, BuildingType building);
     }

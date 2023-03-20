@@ -59,7 +59,7 @@ namespace Web.Controllers
             try
             {
                 string username = User.Claims.First(c => c.Type == "Username").Value;
-                List<UnbuiltBuildingDto> buildings = await _buildingService.GetAllUnbuiltBuildingAsync();
+                List<UnbuiltBuildingDto> buildings = await _buildingService.GetAllUnbuiltBuildingsAsync(username);
 
                 return Ok(buildings);
             }

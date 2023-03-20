@@ -28,10 +28,10 @@ namespace BLL.Services.PlayerService
             _notificationRepository = notificationRepository;
         }
 
-        public async Task<PlayerDto> AddPlayerAsync(string username, IslandType name)
+        public async Task<PlayerDto> AddPlayerAsync(string username, IslandType islandType)
         {
             User user = await _userRepository.GetUserByUsernameAsync(username);
-            SkillsDto defaultSkills = await _configurationService.GetDefaultSkillsByIslandAsync(name);
+            SkillsDto defaultSkills = await _configurationService.GetDefaultSkillsByIslandAsync(islandType);
 
             Player player = new()
             {
@@ -40,7 +40,7 @@ namespace BLL.Services.PlayerService
                 Woods = 100,
                 Stones = 100,
                 Irons = 100,
-                SelectedIsland = name,
+                SelectedIsland = islandType,
                 LastBattleDate = DateTime.MinValue,
                 LastExpeditionDate = DateTime.MinValue,
                 Strength = defaultSkills.Strength,
@@ -82,7 +82,7 @@ namespace BLL.Services.PlayerService
                 Woods = createdPlayer.Woods,
                 Stones = createdPlayer.Stones,
                 Irons = createdPlayer.Irons,
-                SelectedIsland = name.ToString(),
+                SelectedIsland = islandType.ToString(),
                 LastBattleDate = createdPlayer.LastBattleDate,
                 LastExpeditionDate = createdPlayer.LastExpeditionDate,
                 Strength = createdPlayer.Strength,
@@ -94,6 +94,7 @@ namespace BLL.Services.PlayerService
         public async Task<PlayerDto> GetPlayerByUsernameAsync(string username)
         {
             Player player = await _playerRepository.GetPlayerByUsernameAsync(username);
+            ProfileImageConfigurationDto profileImage = await _configurationService.GetProfileImageByIslandAsync(player.SelectedIsland);
 
             return new PlayerDto()
             {
@@ -104,6 +105,7 @@ namespace BLL.Services.PlayerService
                 Stones = player.Stones,
                 Irons = player.Irons,
                 SelectedIsland = player.SelectedIsland.ToString(),
+                ProfileImagePath = profileImage.ImagePath,
                 LastExpeditionDate = player.LastExpeditionDate,
                 LastBattleDate = player.LastBattleDate,
                 Strength = player.Strength,
