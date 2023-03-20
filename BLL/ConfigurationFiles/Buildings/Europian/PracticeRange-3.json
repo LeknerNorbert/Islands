@@ -8,10 +8,11 @@
   "StonesForUpdate": 8750,
   "WoodsForUpdate": 3750,
   "ProductionInterval": 1000,
-  "ProducedCoins": 150,
+  "ProducedCoins": 30,
   "ProducedIrons": 0,
   "ProducedStones": 0,
   "ProducedWoods": 0,
   "ExperienceReward": 600,
-  "BuildTime": 0
+  "BuildTime": 0,
+  "maximumProductionCount": 150
 }

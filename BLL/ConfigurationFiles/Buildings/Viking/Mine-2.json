@@ -1,17 +1,18 @@
 {
   "Name": "Bánya",
   "Description": 0,
-  "ImagePath": "",
+  "ImagePath": "/assets/sprites/viking_buildings/viking_kogyar_2.png",
   "MaxLevel": 3,
-  "CoinsForUpdate": 0,
-  "IronsForUpdate": 0,
-  "StonesForUpdate": 0,
-  "WoodsForUpdate": 0,
+  "CoinsForUpdate": 2400,
+  "IronsForUpdate": 1650,
+  "StonesForUpdate": 900,
+  "WoodsForUpdate": 1300,
   "ProductionInterval": 1000,
   "ProducedCoins": 0,
   "ProducedIrons": 0,
-  "ProducedStones": 0,
+  "ProducedStones": 15,
   "ProducedWoods": 0,
-  "ExperienceReward": 0,
-  "BuildTime": 0
+  "ExperienceReward": 300,
+  "BuildTime": 0,
+  "maximumProductionCount": 75
 }

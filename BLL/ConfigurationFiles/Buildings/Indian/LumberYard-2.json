@@ -1,17 +1,18 @@
 {
   "Name": "Fatelep",
   "Description": 0,
-  "ImagePath": "",
+  "ImagePath": "/assets/sprites/indian_buildings/indian_fagyar_2.png",
   "MaxLevel": 3,
-  "CoinsForUpdate": 0,
-  "IronsForUpdate": 0,
-  "StonesForUpdate": 0,
-  "WoodsForUpdate": 0,
+  "CoinsForUpdate": 2050,
+  "IronsForUpdate": 600,
+  "StonesForUpdate": 1000,
+  "WoodsForUpdate": 1950,
   "ProductionInterval": 1000,
   "ProducedCoins": 0,
   "ProducedIrons": 0,
   "ProducedStones": 0,
-  "ProducedWoods": 0,
-  "ExperienceReward": 0,
-  "BuildTime": 0
+  "ProducedWoods": 15,
+  "ExperienceReward": 300,
+  "BuildTime": 0,
+  "maximumProductionCount": 75
 }

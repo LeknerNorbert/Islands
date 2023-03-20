@@ -1,17 +1,18 @@
 {
   "Name": "Kiképző",
   "Description": 0,
-  "ImagePath": "",
+  "ImagePath": "/assets/sprites/viking_buildings/viking_kikepzo_2.png",
   "MaxLevel": 3,
-  "CoinsForUpdate": 0,
-  "IronsForUpdate": 0,
-  "StonesForUpdate": 0,
-  "WoodsForUpdate": 0,
+  "CoinsForUpdate": 2100,
+  "IronsForUpdate": 1750,
+  "StonesForUpdate": 750,
+  "WoodsForUpdate": 1200,
   "ProductionInterval": 1000,
-  "ProducedCoins": 0,
+  "ProducedCoins": 25,
   "ProducedIrons": 0,
   "ProducedStones": 0,
   "ProducedWoods": 0,
-  "ExperienceReward": 0,
-  "BuildTime": 0
+  "ExperienceReward": 300,
+  "BuildTime": 0,
+  "maximumProductionCount": 25
 }

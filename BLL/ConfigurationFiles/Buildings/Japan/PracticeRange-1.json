@@ -1,17 +1,18 @@
 {
   "Name": "Kiképző",
   "Description": 0,
-  "ImagePath": "",
+  "ImagePath": "/assets/sprites/japan_buildings/japan_kikepzo_1.png",
   "MaxLevel": 3,
-  "CoinsForUpdate": 0,
-  "IronsForUpdate": 0,
-  "StonesForUpdate": 0,
-  "WoodsForUpdate": 0,
+  "CoinsForUpdate": 450,
+  "IronsForUpdate": 240,
+  "StonesForUpdate": 150,
+  "WoodsForUpdate": 350,
   "ProductionInterval": 1000,
-  "ProducedCoins": 0,
+  "ProducedCoins": 5,
   "ProducedIrons": 0,
   "ProducedStones": 0,
   "ProducedWoods": 0,
-  "ExperienceReward": 0,
-  "BuildTime": 0
+  "ExperienceReward": 100,
+  "BuildTime": 0,
+  "maximumProductionCount": 25
 }
