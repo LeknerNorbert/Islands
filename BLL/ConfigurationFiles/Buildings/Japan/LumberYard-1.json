@@ -1,7 +1,7 @@
 {
   "Name": "Fatelep",
   "Description": 0,
-  "ImagePath": "/assets/sprites/japan_buildings/japan_fagyar_1.png",
+  "SpritePath": "/assets/sprites/japan_buildings/japan_fagyar_1.png",
   "MaxLevel": 3,
   "CoinsForUpdate": 400,
   "IronsForUpdate": 200,
@@ -14,5 +14,5 @@
   "ProducedWoods": 5,
   "ExperienceReward": 100,
   "BuildTime": 0,
-  "maximumProductionCount": 25
+  "MaximumProductionCount": 25
 }

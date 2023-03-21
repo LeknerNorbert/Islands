@@ -1,18 +1,18 @@
 {
   "Name": "Templom",
   "Description": 0,
-  "ImagePath": "/assets/sprites/indian_buildings/indian_templom_1.png",
+  "SpritePath": "/assets/sprites/indian_buildings/indian_templom_1.png",
   "MaxLevel": 3,
   "CoinsForUpdate": 400,
   "IronsForUpdate": 100,
   "StonesForUpdate": 220,
   "WoodsForUpdate": 330,
-  "ProductionInterval": 1000,
+  "ProductionInterval": 30000,
   "ProducedCoins": 5,
   "ProducedIrons": 0,
   "ProducedStones": 0,
   "ProducedWoods": 0,
   "ExperienceReward": 100,
   "BuildTime": 0,
-  "maximumProductionCount": 25
+  "MaximumProductionCount": 25
 }

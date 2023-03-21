@@ -1,7 +1,7 @@
 {
   "Name": "Kiképző",
   "Description": 0,
-  "ImagePath": "/assets/sprites/indian_buildings/indian_kikepzo_3.png",
+  "SpritePath": "/assets/sprites/indian_buildings/indian_kikepzo_3.png",
   "MaxLevel": 3,
   "CoinsForUpdate": 10500,
   "IronsForUpdate": 3750,
@@ -14,5 +14,5 @@
   "ProducedWoods": 0,
   "ExperienceReward": 600,
   "BuildTime": 0,
-  "maximumProductionCount": 150
+  "MaximumProductionCount": 150
 }

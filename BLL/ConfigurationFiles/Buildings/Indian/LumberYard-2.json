@@ -1,7 +1,7 @@
 {
   "Name": "Fatelep",
   "Description": 0,
-  "ImagePath": "/assets/sprites/indian_buildings/indian_fagyar_2.png",
+  "SpritePath": "/assets/sprites/indian_buildings/indian_fagyar_2.png",
   "MaxLevel": 3,
   "CoinsForUpdate": 2050,
   "IronsForUpdate": 600,
@@ -14,5 +14,5 @@
   "ProducedWoods": 15,
   "ExperienceReward": 300,
   "BuildTime": 0,
-  "maximumProductionCount": 75
+  "MaximumProductionCount": 75
 }

@@ -1,7 +1,7 @@
 {
   "Name": "Gyár",
   "Description": 0,
-  "ImagePath": "/assets/sprites/japan_buildings/japan_vasgyar_2.png",
+  "SpritePath": "/assets/sprites/japan_buildings/japan_vasgyar_2.png",
   "MaxLevel": 3,
   "CoinsForUpdate": 2100,
   "IronsForUpdate": 1400,
@@ -14,5 +14,5 @@
   "ProducedWoods": 0,
   "ExperienceReward": 300,
   "BuildTime": 0,
-  "maximumProductionCount": 75
+  "MaximumProductionCount": 75
 }

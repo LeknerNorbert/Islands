@@ -1,7 +1,7 @@
 {
   "Name": "Gyár",
   "Description": 0,
-  "ImagePath": "/assets/sprites/viking_buildings/viking_vasgyar_3.png",
+  "SpritePath": "/assets/sprites/viking_buildings/viking_vasgyar_3.png",
   "MaxLevel": 3,
   "CoinsForUpdate": 11500,
   "IronsForUpdate": 9250,
@@ -14,5 +14,5 @@
   "ProducedWoods": 0,
   "ExperienceReward": 600,
   "BuildTime": 0,
-  "maximumProductionCount": 150
+  "MaximumProductionCount": 150
 }

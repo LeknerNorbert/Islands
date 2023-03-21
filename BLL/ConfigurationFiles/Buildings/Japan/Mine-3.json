@@ -1,7 +1,7 @@
 {
   "Name": "Bánya",
   "Description": 0,
-  "ImagePath": "/assets/sprites/japan_buildings/japan_kogyar_3.png",
+  "SpritePath": "/assets/sprites/japan_buildings/japan_kogyar_3.png",
   "MaxLevel": 3,
   "CoinsForUpdate": 11500,
   "IronsForUpdate": 6500,
@@ -14,5 +14,5 @@
   "ProducedWoods": 0,
   "ExperienceReward": 600,
   "BuildTime": 0,
-  "maximumProductionCount": 150
+  "MaximumProductionCount": 150
 }

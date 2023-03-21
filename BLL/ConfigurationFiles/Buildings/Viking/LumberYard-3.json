@@ -1,7 +1,7 @@
 {
   "Name": "Fatelep",
   "Description": 0,
-  "ImagePath": "/assets/sprites/viking_buildings/viking_fagyar_3.png",
+  "SpritePath": "/assets/sprites/viking_buildings/viking_fagyar_3.png",
   "MaxLevel": 3,
   "CoinsForUpdate": 10750,
   "IronsForUpdate": 9750,
@@ -14,5 +14,5 @@
   "ProducedWoods": 30,
   "ExperienceReward": 600,
   "BuildTime": 0,
-  "maximumProductionCount": 150
+  "MaximumProductionCount": 150
 }
