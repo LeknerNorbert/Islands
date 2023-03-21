@@ -19,12 +19,12 @@ namespace Web.Controllers
 
         [Authorize]
         [HttpGet]
-        public async Task<IActionResult> GetAllNotification()
+        public async Task<IActionResult> GetAllNotifications()
         {
             try
             {
                 string username = User.Claims.First(claim => claim.Type == "Username").Value;
-                List<NotificationDto> notifications = await _notificationService.GetAllNotificationByUsernameAsync(username);
+                List<NotificationDto> notifications = await _notificationService.GetAllNotificationsByUsernameAsync(username);
 
                 return Ok(notifications);
             }

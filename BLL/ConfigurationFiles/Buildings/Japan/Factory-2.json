@@ -1,7 +1,7 @@
 {
   "Name": "Gyár",
   "Description": 0,
-  "ImagePath": "",
+  "SpritePath": "",
   "MaxLevel": 3,
   "CoinsForUpdate": 0,
   "IronsForUpdate": 0,

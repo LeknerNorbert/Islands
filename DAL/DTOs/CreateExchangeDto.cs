@@ -1,5 +1,6 @@
 ﻿using DAL.Models.Enums;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace DAL.DTOs
 {

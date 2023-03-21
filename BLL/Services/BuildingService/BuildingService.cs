@@ -90,9 +90,9 @@ namespace BLL.Services.BuildingService
                 LastCollectDate = building.LastCollectDate
             };
         }
-        public async Task<List<BuildingDto>> GetAllBuildingAsync(string username)
+        public async Task<List<BuildingDto>> GetAllBuildingsAsync(string username)
         {
-            List<Building> buildings = await _buildingRepository.GetAllBuildingByUsernameAsync(username);
+            List<Building> buildings = await _buildingRepository.GetAllBuildingsByUsernameAsync(username);
             List<BuildingDto> buildingsWithConfiguration = new();
 
             Player player = await _playerRepository.GetPlayerByUsernameAsync(username);

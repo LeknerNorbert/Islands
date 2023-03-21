@@ -169,14 +169,14 @@ namespace BLL.Services.ExchangeService
             await _exchangeRepository.RemoveExchangeAsync(exchange);
         }
 
-        public async Task<List<ExchangeDto>> GetAllExchangeAsync()
+        public async Task<List<ExchangeDto>> GetAllExchangesAsync(string username)
         {
-            return await _exchangeRepository.GetAllExchangeAsync();
+            return await _exchangeRepository.GetAllExchangesAsync(username);
         }
 
-        public async Task<List<ExchangeDto>> GetAllExchangeByUsernameAsync(string username)
+        public async Task<List<ExchangeDto>> GetAllExchangesByUsernameAsync(string username)
         {
-            return await _exchangeRepository.GetAllExchangeByUsernameAsync(username);
+            return await _exchangeRepository.GetAllExchangesByUsernameAsync(username);
         }
 
         public async Task RemoveExchangeAsync(int id)

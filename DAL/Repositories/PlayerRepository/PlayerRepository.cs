@@ -113,7 +113,7 @@ namespace DAL.Repositories.PlayerRepository
             return playerForBattle;
         }
 
-        public async Task<List<Player>> GetTopSixPlayerByExperience(string username, int minExperience, int maxExperience)
+        public async Task<List<Player>> GetTopSixPlayersByExperience(string username, int minExperience, int maxExperience)
         {
             return await _context.Players
                 .Include(player => player.User)

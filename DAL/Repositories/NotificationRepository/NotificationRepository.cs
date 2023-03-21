@@ -26,7 +26,7 @@ namespace DAL.Repositories.NotificationRepository
                 .FirstAsync(notification => notification.Id == id);
         }
 
-        public async Task<List<NotificationDto>> GetAllNotificationByUsername(string username)
+        public async Task<List<NotificationDto>> GetAllNotificationsByUsername(string username)
         {
             return await _context.Notifications
                 .Include(notification => notification.Player)

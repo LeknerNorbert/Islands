@@ -12,9 +12,9 @@ namespace BLL.Services.NotificationService
             _notificationRepository = notificationRepository;
         }
 
-        public async Task<List<NotificationDto>> GetAllNotificationByUsernameAsync(string username)
+        public async Task<List<NotificationDto>> GetAllNotificationsByUsernameAsync(string username)
         {
-            return await _notificationRepository.GetAllNotificationByUsername(username);
+            return await _notificationRepository.GetAllNotificationsByUsername(username);
         }
 
         public async Task RemoveNotificationAsync(int id)

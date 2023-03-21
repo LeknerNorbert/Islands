@@ -11,7 +11,7 @@ namespace DAL.Repositories.PlayerRepository
         Task<Player> GetPlayerByIdAsync(int id);
         Task<IslandType> GetIslandTypeByUsernameAsync(string username);
         Task<Player> GetPlayerByUsernameAsync(string username);
-        Task<List<Player>> GetTopSixPlayerByExperience(string username, int minExperience, int maxExperience);
+        Task<List<Player>> GetTopSixPlayersByExperience(string username, int minExperience, int maxExperience);
         Task<Player> GetPlayerByForAdAsync(int adId);
         Task<Player> AddPlayerAsync(Player player);
         Task UpdatePlayerAsync(Player player);

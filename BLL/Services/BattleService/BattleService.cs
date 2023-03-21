@@ -27,7 +27,7 @@ namespace BLL.Services.BattleService
             random = new();
         }
 
-        public async Task<List<EnemyDto>> GetAllEnemyAsync(string username)
+        public async Task<List<EnemyDto>> GetAllEnemiesAsync(string username)
         {
             Player player = await _playerRepository.GetPlayerByUsernameAsync(username);
             int playerLevel = _configurationService.GetLevelByExperience(player.Experience);
@@ -37,7 +37,7 @@ namespace BLL.Services.BattleService
             int minExperience = _configurationService.GetExperienceByLevel(minLevel);
             int maxExperience = _configurationService.GetExperienceByLevel(maxLevel);
 
-            List<Player> enemyPlayers = await _playerRepository.GetTopSixPlayerByExperience(username, minExperience, maxExperience);
+            List<Player> enemyPlayers = await _playerRepository.GetTopSixPlayersByExperience(username, minExperience, maxExperience);
             List<EnemyDto> enemies = new();
 
             foreach (Player enemyPlayer in enemyPlayers)

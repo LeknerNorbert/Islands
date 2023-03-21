@@ -21,11 +21,12 @@ namespace Web.Controllers
 
         [HttpGet]
         [Authorize]
-        public async Task<IActionResult> GetAllExchange()
+        public async Task<IActionResult> GetAllExchanges()
         {
             try
             {
-                List<ExchangeDto> exchanges = await _exchangeService.GetAllExchangeAsync();
+                string username = User.Claims.First(c => c.Type == "Username").Value;
+                List<ExchangeDto> exchanges = await _exchangeService.GetAllExchangesAsync(username);
                 return Ok(exchanges);
             }
             catch (Exception ex)
@@ -36,12 +37,12 @@ namespace Web.Controllers
 
         [HttpGet]
         [Authorize]
-        public async Task<IActionResult> GetAllMyExchange()
+        public async Task<IActionResult> GetAllMyExchanges()
         {
             try
             {
                 string username = User.Claims.First(c => c.Type == "Username").Value;
-                List<ExchangeDto> exchanges = await _exchangeService.GetAllExchangeByUsernameAsync(username);
+                List<ExchangeDto> exchanges = await _exchangeService.GetAllExchangesByUsernameAsync(username);
 
                 return Ok(exchanges);
             }

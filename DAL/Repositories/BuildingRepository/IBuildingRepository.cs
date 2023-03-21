@@ -7,7 +7,7 @@ namespace DAL.Repositories.BuildingRepository
     public interface IBuildingRepository
     {
         Task<int> AddBuildingAsync(Building building);
-        Task<List<Building>> GetAllBuildingByUsernameAsync(string username);
+        Task<List<Building>> GetAllBuildingsByUsernameAsync(string username);
         Task<Building> GetBuildingAsync(string username, BuildingType name);
         Task<List<CoordinateDto>> GetReservedCoordinates(string username);
         Task UpdateBuildingAsync(Building building);

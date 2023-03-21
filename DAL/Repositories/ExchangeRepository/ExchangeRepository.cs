@@ -22,24 +22,26 @@ namespace DAL.Repositories.ExchangeRepository
                 .FirstAsync(c => c.Id == id);
         }
 
-        public async Task<List<ExchangeDto>> GetAllExchangeAsync()
+        public async Task<List<ExchangeDto>> GetAllExchangesAsync(string username)
         {
             return await _context.Exchanges
-                .Where(c => c.PublishDate >= DateTime.Now.AddDays(-7))
-                .OrderBy(c => c.PublishDate)
-                .Select(c => new ExchangeDto()
+                .Include(exchange => exchange.Player)
+                    .ThenInclude(player => player.User)
+                .Where(exchange => exchange.PublishDate >= DateTime.Now.AddDays(-7) && exchange.Player.User.Username != username)
+                .OrderBy(exchange => exchange.PublishDate)
+                .Select(exchange => new ExchangeDto()
                 {
-                    Id = c.Id,
-                    Item = c.Item,
-                    Amount = c.Amount,
-                    ReplacementItem = c.ReplacementItem,
-                    ReplacementAmount = c.ReplacementAmount,
-                    PublishDate = c.PublishDate
+                    Id = exchange.Id,
+                    Item = exchange.Item,
+                    Amount = exchange.Amount,
+                    ReplacementItem = exchange.ReplacementItem,
+                    ReplacementAmount = exchange.ReplacementAmount,
+                    PublishDate = exchange.PublishDate
                 })
                 .ToListAsync();
         }
 
-        public async Task<List<ExchangeDto>> GetAllExchangeByUsernameAsync(string username)
+        public async Task<List<ExchangeDto>> GetAllExchangesByUsernameAsync(string username)
         {
             return await _context.Exchanges
                 .Include(c => c.Player)

@@ -7,7 +7,7 @@ namespace DAL.Repositories.NotificationRepository
     {
         Task AddNotificationAsync(Notification notification);
         Task<Notification> GetNotificationById(int id);
-        Task<List<NotificationDto>> GetAllNotificationByUsername(string username);
+        Task<List<NotificationDto>> GetAllNotificationsByUsername(string username);
         Task RemoveNotification(Notification notification);
     }
 }

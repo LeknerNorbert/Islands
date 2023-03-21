@@ -39,12 +39,12 @@ namespace Web.Controllers
 
         [HttpGet]
         [Authorize]
-        public async Task<IActionResult> GetAllEnemy()
+        public async Task<IActionResult> GetAllEnemies()
         {
             try
             {
                 string username = User.Claims.First(c => c.Type == "Username").Value;
-                List<EnemyDto> enemies = await _battleService.GetAllEnemyAsync(username);
+                List<EnemyDto> enemies = await _battleService.GetAllEnemiesAsync(username);
 
                 return Ok(enemies);
             }

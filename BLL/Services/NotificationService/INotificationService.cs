@@ -4,7 +4,7 @@ namespace BLL.Services.NotificationService
 {
     public interface INotificationService
     {
-        Task<List<NotificationDto>> GetAllNotificationByUsernameAsync(string username);
+        Task<List<NotificationDto>> GetAllNotificationsByUsernameAsync(string username);
         Task RemoveNotificationAsync(int id);
     }
 }

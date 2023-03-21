@@ -37,12 +37,12 @@ namespace Web.Controllers
 
         [HttpGet]
         [Authorize]
-        public async Task<IActionResult> GetAllBuilding()
+        public async Task<IActionResult> GetAllBuildings()
         {
             try
             {
                 string username = User.Claims.First(c => c.Type == "Username").Value;
-                List<BuildingDto> buildings = await _buildingService.GetAllBuildingAsync(username);
+                List<BuildingDto> buildings = await _buildingService.GetAllBuildingsAsync(username);
 
                 return Ok(buildings);
             }
@@ -54,7 +54,7 @@ namespace Web.Controllers
 
         [HttpGet]
         [Authorize]
-        public async Task<IActionResult> GetAllUnbuiltBuilding()
+        public async Task<IActionResult> GetAllUnbuiltBuildings()
         {
             try
             {

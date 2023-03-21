@@ -5,6 +5,6 @@ namespace BLL.Services.BattleService
     public interface IBattleService
     {
         Task<BattleReportDto> GetBattleReportAsync(string username, int enemyId);
-        Task<List<EnemyDto>> GetAllEnemyAsync(string username);
+        Task<List<EnemyDto>> GetAllEnemiesAsync(string username);
     }
 }
