@@ -1,17 +1,18 @@
 {
   "Name": "Templom",
   "Description": 0,
-  "SpritePath": "/assets/sprites/eu_buildings/eu_templom_1.png",
+  "ImagePath": "/assets/sprites/eu_buildings/eu_templom_1.png",
   "MaxLevel": 3,
   "CoinsForUpdate": 400,
   "IronsForUpdate": 220,
   "StonesForUpdate": 330,
   "WoodsForUpdate": 100,
-  "ProductionInterval": 30000,
-  "ProducedCoins": 25,
+  "ProductionInterval": 1000,
+  "ProducedCoins": 5,
   "ProducedIrons": 0,
   "ProducedStones": 0,
   "ProducedWoods": 0,
   "ExperienceReward": 100,
-  "BuildTime": 0
+  "BuildTime": 0,
+  "maximumProductionCount": 25
 }
