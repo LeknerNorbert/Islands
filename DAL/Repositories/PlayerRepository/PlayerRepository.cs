@@ -61,11 +61,11 @@ namespace DAL.Repositories.PlayerRepository
 
             Building? church = await _context.Buildings
                 .Include(building => building.Player)
-                .FirstOrDefaultAsync(building => building.Player.Id == player.Id && building.Type == BuildingType.Church);
+                .FirstOrDefaultAsync(building => building.Player.Id == player.Id && building.BuildingType == BuildingType.Church);
 
             Building? practiceRange = await _context.Buildings
                 .Include(building => building.Player)
-                .FirstOrDefaultAsync(building => building.Player.Id == player.Id && building.Type == BuildingType.PracticeRange);
+                .FirstOrDefaultAsync(building => building.Player.Id == player.Id && building.BuildingType == BuildingType.PracticeRange);
 
             PlayerForBattleDto playerForBattle = new()
             {
@@ -91,11 +91,11 @@ namespace DAL.Repositories.PlayerRepository
 
             Building? church = await _context.Buildings
                 .Include(building => building.Player)
-                .FirstOrDefaultAsync(building => building.Player.Id == player.Id && building.Type == BuildingType.Church);
+                .FirstOrDefaultAsync(building => building.Player.Id == player.Id && building.BuildingType == BuildingType.Church);
 
             Building? practiceRange = await _context.Buildings
                 .Include(building => building.Player)
-                .FirstOrDefaultAsync(building => building.Player.Id == player.Id && building.Type == BuildingType.PracticeRange);
+                .FirstOrDefaultAsync(building => building.Player.Id == player.Id && building.BuildingType == BuildingType.PracticeRange);
 
             PlayerForBattleDto playerForBattle = new()
             {

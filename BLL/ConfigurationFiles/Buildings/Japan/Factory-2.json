@@ -1,9 +1,10 @@
 {
+  "BuildingType": "Factory",
   "Name": "Gyár",
   "Description": 0,
   "SpritePath": "/assets/sprites/japan_buildings/japan_vasgyar_2.png",
   "MaxLevel": 3,
-  "CoinsForUpdate": 2100,
+  "CoinsForBuild": 2100,
   "IronsForUpdate": 1400,
   "StonesForUpdate": 800,
   "WoodsForUpdate": 1850,

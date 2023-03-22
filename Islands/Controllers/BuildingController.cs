@@ -1,4 +1,5 @@
-﻿using BLL.Services.BuildingService;
+﻿using BLL.Exceptions;
+using BLL.Services.BuildingService;
 using DAL.DTOs;
 using DAL.Models.Enums;
 using Microsoft.AspNetCore.Authorization;
@@ -62,6 +63,23 @@ namespace Web.Controllers
                 List<UnbuiltBuildingDto> buildings = await _buildingService.GetAllUnbuiltBuildingsAsync(username);
 
                 return Ok(buildings);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.ToString());
+            }
+        }
+
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> GetNextLevelOfBuilding(BuildingType type)
+        {
+            try
+            {
+                string username = User.Claims.First(c => c.Type == "Username").Value;
+                UnbuiltBuildingDto nextLevelBuilding = await _buildingService.GetNextLevelOfBuildingByIslandAsync(username, type);
+
+                return Ok(nextLevelBuilding);
             }
             catch (Exception ex)
             {

@@ -6,7 +6,7 @@ namespace BLL.Services.ConfigurationService
     public interface IConfigurationService
     {
         Task<BuildingConfigurationDto> GetBuildingByIslandAsync(IslandType islandType, BuildingType buildingType, int level);
-        Task<List<UnbuiltBuildingDto>> GetAllUnbuiltBuildingsByIslandAsync(IslandType islandType);
+        Task<List<BuildingConfigurationDto>> GetAllUnbuiltBuildingsByIslandAsync(IslandType islandType);
         Task<SkillsDto> GetDefaultSkillsByIslandAsync(IslandType islandType);
         Task<SkillsDto> GetMaximumSkillPointsAsync();
         Task<IslandDto> GetIslandAsync(IslandType islandType);

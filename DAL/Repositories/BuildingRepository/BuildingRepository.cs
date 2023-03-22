@@ -28,7 +28,7 @@ namespace DAL.Repositories.BuildingRepository
             return await _context.Buildings
                 .Include(building => building.Player)
                     .ThenInclude(player => player.User)
-                .FirstAsync(building => building.Player.User.Username == username && building.Type == name);
+                .FirstAsync(building => building.Player.User.Username == username && building.BuildingType == name);
         }
 
         public async Task<List<Building>> GetAllBuildingsByUsernameAsync(string username)
@@ -65,7 +65,7 @@ namespace DAL.Repositories.BuildingRepository
             Building? building = await _context.Buildings
                 .Include(building => building.Player)
                     .ThenInclude(player => player.User)
-                .FirstOrDefaultAsync(building => building.Player.User.Username == username && building.Type == buildingType);
+                .FirstOrDefaultAsync(building => building.Player.User.Username == username && building.BuildingType == buildingType);
 
             return building != null;
         }

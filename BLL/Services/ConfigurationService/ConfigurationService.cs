@@ -6,18 +6,18 @@ namespace BLL.Services.ConfigurationService
 {
     public class ConfigurationService : IConfigurationService
     {
-        public async Task<List<UnbuiltBuildingDto>> GetAllUnbuiltBuildingsByIslandAsync(IslandType islandType)
+        public async Task<List<BuildingConfigurationDto>> GetAllUnbuiltBuildingsByIslandAsync(IslandType islandType)
         {
             string[] unbuiltPaths = new string[]
             {
-                @$"..\BLL\ConfigurationFiles\UnbuiltBuildings\{islandType}\Church.json",
-                @$"..\BLL\ConfigurationFiles\UnbuiltBuildings\{islandType}\Factory.json",
-                @$"..\BLL\ConfigurationFiles\UnbuiltBuildings\{islandType}\LumberYard.json",
-                @$"..\BLL\ConfigurationFiles\UnbuiltBuildings\{islandType}\Mine.json",
-                @$"..\BLL\ConfigurationFiles\UnbuiltBuildings\{islandType}\PracticeRange.json",
+                @$"..\BLL\ConfigurationFiles\Buildings\{islandType}\Church-1.json",
+                @$"..\BLL\ConfigurationFiles\Buildings\{islandType}\Factory-1.json",
+                @$"..\BLL\ConfigurationFiles\Buildings\{islandType}\LumberYard-1.json",
+                @$"..\BLL\ConfigurationFiles\Buildings\{islandType}\Mine-1.json",
+                @$"..\BLL\ConfigurationFiles\Buildings\{islandType}\PracticeRange-1.json",
             };
 
-            List<UnbuiltBuildingDto> unbuiltBuildings = new();
+            List<BuildingConfigurationDto> unbuiltBuildings = new();
 
             foreach (string path in unbuiltPaths)
             {
@@ -27,7 +27,7 @@ namespace BLL.Services.ConfigurationService
                 }
 
                 string json = await File.ReadAllTextAsync(path);
-                UnbuiltBuildingDto? unbuiltBuilding = JsonConvert.DeserializeObject<UnbuiltBuildingDto>(json);
+                BuildingConfigurationDto? unbuiltBuilding = JsonConvert.DeserializeObject<BuildingConfigurationDto>(json);
 
                 if (unbuiltBuilding == null)
                 {

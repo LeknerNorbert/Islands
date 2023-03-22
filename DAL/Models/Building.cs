@@ -8,7 +8,7 @@ namespace DAL.Models
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        public BuildingType Type { get; set; }
+        public BuildingType BuildingType { get; set; }
         public int XCoordinate { get; set; }
         public int YCoordinate { get; set; }
         public int Level { get; set; }
