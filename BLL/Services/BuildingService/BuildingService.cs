@@ -181,7 +181,7 @@ namespace BLL.Services.BuildingService
             }
 
             BuildingConfigurationDto nextLevelConfiguration =
-                await _configurationService.GetBuildingByIslandAsync(player.SelectedIsland, building.BuildingType, building.Level);
+                await _configurationService.GetBuildingByIslandAsync(player.SelectedIsland, building.BuildingType, building.Level + 1);
 
 
             if (player.Coins < nextLevelConfiguration.CoinsForBuild ||
@@ -200,6 +200,7 @@ namespace BLL.Services.BuildingService
             player.Woods -= nextLevelConfiguration.WoodsForBuild;
             player.Stones -= nextLevelConfiguration.StonesForBuild;
             player.Woods -= nextLevelConfiguration.WoodsForBuild;
+            player.Experience += nextLevelConfiguration.ExperienceReward;
 
             await _buildingRepository.UpdateBuildingAsync(building);
             await _playerRepository.UpdatePlayerAsync(player);
@@ -207,7 +208,8 @@ namespace BLL.Services.BuildingService
             return new BuildingDto()
             {
                 Id = building.Id,
-                Name = building.BuildingType.ToString(),
+                BuildingType = nextLevelConfiguration.BuildingType,
+                Name = nextLevelConfiguration.Name,
                 XCoordinate = building.XCoordinate,
                 YCoordinate = building.YCoordinate,
                 Level = building.Level,
@@ -223,8 +225,9 @@ namespace BLL.Services.BuildingService
                 ProducedStones = nextLevelConfiguration.ProducedStones,
                 ProducedWoods = nextLevelConfiguration.ProducedWoods,
                 ExperienceReward = nextLevelConfiguration.ExperienceReward,
-                BuildDate = building.BuildDate,
-                LastCollectDate = building.LastCollectDate
+                MaximumProductionCount = nextLevelConfiguration.MaximumProductionCount,
+                BuildDate = DateTime.Now.AddMilliseconds(nextLevelConfiguration.BuildTime),
+                LastCollectDate = DateTime.Now.AddMilliseconds(nextLevelConfiguration.BuildTime)
             };
         }
         public async Task<ItemsDto> CollectItemsAsync(string username, BuildingType type)
@@ -234,7 +237,12 @@ namespace BLL.Services.BuildingService
             BuildingConfigurationDto buildingConfiguration = 
                 await _configurationService.GetBuildingByIslandAsync(player.SelectedIsland, building.BuildingType, building.Level);
 
-            int ticks = Convert.ToInt32((DateTime.Now - building.LastCollectDate).TotalMilliseconds / buildingConfiguration.ProductionInterval);
+            int ticksFromBuild = 
+                    Convert.ToInt32((DateTime.Now - building.BuildDate).TotalMilliseconds / buildingConfiguration.ProductionInterval);
+            int ticksBetweenBuildAndLastCollect = 
+                    Convert.ToInt32((building.LastCollectDate - building.BuildDate).TotalMilliseconds / buildingConfiguration.ProductionInterval);
+
+            int ticks = ticksFromBuild - ticksBetweenBuildAndLastCollect;
 
             int producedCoins = 
                 ticks * buildingConfiguration.ProducedCoins < buildingConfiguration.MaximumProductionCount ? 

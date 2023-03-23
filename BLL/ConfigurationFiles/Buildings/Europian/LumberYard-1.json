@@ -14,6 +14,6 @@
   "ProducedStones": 0,
   "ProducedWoods": 5,
   "ExperienceReward": 100,
-  "BuildTime": 0,
+  "BuildTime": 120000,
   "MaximumProductionCount": 25
 }
