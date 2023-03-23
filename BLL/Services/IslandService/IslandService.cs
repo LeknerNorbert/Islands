@@ -36,5 +36,16 @@ namespace BLL.Services.IslandService
             }
 
         }
+
+        public async Task<SkillsDto> GetDefaultSkillsByUsernameAsync(string username)
+        {
+            IslandType island = await _playerRepository.GetIslandTypeByUsernameAsync(username);
+            return await _configurationService.GetDefaultSkillsByIslandAsync(island);
+        }
+
+        public async Task<SkillsDto> GetMaximumSkillPointsAsync()
+        {
+            return await _configurationService.GetMaximumSkillPointsAsync();
+        }
     }
 }

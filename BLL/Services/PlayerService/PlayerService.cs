@@ -117,12 +117,22 @@ namespace BLL.Services.PlayerService
         public async Task UpdateSkillsAsync(string username, SkillsDto skills)
         {
             Player player = await _playerRepository.GetPlayerByUsernameAsync(username);
+
             int currentLevel = _configurationService.GetLevelByExperience(player.Experience);
+            SkillsDto maximumSkillPoints = await _configurationService.GetMaximumSkillPointsAsync();
+            SkillsDto defaultSkills = await _configurationService.GetDefaultSkillsByIslandAsync(player.SelectedIsland);
 
-            int availableSkillPoints = currentLevel - player.Intelligence - player.Strength - player.Agility;
-            int updateSkillPointsQuantity = skills.Intelligence + skills.Strength + skills.Agility;
+            int allSkillPointsInCurrentLevel = defaultSkills.Strength + defaultSkills.Intelligence + defaultSkills.Agility + currentLevel * 3;
+            int unusedSkillPoints = allSkillPointsInCurrentLevel - player.Strength - player.Intelligence - player.Agility;
 
-            if (availableSkillPoints >= updateSkillPointsQuantity)
+            if (maximumSkillPoints.Strength < player.Strength + skills.Strength || 
+                maximumSkillPoints.Intelligence < player.Intelligence + skills.Intelligence ||
+                maximumSkillPoints.Agility < player.Agility + skills.Agility)
+            {
+                throw new NotEnoughSkillPointsException("Maximum skill points reached.");
+            }
+
+            if (unusedSkillPoints >= skills.Strength + skills.Intelligence + skills.Agility)
             {
                 player.Agility += skills.Agility;
                 player.Strength += skills.Strength;
