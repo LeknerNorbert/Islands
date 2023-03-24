@@ -1,7 +1,7 @@
 {
-  "BuildingType": "Curch",
+  "BuildingType": "Church",
   "Name": "Templom",
-  "Description": 0,
+  "Description": "Passzívan pénzt termel. Csatában plusz sebzést okoz százalékos arányban. Szinttől függően több a sebzés és a termelt pénz mennyisége.",
   "SpritePath": "/assets/sprites/japan_buildings/japan_templom_2.png",
   "MaxLevel": 3,
   "CoinsForBuild": 2350,

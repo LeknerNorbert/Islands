@@ -1,7 +1,7 @@
 {
-  "BuildingType": "Curch",
+  "BuildingType": "Church",
   "Name": "Templom",
-  "Description": 0,
+  "Description": "Passzívan pénzt termel. Csatában plusz sebzést okoz százalékos arányban. Szinttől függően több a sebzés és a termelt pénz mennyisége.",
   "SpritePath": "/assets/sprites/indian_buildings/indian_templom_3.png",
   "MaxLevel": 3,
   "CoinsForBuild": 10000,

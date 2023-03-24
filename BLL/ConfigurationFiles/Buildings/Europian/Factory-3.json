@@ -1,7 +1,7 @@
 {
   "BuildingType": "Factory",
   "Name": "Gyár",
-  "Description": 0,
+  "Description": "Passzívan vasat termel. Szinttől függően több a termelt vas mennyisége.",
   "SpritePath": "/assets/sprites/eu_buildings/eu_vasgyar_3.png",
   "MaxLevel": 3,
   "CoinsForBuild": 10000,

@@ -1,7 +1,7 @@
 {
   "BuildingType": "Mine",
   "Name": "Bánya",
-  "Description": 0,
+  "Description": "Passzívan követ termel. Szinttől függően több a termelt kő mennyisége.",
   "SpritePath": "/assets/sprites/eu_buildings/eu_kogyar_3.png",
   "MaxLevel": 3,
   "CoinsForBuild": 10500,
