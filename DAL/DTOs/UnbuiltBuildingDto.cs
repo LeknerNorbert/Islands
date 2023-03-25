@@ -12,5 +12,6 @@ namespace DAL.DTOs
         public int IronsForBuild { get; set; }
         public int StonesForBuild { get; set; }
         public int WoodsForBuild { get; set; }
+        public int ExperienceReward { get; set; }
     }
 }

@@ -2,7 +2,7 @@
   "BuildingType": "LumberYard",
   "Name": "Fatelep",
   "Description": "Passzívan fát termel. Szinttől függően több a termelt fa mennyisége.",
-  "ImagePath": "/assets/sprites/indian_buildings/indian_fagyar_3.png",
+  "SpritePath": "/assets/sprites/indian_buildings/indian_fagyar_3.png",
   "MaxLevel": 3,
   "CoinsForBuild": 10250,
   "IronsForBuild": 3000,

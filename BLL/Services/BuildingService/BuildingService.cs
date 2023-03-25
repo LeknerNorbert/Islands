@@ -51,9 +51,10 @@ namespace BLL.Services.BuildingService
                 player.Stones < buildingConfiguration.StonesForBuild ||
                 player.Irons < buildingConfiguration.IronsForBuild)
             {
-                throw new NotEnoughItemsException("No enough items to build!");
+                throw new NotEnoughItemsException("There are no enough items for build.");
             }
 
+            player.Experience += buildingConfiguration.ExperienceReward;
             player.Coins -= buildingConfiguration.CoinsForBuild;
             player.Woods -= buildingConfiguration.WoodsForBuild;
             player.Stones -= buildingConfiguration.StonesForBuild;
@@ -152,7 +153,8 @@ namespace BLL.Services.BuildingService
                 CoinsForBuild = building.CoinsForBuild,
                 IronsForBuild = building.IronsForBuild,
                 StonesForBuild = building.StonesForBuild,
-                WoodsForBuild = building.WoodsForBuild
+                WoodsForBuild = building.WoodsForBuild,
+                ExperienceReward = building.ExperienceReward
             }).ToList();
         }
 
@@ -172,7 +174,8 @@ namespace BLL.Services.BuildingService
                 CoinsForBuild = nextLevelBuilding.CoinsForBuild,
                 IronsForBuild = nextLevelBuilding.IronsForBuild,
                 StonesForBuild = nextLevelBuilding.StonesForBuild,
-                WoodsForBuild = nextLevelBuilding.WoodsForBuild
+                WoodsForBuild = nextLevelBuilding.WoodsForBuild,
+                ExperienceReward = nextLevelBuilding.ExperienceReward
             };
         }
 
