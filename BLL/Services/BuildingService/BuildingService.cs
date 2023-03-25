@@ -31,19 +31,33 @@ namespace BLL.Services.BuildingService
                 throw new BuildingAlreadyExistException("Building already exist.");
             }
 
-            List<CoordinateDto> reservedCoordinates = await _buildingRepository.GetReservedCoordinates(username);
+            List<CoordinateDto> reservedCoordinates = await _buildingRepository
+                .GetReservedCoordinates(username);
 
-            if (
-                reservedCoordinates.FirstOrDefault(coordinate =>
-                coordinate.YCoordinate == buildingRequest.YCoordinate &&
-                coordinate.XCoordinate == buildingRequest.XCoordinate) != null)
+            if (reservedCoordinates.Exists(coordinate => 
+                coordinate.XCoordinate == buildingRequest.XCoordinate &&
+                coordinate.YCoordinate == buildingRequest.YCoordinate))
             {
                 throw new InvalidCoordinatesException("Invalid coordinates.");
             }
 
-            Player player = await _playerRepository.GetPlayerByUsernameAsync(username);
-            BuildingConfigurationDto configuration =
-                await _configurationService.GetBuildingByIslandAsync(player.SelectedIsland, buildingRequest.BuildingType, 1);
+            Player player = await _playerRepository
+                .GetPlayerByUsernameAsync(username);
+            BuildingConfigurationDto buildingConfiguration = await _configurationService
+                .GetBuildingByIslandAsync(player.SelectedIsland, buildingRequest.BuildingType, 1);
+
+            if (player.Coins < buildingConfiguration.CoinsForBuild ||
+                player.Woods < buildingConfiguration.WoodsForBuild ||
+                player.Stones < buildingConfiguration.StonesForBuild ||
+                player.Irons < buildingConfiguration.IronsForBuild)
+            {
+                throw new NotEnoughItemsException("No enough items to build!");
+            }
+
+            player.Coins -= buildingConfiguration.CoinsForBuild;
+            player.Woods -= buildingConfiguration.WoodsForBuild;
+            player.Stones -= buildingConfiguration.StonesForBuild;
+            player.Irons -= buildingConfiguration.IronsForBuild;
 
             Building building = new()
             {
@@ -51,33 +65,34 @@ namespace BLL.Services.BuildingService
                 XCoordinate = buildingRequest.XCoordinate,
                 YCoordinate = buildingRequest.YCoordinate,
                 Level = 1,
-                BuildDate = DateTime.Now.AddMilliseconds(configuration.BuildTime),
-                LastCollectDate = DateTime.Now.AddMilliseconds(configuration.BuildTime),
+                BuildDate = DateTime.Now.AddMilliseconds(buildingConfiguration.BuildTime),
+                LastCollectDate = DateTime.Now.AddMilliseconds(buildingConfiguration.BuildTime),
                 Player = player,
             };
 
+            await _playerRepository.UpdatePlayerAsync(player);
             int id = await _buildingRepository.AddBuildingAsync(building);
 
             return new BuildingDto()
             {
                 Id = id,
-                BuildingType = configuration.BuildingType,
-                Name = configuration.Name,
+                BuildingType = buildingConfiguration.BuildingType,
+                Name = buildingConfiguration.Name,
                 XCoordinate = building.XCoordinate,
                 YCoordinate = building.YCoordinate,
                 Level = building.Level,
-                MaxLevel = configuration.MaxLevel,
-                Description = configuration.Description,
-                SpritePath = configuration.SpritePath,
-                CoinsForBuild = configuration.CoinsForBuild,
-                IronsForBuild = configuration.IronsForBuild,
-                StonesForBuild = configuration.StonesForBuild,
-                WoodsForBuild = configuration.WoodsForBuild,
-                ProducedCoins = configuration.ProducedCoins,
-                ProducedIrons = configuration.ProducedIrons,
-                ProducedStones = configuration.ProducedStones,
-                ProducedWoods = configuration.ProducedWoods,
-                ExperienceReward = configuration.ExperienceReward,
+                MaxLevel = buildingConfiguration.MaxLevel,
+                Description = buildingConfiguration.Description,
+                SpritePath = buildingConfiguration.SpritePath,
+                CoinsForBuild = buildingConfiguration.CoinsForBuild,
+                IronsForBuild = buildingConfiguration.IronsForBuild,
+                StonesForBuild = buildingConfiguration.StonesForBuild,
+                WoodsForBuild = buildingConfiguration.WoodsForBuild,
+                ProducedCoins = buildingConfiguration.ProducedCoins,
+                ProducedIrons = buildingConfiguration.ProducedIrons,
+                ProducedStones = buildingConfiguration.ProducedStones,
+                ProducedWoods = buildingConfiguration.ProducedWoods,
+                ExperienceReward = buildingConfiguration.ExperienceReward,
                 BuildDate = building.BuildDate,
                 LastCollectDate = building.LastCollectDate
             };
@@ -90,7 +105,7 @@ namespace BLL.Services.BuildingService
             return buildings
                 .Select(async building =>
                 {
-                    BuildingConfigurationDto buildingConfiguration = 
+                    BuildingConfigurationDto buildingConfiguration =
                         await _configurationService.GetBuildingByIslandAsync(player.SelectedIsland, building.BuildingType, building.Level);
 
                     return new BuildingDto()
@@ -145,7 +160,8 @@ namespace BLL.Services.BuildingService
         {
             Player player = await _playerRepository.GetPlayerByUsernameAsync(username);
             Building building = await _buildingRepository.GetBuildingAsync(username, buildingType);
-            BuildingConfigurationDto nextLevelBuilding = await _configurationService.GetBuildingByIslandAsync(player.SelectedIsland, buildingType, building.Level + 1);
+            BuildingConfigurationDto nextLevelBuilding = await _configurationService
+                .GetBuildingByIslandAsync(player.SelectedIsland, buildingType, building.Level + 1);
 
             return new UnbuiltBuildingDto()
             {
@@ -154,9 +170,9 @@ namespace BLL.Services.BuildingService
                 Description = nextLevelBuilding.Description,
                 SpritePath = nextLevelBuilding.SpritePath,
                 CoinsForBuild = nextLevelBuilding.CoinsForBuild,
-                IronsForBuild = nextLevelBuilding.IronsForBuild,  
+                IronsForBuild = nextLevelBuilding.IronsForBuild,
                 StonesForBuild = nextLevelBuilding.StonesForBuild,
-                WoodsForBuild = nextLevelBuilding.WoodsForBuild   
+                WoodsForBuild = nextLevelBuilding.WoodsForBuild
             };
         }
 
