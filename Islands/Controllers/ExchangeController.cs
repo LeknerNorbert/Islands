@@ -100,7 +100,7 @@ namespace Web.Controllers
                 string username = User.Claims.First(c => c.Type == "Username").Value;
                 await _exchangeService.BuyExchangeAsync(username, id);
 
-                return StatusCode(200, "Exchange successfully buyed.");
+                return StatusCode(200, "Exchange successfully bought.");
             }
             catch (NotEnoughItemsException ex)
             {

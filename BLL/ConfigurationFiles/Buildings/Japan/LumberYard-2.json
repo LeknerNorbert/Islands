@@ -1,7 +1,7 @@
 {
   "BuildingType": "LumberYard",
   "Name": "Fatelep",
-  "Description": 0,
+  "Description": "Passzívan fát termel. Szinttől függően több a termelt fa mennyisége.",
   "SpritePath": "/assets/sprites/japan_buildings/japan_fagyar_2.png",
   "MaxLevel": 3,
   "CoinsForBuild": 2000,

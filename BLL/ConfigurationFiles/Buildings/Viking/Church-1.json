@@ -1,7 +1,7 @@
 {
   "BuildingType": "Church",
   "Name": "Templom",
-  "Description": 0,
+  "Description": "Passzívan pénzt termel. Csatában plusz sebzést okoz százalékos arányban. Szinttől függően több a sebzés és a termelt pénz mennyisége.",
   "SpritePath": "/assets/sprites/viking_buildings/viking_templom_1.png",
   "MaxLevel": 3,
   "CoinsForBuild": 450,

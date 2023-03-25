@@ -1,7 +1,7 @@
 {
   "BuildingType": "PracticeRange",
   "Name": "Kiképző",
-  "Description": 0,
+  "Description": "Passzívan pénzt termel. Csatában a kritikus találat sebézését növeli. Szinttől függően több a sebéz kritikus támadás esetén és a termelt pénz mennyisége.",
   "SpritePath": "/assets/sprites/indian_buildings/indian_kikepzo_3.png",
   "MaxLevel": 3,
   "CoinsForBuild": 10500,
