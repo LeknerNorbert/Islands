@@ -77,12 +77,12 @@ namespace Web.Controllers
 
         [HttpPut]
         [Authorize]
-        public async Task<IActionResult> UpdateItems(ItemsDto items)
+        public async Task<IActionResult> CollectRewards(ItemsDto items)
         {
             try
             {
                 string username = User.Claims.First(claim => claim.Type == "Username").Value;
-                await _playerService.UpdatePlayerItemsAsync(username, items);
+                await _playerService.UpdateItemsAsync(username, items);
 
                 return Ok("Items has been updated!");
             }
