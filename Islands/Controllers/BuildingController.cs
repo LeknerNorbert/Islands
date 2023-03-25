@@ -106,12 +106,12 @@ namespace Web.Controllers
 
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> CollectItems(BuildingType type)
+        public async Task<IActionResult> CollectItems(CollectRequestDto collectRequest)
         {
             try
             {
                 string username = User.Claims.First(c => c.Type == "Username").Value;
-                ItemsDto receivedItems = await _buildingService.CollectItemsAsync(username, type);
+                ItemsDto receivedItems = await _buildingService.CollectItemsAsync(username, collectRequest);
 
                 return Ok(receivedItems);
             }

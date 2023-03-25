@@ -1,25 +1,25 @@
 {
   "SpritePath": "/assets/europian_island.png",
-  "BuildingAreas": [
-    {
-      "XCoordinate": 7,
-      "YCoordinate": 4
-    },
+  "BuildableLocations": [
     {
       "XCoordinate": 6,
-      "YCoordinate": 8
+      "YCoordinate": 3
     },
     {
-      "XCoordinate": 11,
-      "YCoordinate": 10
-    },
-    {
-      "XCoordinate": 16,
-      "YCoordinate": 12
-    },
-    {
-      "XCoordinate": 13,
+      "XCoordinate": 5,
       "YCoordinate": 7
+    },
+    {
+      "XCoordinate": 10,
+      "YCoordinate": 9
+    },
+    {
+      "XCoordinate": 15,
+      "YCoordinate": 11
+    },
+    {
+      "XCoordinate": 12,
+      "YCoordinate": 6
     }
   ],
   "NPCRoutes": [

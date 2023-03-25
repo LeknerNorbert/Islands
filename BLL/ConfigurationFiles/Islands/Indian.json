@@ -1,25 +1,25 @@
 {
   "SpritePath": "/assets/indian-island.png",
-  "BuildingAreas": [
+  "BuildableLocations": [
     {
-      "XCoordinate": 14,
-      "YCoordinate": 2
-    },
-    {
-      "XCoordinate": 9,
-      "YCoordinate": 6
+      "XCoordinate": 13,
+      "YCoordinate": 1
     },
     {
       "XCoordinate": 8,
+      "YCoordinate": 5
+    },
+    {
+      "XCoordinate": 7,
+      "YCoordinate": 11
+    },
+    {
+      "XCoordinate": 4,
       "YCoordinate": 12
     },
     {
-      "XCoordinate": 5,
-      "YCoordinate": 13
-    },
-    {
-      "XCoordinate": 18,
-      "YCoordinate": 13
+      "XCoordinate": 17,
+      "YCoordinate": 12
     }
   ],
   "NPCRoutes": [

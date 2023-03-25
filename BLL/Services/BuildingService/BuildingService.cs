@@ -31,14 +31,6 @@ namespace BLL.Services.BuildingService
                 throw new BuildingAlreadyExistException("Building already exist.");
             }
 
-            if (buildingRequest.XCoordinate > 25 ||
-                buildingRequest.YCoordinate < 0 ||
-                buildingRequest.YCoordinate > 15 ||
-                buildingRequest.YCoordinate < 0)
-            {
-                throw new InvalidCoordinatesException("Invalid coordinates.");
-            }
-
             List<CoordinateDto> reservedCoordinates = await _buildingRepository.GetReservedCoordinates(username);
 
             if (
@@ -172,8 +164,8 @@ namespace BLL.Services.BuildingService
         {
             Player player = await _playerRepository.GetPlayerByUsernameAsync(username);
             Building building = await _buildingRepository.GetBuildingAsync(username, type);
-            BuildingConfigurationDto currentConfiguration = 
-                await _configurationService.GetBuildingByIslandAsync(player.SelectedIsland, building.BuildingType, building.Level);
+            BuildingConfigurationDto currentConfiguration = await _configurationService
+                .GetBuildingByIslandAsync(player.SelectedIsland, building.BuildingType, building.Level);
 
             if (currentConfiguration.MaxLevel <= building.Level)
             {
@@ -230,34 +222,36 @@ namespace BLL.Services.BuildingService
                 LastCollectDate = DateTime.Now.AddMilliseconds(nextLevelConfiguration.BuildTime)
             };
         }
-        public async Task<ItemsDto> CollectItemsAsync(string username, BuildingType type)
+        public async Task<ItemsDto> CollectItemsAsync(string username, CollectRequestDto collectRequest)
         {
-            Player player = await _playerRepository.GetPlayerByUsernameAsync(username);
-            Building building = await _buildingRepository.GetBuildingAsync(username, type);
-            BuildingConfigurationDto buildingConfiguration = 
-                await _configurationService.GetBuildingByIslandAsync(player.SelectedIsland, building.BuildingType, building.Level);
+            Player player = await _playerRepository
+                .GetPlayerByUsernameAsync(username);
+            Building building = await _buildingRepository
+                .GetBuildingAsync(username, collectRequest.BuildingType);
+            BuildingConfigurationDto buildingConfiguration = await _configurationService
+                .GetBuildingByIslandAsync(player.SelectedIsland, building.BuildingType, building.Level);
 
-            int ticksFromBuild = 
-                    Convert.ToInt32((DateTime.Now - building.BuildDate).TotalMilliseconds / buildingConfiguration.ProductionInterval);
-            int ticksBetweenBuildAndLastCollect = 
-                    Convert.ToInt32((building.LastCollectDate - building.BuildDate).TotalMilliseconds / buildingConfiguration.ProductionInterval);
+            int ticksFromCurrentCollectBuild = Convert
+                .ToInt32((collectRequest.CollectDate - building.BuildDate).TotalMilliseconds / buildingConfiguration.ProductionInterval);
+            int ticksBetweenBuildAndLastCollect = Convert
+                .ToInt32((building.LastCollectDate - building.BuildDate).TotalMilliseconds / buildingConfiguration.ProductionInterval);
 
-            int ticks = ticksFromBuild - ticksBetweenBuildAndLastCollect;
+            int ticks = ticksFromCurrentCollectBuild - ticksBetweenBuildAndLastCollect;
 
-            int producedCoins = 
-                ticks * buildingConfiguration.ProducedCoins < buildingConfiguration.MaximumProductionCount ? 
+            int producedCoins =
+                ticks * buildingConfiguration.ProducedCoins < buildingConfiguration.MaximumProductionCount ?
                 ticks * buildingConfiguration.ProducedCoins : buildingConfiguration.MaximumProductionCount;
-            int producedWoods = 
-                ticks * buildingConfiguration.ProducedWoods < buildingConfiguration.MaximumProductionCount ? 
+            int producedWoods =
+                ticks * buildingConfiguration.ProducedWoods < buildingConfiguration.MaximumProductionCount ?
                 ticks * buildingConfiguration.ProducedWoods : buildingConfiguration.MaximumProductionCount;
-            int producedStones = 
-                ticks * buildingConfiguration.ProducedStones < buildingConfiguration.MaximumProductionCount ? 
+            int producedStones =
+                ticks * buildingConfiguration.ProducedStones < buildingConfiguration.MaximumProductionCount ?
                 ticks * buildingConfiguration.ProducedStones : buildingConfiguration.MaximumProductionCount;
-            int producedIrons = 
-                ticks * buildingConfiguration.ProducedIrons < buildingConfiguration.MaximumProductionCount ? 
+            int producedIrons =
+                ticks * buildingConfiguration.ProducedIrons < buildingConfiguration.MaximumProductionCount ?
                 ticks * buildingConfiguration.ProducedIrons : buildingConfiguration.MaximumProductionCount;
 
-            building.LastCollectDate = DateTime.Now;
+            building.LastCollectDate = collectRequest.CollectDate;
 
             player.Coins += producedCoins;
             player.Woods += producedWoods;

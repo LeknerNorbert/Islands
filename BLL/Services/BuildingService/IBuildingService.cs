@@ -10,6 +10,6 @@ namespace BLL.Services.BuildingService
         Task<List<UnbuiltBuildingDto>> GetAllUnbuiltBuildingsAsync(string username);
         Task<UnbuiltBuildingDto> GetNextLevelOfBuildingByIslandAsync(string username, BuildingType buildingType);
         Task<BuildingDto> UpgradeBuildingAsync(string username, BuildingType buildingType);
-        Task<ItemsDto> CollectItemsAsync(string username, BuildingType buildingType);
+        Task<ItemsDto> CollectItemsAsync(string username, CollectRequestDto collectRequest);
     }
 }

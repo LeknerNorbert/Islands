@@ -1,25 +1,25 @@
 {
   "SpritePath": "/assets/japanese_island.png",
-  "BuildingAreas": [
+  "BuildableLocations": [
     {
-      "XCoordinate": 4,
-      "YCoordinate": 2
+      "XCoordinate": 3,
+      "YCoordinate": 1
     },
     {
-      "XCoordinate": 8,
-      "YCoordinate": 9
+      "XCoordinate": 7,
+      "YCoordinate": 8
+    },
+    {
+      "XCoordinate": 13,
+      "YCoordinate": 3
     },
     {
       "XCoordinate": 14,
-      "YCoordinate": 4
+      "YCoordinate": 13
     },
     {
-      "XCoordinate": 15,
-      "YCoordinate": 14
-    },
-    {
-      "XCoordinate": 17,
-      "YCoordinate": 9
+      "XCoordinate": 16,
+      "YCoordinate": 8
     }
   ],
   "NPCRoutes": [

@@ -1,25 +1,25 @@
 {
   "SpritePath": "/assets/viking_island.png",
-  "BuildingAreas": [
+  "BuildableLocations": [
     {
-      "XCoordinate": 13,
-      "YCoordinate": 3
+      "XCoordinate": 12,
+      "YCoordinate": 2
+    },
+    {
+      "XCoordinate": 15,
+      "YCoordinate": 4
     },
     {
       "XCoordinate": 16,
-      "YCoordinate": 5
-    },
-    {
-      "XCoordinate": 17,
-      "YCoordinate": 9
-    },
-    {
-      "XCoordinate": 14,
-      "YCoordinate": 11
-    },
-    {
-      "XCoordinate": 10,
       "YCoordinate": 8
+    },
+    {
+      "XCoordinate": 13,
+      "YCoordinate": 10
+    },
+    {
+      "XCoordinate": 9,
+      "YCoordinate": 7
     }
   ],
   "NPCRoutes": [
