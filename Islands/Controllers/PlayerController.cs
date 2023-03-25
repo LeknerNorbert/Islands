@@ -74,5 +74,22 @@ namespace Web.Controllers
                 return BadRequest(ex.ToString());
             }
         }
+
+        [HttpPut]
+        [Authorize]
+        public async Task<IActionResult> StartSlotMachine(ItemsDto items)
+        {
+            try
+            {
+                string username = User.Claims.First(claim => claim.Type == "Username").Value;
+                await _playerService.UpdatePlayerItemsAsync(username, items);
+
+                return Ok("Items has been updated!");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.ToString());
+            }
+        }
     }
 }

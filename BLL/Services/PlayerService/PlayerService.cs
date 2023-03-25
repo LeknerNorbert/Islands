@@ -145,5 +145,14 @@ namespace BLL.Services.PlayerService
                 throw new NotEnoughSkillPointsException("No enough skill points.");
             }
         }
+        public async Task UpdatePlayerItemsAsync(string username, ItemsDto items)
+        {
+            Player player = await _playerRepository.GetPlayerByUsernameAsync(username);
+
+            if (player.Coins == 0)
+            {
+                throw new Exception("Not enough coins!");
+            }
+        }
     }
 }

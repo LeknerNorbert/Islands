@@ -8,5 +8,6 @@ namespace BLL.Services.PlayerService
         Task<PlayerDto> GetPlayerByUsernameAsync(string username);
         Task<PlayerDto> AddPlayerAsync(string username, IslandType name);
         Task UpdateSkillsAsync(string username, SkillsDto skills);
+        Task UpdatePlayerItemsAsync(string username, ItemsDto items);
     }
 }
