@@ -145,14 +145,21 @@ namespace BLL.Services.PlayerService
                 throw new NotEnoughSkillPointsException("No enough skill points.");
             }
         }
-        public async Task UpdatePlayerItemsAsync(string username, ItemsDto items)
+        public async Task UpdateItemsAsync(string username, ItemsDto items)
         {
             Player player = await _playerRepository.GetPlayerByUsernameAsync(username);
 
-            if (player.Coins == 0)
+            if (player.Coins + items.Coins < 0)
             {
-                throw new Exception("Not enough coins!");
+                throw new NotEnoughItemsException("No enough items.");
             }
+
+            player.Coins += items.Coins;
+            player.Woods += player.Woods;
+            player.Stones += player.Stones;
+            player.Irons += player.Irons;
+
+            await _playerRepository.UpdatePlayerAsync(player);
         }
     }
 }

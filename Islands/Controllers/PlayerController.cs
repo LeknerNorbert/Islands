@@ -77,7 +77,7 @@ namespace Web.Controllers
 
         [HttpPut]
         [Authorize]
-        public async Task<IActionResult> StartSlotMachine(ItemsDto items)
+        public async Task<IActionResult> UpdateItems(ItemsDto items)
         {
             try
             {
