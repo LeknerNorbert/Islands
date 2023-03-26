@@ -8,7 +8,7 @@
   "IronsForBuild": 8250,
   "StonesForBuild": 2500,
   "WoodsForBuild": 5500,
-  "ProductionInterval": 1000,
+  "ProductionInterval": 30000,
   "ProducedCoins": 30,
   "ProducedIrons": 0,
   "ProducedStones": 0,
