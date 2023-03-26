@@ -155,9 +155,9 @@ namespace BLL.Services.PlayerService
             }
 
             player.Coins += items.Coins;
-            player.Woods += player.Woods;
-            player.Stones += player.Stones;
-            player.Irons += player.Irons;
+            player.Woods += items.Woods;
+            player.Stones += items.Stones;
+            player.Irons += items.Irons;
 
             await _playerRepository.UpdatePlayerAsync(player);
         }

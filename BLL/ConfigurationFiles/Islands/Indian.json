@@ -24,6 +24,10 @@
   ],
   "NPCRoutes": [
     {
+      "XCoordinate": 16,
+      "YCoordinate": 6
+    },
+    {
       "XCoordinate": 9,
       "YCoordinate": 26
     },

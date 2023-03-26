@@ -58,7 +58,7 @@ namespace BLL.Services.AuthService
             };
 
             await _userRepository.AddUserAsync(user);
-            SendEmailValidationEmail(user.Email, validationToken);
+            //SendEmailValidationEmail(user.Email, validationToken);
         }
 
         public async Task ResendVerifyEmailAsync(string username)
