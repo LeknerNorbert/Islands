@@ -5,6 +5,7 @@ using DAL.Models;
 using DAL.Models.Enums;
 using DAL.Repositories.BuildingRepository;
 using DAL.Repositories.PlayerRepository;
+using System.Diagnostics;
 
 namespace BLL.Services.BuildingService
 {
@@ -245,42 +246,61 @@ namespace BLL.Services.BuildingService
         {
             Player player = await _playerRepository
                 .GetPlayerByUsernameAsync(username);
+
             Building building = await _buildingRepository
                 .GetBuildingAsync(username, collectRequest.BuildingType);
+
             BuildingConfigurationDto buildingConfiguration = await _configurationService
                 .GetBuildingByIslandAsync(player.SelectedIsland, building.BuildingType, building.Level);
 
-            int ticksFromCurrentCollectBuild = Convert
-                .ToInt32((collectRequest.CollectDate - building.BuildDate).TotalMilliseconds / buildingConfiguration.ProductionInterval);
-            int ticksBetweenBuildAndLastCollect = Convert
-                .ToInt32((building.LastCollectDate - building.BuildDate).TotalMilliseconds / buildingConfiguration.ProductionInterval);
+            int productionsFromLastCollection = 0;
+            DateTime currentProductionDate = building.BuildDate;
 
-            int ticks = ticksFromCurrentCollectBuild - ticksBetweenBuildAndLastCollect;
+            while(currentProductionDate < collectRequest.CollectDate)
+            {
+                if (currentProductionDate > building.LastCollectDate)
+                {
+                    productionsFromLastCollection++;
+                }
 
-            int producedCoins =
-                ticks * buildingConfiguration.ProducedCoins < buildingConfiguration.MaximumProductionCount ?
-                ticks * buildingConfiguration.ProducedCoins : buildingConfiguration.MaximumProductionCount;
-            int producedWoods =
-                ticks * buildingConfiguration.ProducedWoods < buildingConfiguration.MaximumProductionCount ?
-                ticks * buildingConfiguration.ProducedWoods : buildingConfiguration.MaximumProductionCount;
-            int producedStones =
-                ticks * buildingConfiguration.ProducedStones < buildingConfiguration.MaximumProductionCount ?
-                ticks * buildingConfiguration.ProducedStones : buildingConfiguration.MaximumProductionCount;
-            int producedIrons =
-                ticks * buildingConfiguration.ProducedIrons < buildingConfiguration.MaximumProductionCount ?
-                ticks * buildingConfiguration.ProducedIrons : buildingConfiguration.MaximumProductionCount;
+                currentProductionDate = currentProductionDate.AddMilliseconds(buildingConfiguration.ProductionInterval);
+            }
 
+            int collectedCoins = productionsFromLastCollection * buildingConfiguration.ProducedCoins;
+            int collectedWoods = productionsFromLastCollection * buildingConfiguration.ProducedWoods;
+            int collectedStones = productionsFromLastCollection * buildingConfiguration.ProducedStones;
+            int collectedIrons = productionsFromLastCollection * buildingConfiguration.ProducedIrons;
+
+            if (collectedCoins > buildingConfiguration.MaximumProductionCount)
+            {
+                collectedCoins = buildingConfiguration.MaximumProductionCount;
+            }
+
+            if (collectedWoods > buildingConfiguration.MaximumProductionCount)
+            {
+                collectedWoods = buildingConfiguration.MaximumProductionCount;
+            }
+
+            if (collectedStones > buildingConfiguration.MaximumProductionCount)
+            {
+                collectedStones = buildingConfiguration.MaximumProductionCount;
+            }
+
+            if (collectedIrons > buildingConfiguration.MaximumProductionCount)
+            {
+                collectedIrons = buildingConfiguration.MaximumProductionCount;
+            }
+
+            player.Coins += collectedCoins;
+            player.Woods += collectedWoods;
+            player.Stones += collectedStones;
+            player.Irons += collectedIrons;
             building.LastCollectDate = collectRequest.CollectDate;
-
-            player.Coins += producedCoins;
-            player.Woods += producedWoods;
-            player.Stones += producedStones;
-            player.Irons += producedIrons;
 
             await _playerRepository.UpdatePlayerAsync(player);
             await _buildingRepository.UpdateBuildingAsync(building);
 
-            return new ItemsDto(producedCoins, producedWoods, producedStones, producedIrons);
+            return new ItemsDto(collectedCoins, collectedWoods, collectedStones, collectedIrons);
         }
     }
 }
