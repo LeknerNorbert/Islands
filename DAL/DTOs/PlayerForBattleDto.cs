@@ -4,6 +4,7 @@
     {
         public int Id { get; set; }
         public string Username { get; set; } = string.Empty;
+        public int Experience { get; set; }
         public int Health { get; set; }
         public int Strength { get; set; }
         public int Intelligence { get; set; }

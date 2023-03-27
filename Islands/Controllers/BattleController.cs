@@ -18,12 +18,12 @@ namespace Web.Controllers
 
         [HttpGet]
         [Authorize]
-        public async Task<IActionResult> StartBattle(int enemyId)
+        public async Task<IActionResult> StartBattle(string enemyUsername)
         {
             try
             {
                 string username = User.Claims.First(c => c.Type == "Username").Value;
-                BattleReportDto battleResult = await _battleService.GetBattleReportAsync(username, enemyId);
+                BattleReportDto battleResult = await _battleService.GetBattleReportAsync(username, enemyUsername);
                 
                 return Ok(battleResult);
             }

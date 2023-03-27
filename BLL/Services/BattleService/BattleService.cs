@@ -1,5 +1,6 @@
 ﻿using BLL.Exceptions;
 using BLL.Services.ConfigurationService;
+using BLL.Services.PlayerService;
 using DAL.DTOs;
 using DAL.Models;
 using DAL.Repositories.NotificationRepository;
@@ -11,6 +12,7 @@ namespace BLL.Services.BattleService
     {
         private readonly IConfigurationService _configurationService;
         private readonly IPlayerRepository _playerRepository;
+        private readonly IPlayerService _playerService;
         private readonly INotificationRepository _notificationRepository;
 
         private readonly Random random;
@@ -18,10 +20,12 @@ namespace BLL.Services.BattleService
         public BattleService(
             IConfigurationService configurationService,
             IPlayerRepository playerRepository,
+            IPlayerService playerService,
             INotificationRepository notificationRepository)
         {
             _configurationService = configurationService;
             _playerRepository = playerRepository;
+            _playerService = playerService;
             _notificationRepository = notificationRepository;
 
             random = new();
@@ -32,38 +36,67 @@ namespace BLL.Services.BattleService
             Player player = await _playerRepository.GetPlayerByUsernameAsync(username);
             int playerLevel = _configurationService.GetLevelByExperience(player.Experience);
 
-            int minLevel = playerLevel < 2 ? 0 : playerLevel - 2;
-            int maxLevel = playerLevel > 28 ? 30 : playerLevel + 2;
-            int minExperience = _configurationService.GetExperienceByLevel(minLevel);
-            int maxExperience = _configurationService.GetExperienceByLevel(maxLevel);
+            int minimumLevel = playerLevel - 1;
+            int maximumLevel = playerLevel > 28 ? 30 : playerLevel + 2;
+            int minimumExperience = _configurationService.GetExperienceByLevel(minimumLevel);
+            int maximumExperience = _configurationService.GetExperienceByLevel(maximumLevel);
 
-            List<Player> enemyPlayers = await _playerRepository.GetTopSixPlayersByExperience(username, minExperience, maxExperience);
+            List<Player> enemyPlayers = await _playerRepository
+                .GetPlayersByExperience(username, minimumExperience, maximumExperience);
+            
+            List<Player> randomTopThreeEnemyPlayers = new(3);
             List<EnemyDto> enemies = new();
 
-            foreach (Player enemyPlayer in enemyPlayers)
+            int maximumRandomEnemies;
+
+            if (enemyPlayers.Count < 5)
             {
-                EnemyConfigurationDto configuration = await _configurationService.GetEnemyByIslandAsync(enemyPlayer.SelectedIsland);
+                maximumRandomEnemies = enemyPlayers.Count;
+            }
+            else
+            {
+                maximumRandomEnemies = 5;
+            }
+
+            while (randomTopThreeEnemyPlayers.Count != maximumRandomEnemies)
+            {
+                Random random = new();
+                int randomEnemyIndex = random.Next(0, enemyPlayers.Count);
+
+                if (!randomTopThreeEnemyPlayers.Exists(enemy => enemy.Id == enemyPlayers[randomEnemyIndex].Id))
+                {
+                    randomTopThreeEnemyPlayers.Add(enemyPlayers[randomEnemyIndex]);
+                }
+            }
+
+
+            foreach (Player randomEnemyPlayer in randomTopThreeEnemyPlayers)
+            {
+                EnemyConfigurationDto enemyConfiguration = await _configurationService
+                    .GetEnemyByIslandAsync(randomEnemyPlayer.SelectedIsland);
 
                 enemies.Add(new EnemyDto()
                 {
-                    PlayerId = enemyPlayer.Id,
-                    Username = enemyPlayer.User.Username,
-                    SpritePath = configuration.SpritePath,
-                    Level = _configurationService.GetLevelByExperience(enemyPlayer.Experience)
+                    Username = randomEnemyPlayer.User.Username,
+                    SpritePath = enemyConfiguration.SpritePath,
+                    ProfileImage = enemyConfiguration.ProfileImage,
+                    Level = _configurationService.GetLevelByExperience(randomEnemyPlayer.Experience),
+                    Health = 100 + (_configurationService.GetLevelByExperience(randomEnemyPlayer.Experience) * 15)
                 });
             }
 
             return enemies;
         }
 
-        public async Task<BattleReportDto> GetBattleReportAsync(string username, int enemyId)
+        public async Task<BattleReportDto> GetBattleReportAsync(string username, string enemyUsername)
         {
-            PlayerForBattleDto player = await _playerRepository.GetPlayerForBattleByUsernameAsync(username);
-            PlayerForBattleDto enemy = await _playerRepository.GetPlayerForBattleByIdAsync(enemyId);
+            PlayerForBattleDto player = await _playerService.GetPlayerForBattleByUsernameAsync(username);
+            PlayerForBattleDto enemy = await _playerService.GetPlayerForBattleByUsernameAsync(enemyUsername);
 
-            if (player.LastBattleDate > DateTime.Now.AddMinutes(-10))
+            if (player.LastBattleDate.AddMinutes(-10) > DateTime.Now ||
+                _configurationService.GetLevelByExperience(player.Experience) < 5)
             {
-                throw new BattleNotAllowedException($"Battle is not allowed, date of your last battle is {player.LastBattleDate}");
+                throw new BattleNotAllowedException("Battle is not allowed!");
             }
 
             int winnerId = 0;
@@ -103,7 +136,7 @@ namespace BLL.Services.BattleService
                     round.Username = player.Username;
                     round.Message = battleText[txt];
                     round.Damage = damage;
-                    round.EnemyReminingHealth = enemy.Health;
+                    round.EnemyRemainingHealth = enemy.Health;
 
                     battleReports.Rounds.Add(round);
 
@@ -118,7 +151,7 @@ namespace BLL.Services.BattleService
                         round2.Username = enemy.Username;
                         round2.Message = battleText[txt2];
                         round2.Damage = damage2;
-                        round2.EnemyReminingHealth = player.Health;
+                        round2.EnemyRemainingHealth = player.Health;
 
                         battleReports.Rounds.Add(round2);
                     }

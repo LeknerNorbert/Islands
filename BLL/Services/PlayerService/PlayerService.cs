@@ -161,5 +161,30 @@ namespace BLL.Services.PlayerService
 
             await _playerRepository.UpdatePlayerAsync(player);
         }
+
+        public async Task<PlayerForBattleDto> GetPlayerForBattleByUsernameAsync(string username)
+        {
+            Player player = await _playerRepository.GetPlayerWithBuildingsByUsernameAsync(username);
+
+            Building? church = player.Buildings
+                .FirstOrDefault(building => building.BuildingType == BuildingType.Church);
+
+            Building? practiceRange = player.Buildings
+                .FirstOrDefault(building => building.BuildingType == BuildingType.PracticeRange);
+
+            return new PlayerForBattleDto()
+            {
+                Id = player.Id,
+                Username = username,
+                Experience = player.Experience,
+                Health = 100 + (_configurationService.GetLevelByExperience(player.Experience) * 15),
+                Strength = player.Strength,
+                Intelligence = player.Intelligence,
+                Agility = player.Agility,
+                ChurchLevel = church != null ? church.Level : 0,
+                PracticeRangeLevel = practiceRange != null ? practiceRange.Level : 0,
+                LastBattleDate = player.LastBattleDate,
+            };
+        }
     }
 }
