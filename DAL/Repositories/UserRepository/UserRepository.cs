@@ -19,6 +19,11 @@ namespace DAL.Repositories.UserRepository
             await _context.SaveChangesAsync();
         }
 
+        public async Task<User> GetUserByEmailAsync(string email)
+        {
+            return await _context.Users.FirstAsync(u => u.Email == email);
+        }
+
         public async Task<User> GetUserByUsernameAsync(string username)
         {
             return await _context.Users.FirstAsync(u => u.Username == username);
