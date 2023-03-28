@@ -54,7 +54,7 @@ namespace Web.Controllers
             }
         }
 
-        [HttpPost]
+        [HttpGet]
         [ValidateModel]
         [Authorize]
         public async Task<IActionResult> ResendVerifyEmail() 
