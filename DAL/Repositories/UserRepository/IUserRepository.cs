@@ -10,9 +10,9 @@ namespace DAL.Repositories.UserRepository
     public interface IUserRepository
     {
         Task<User> GetUserByUsernameAsync(string username);
-        Task<User> GetUserByEmailAsync(string email);
         Task<User> GetUserByValidationTokenAsync(string token);
         Task AddUserAsync(User user);
         Task UpdateUserAsync(User user);
+        Task<DateTime> GetEmailValidationDateByUsernameAsync(string username);
     }
 }

@@ -17,7 +17,7 @@ namespace BLL.Services.EmailService
         public void SendEmail(EmailDto request)
         {
             var message = new MimeMessage();
-            message.From.Add(MailboxAddress.Parse("leknern@gmail.com"));
+            message.From.Add(MailboxAddress.Parse("smtpislanders1234@gmail.com"));
             message.To.Add(MailboxAddress.Parse(request.Email));
             message.Subject = request.Subject;
             message.Body = new TextPart(MimeKit.Text.TextFormat.Html)

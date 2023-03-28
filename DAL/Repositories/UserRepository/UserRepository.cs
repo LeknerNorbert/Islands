@@ -19,11 +19,6 @@ namespace DAL.Repositories.UserRepository
             await _context.SaveChangesAsync();
         }
 
-        public async Task<User> GetUserByEmailAsync(string email)
-        {
-            return await _context.Users.FirstAsync(u => u.Email == email);
-        }
-
         public async Task<User> GetUserByUsernameAsync(string username)
         {
             return await _context.Users.FirstAsync(u => u.Username == username);
@@ -38,6 +33,14 @@ namespace DAL.Repositories.UserRepository
         {
             _context.Entry(user).State = EntityState.Modified;
             await _context.SaveChangesAsync();
+        }
+
+        public async Task<DateTime> GetEmailValidationDateByUsernameAsync(string username)
+        {
+            return await _context.Users
+                .Where(user => user.Username == username)
+                .Select(user => user.EmailValidationDate)
+                .FirstAsync();
         }
     }
 }

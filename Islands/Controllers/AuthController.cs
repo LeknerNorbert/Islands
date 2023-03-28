@@ -36,6 +36,7 @@ namespace Web.Controllers
         }
 
         [HttpPost]
+        [ValidateModel]
         public async Task<IActionResult> VerifyEmail(string token)
         {
             try
@@ -45,7 +46,7 @@ namespace Web.Controllers
                     return Ok("Email verified.");
                 }
 
-                return StatusCode(500, "Validation token expired");
+                return StatusCode(500, "Validation token expired.");
             }
             catch (Exception ex)
             {
@@ -54,10 +55,13 @@ namespace Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> ResendVerifyEmail(string username)
-        {
+        [ValidateModel]
+        [Authorize]
+        public async Task<IActionResult> ResendVerifyEmail() 
+        { 
             try
             {
+                string username = User.Claims.First(c => c.Type == "Username").Value;
                 await _authService.ResendVerifyEmailAsync(username);
 
                 return Ok("Email verification email sended.");
@@ -81,6 +85,25 @@ namespace Web.Controllers
             catch (LoginValidationException ex)
             {
                 return StatusCode(500, ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.ToString());
+            }
+        }
+
+        [HttpGet]
+        [Authorize]
+        [ValidateModel]
+        public async Task<IActionResult> GetEmailValidationDate()
+        {
+            try
+            {
+                string username = User.Claims.First(c => c.Type == "Username").Value;
+                DateTime emailValidationDate = await _authService
+                    .GetEmailValidationDateByUsernameAsync(username);
+
+                return Ok(emailValidationDate);
             }
             catch (Exception ex)
             {

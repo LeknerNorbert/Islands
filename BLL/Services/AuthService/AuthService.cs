@@ -58,12 +58,12 @@ namespace BLL.Services.AuthService
             };
 
             await _userRepository.AddUserAsync(user);
-            //SendEmailValidationEmail(user.Email, validationToken);
+            SendEmailValidationEmail(user.Email, validationToken);
         }
 
         public async Task ResendVerifyEmailAsync(string username)
         {
-            User user = await _userRepository.GetUserByEmailAsync(username);
+            User user = await _userRepository.GetUserByUsernameAsync(username);
 
             string validationToken = CreateRandomToken();
             user.EmailValidationToken = validationToken;
@@ -115,13 +115,25 @@ namespace BLL.Services.AuthService
             await _userRepository.UpdateUserAsync(user);
         }
 
+        public async Task<DateTime> GetEmailValidationDateByUsernameAsync(string username)
+        {
+            DateTime emailValidationDate = await _userRepository.GetEmailValidationDateByUsernameAsync(username);
+
+            if (emailValidationDate == DateTime.MinValue)
+            {
+                throw new EmailNotValidatedException("Email is not validated.");
+            }
+
+            return emailValidationDate; 
+        }
+
         private void SendEmailValidationEmail(string email, string token)
         {
             EmailDto request = new()
             {
                 Email = email,
                 Subject = "Erősítsd meg az email címed!",
-                Body = token
+                Body = $"<a href='http://localhost:3000/email-verification/{token}'>Kattints ide</a>"
             };
             _emailService.SendEmail(request);
         }
