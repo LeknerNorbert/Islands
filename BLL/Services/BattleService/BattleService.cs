@@ -93,7 +93,7 @@ namespace BLL.Services.BattleService
             PlayerForBattleDto player = await _playerService.GetPlayerForBattleByUsernameAsync(username);
             PlayerForBattleDto enemy = await _playerService.GetPlayerForBattleByUsernameAsync(enemyUsername);
 
-            if (player.LastBattleDate.AddMinutes(-10) > DateTime.Now ||
+            if (player.LastBattleDate > DateTime.Now.AddMinutes(-10) ||
                 _configurationService.GetLevelByExperience(player.Experience) < 5)
             {
                 throw new BattleNotAllowedException("Battle is not allowed!");
