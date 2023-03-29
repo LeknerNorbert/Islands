@@ -7,7 +7,7 @@ namespace BLL.Services.AuthService
         Task<string> LoginAsync(LoginRequestDto login);
         Task RegistrationAsync(RegistrationRequestDto registration);
         Task<bool> VerifyEmailAsync(string token);
-        Task ResendVerifyEmailAsync(string username);
+        Task ResendVerifyEmailAsync(string email);
         Task SetTemporaryPasswordAsync(string email);
         Task UpdatePasswordAsync(string username, PasswordChangeDto password);
         Task<DateTime> GetEmailValidationDateByUsernameAsync(string username);

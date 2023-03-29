@@ -54,15 +54,13 @@ namespace Web.Controllers
             }
         }
 
-        [HttpGet]
+        [HttpPost]
         [ValidateModel]
-        [Authorize]
-        public async Task<IActionResult> ResendVerifyEmail() 
+        public async Task<IActionResult> ResendVerifyEmail(string email) 
         { 
             try
             {
-                string username = User.Claims.First(c => c.Type == "Username").Value;
-                await _authService.ResendVerifyEmailAsync(username);
+                await _authService.ResendVerifyEmailAsync(email);
 
                 return Ok("Email verification email sended.");
             }
@@ -85,6 +83,10 @@ namespace Web.Controllers
             catch (LoginValidationException ex)
             {
                 return StatusCode(500, ex.Message);
+            }
+            catch (EmailNotValidatedException ex)
+            {
+                return StatusCode(500, ex.ToString());
             }
             catch (Exception ex)
             {

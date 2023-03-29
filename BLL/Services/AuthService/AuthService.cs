@@ -36,6 +36,11 @@ namespace BLL.Services.AuthService
 
             if (VerifyPasswordHash(login.Password, user.PasswordHash, user.PasswordSalt))
             {
+                if (user.EmailValidationDate == DateTime.MinValue)
+                {
+                    throw new EmailNotValidatedException("Email is not valited.");
+                }
+
                 return CreateToken(user);
             }
 
@@ -61,9 +66,9 @@ namespace BLL.Services.AuthService
             SendEmailValidationEmail(user.Email, validationToken);
         }
 
-        public async Task ResendVerifyEmailAsync(string username)
+        public async Task ResendVerifyEmailAsync(string email)
         {
-            User user = await _userRepository.GetUserByUsernameAsync(username);
+            User user = await _userRepository.GetUserByEmailAsync(email);
 
             string validationToken = CreateRandomToken();
             user.EmailValidationToken = validationToken;
@@ -91,7 +96,9 @@ namespace BLL.Services.AuthService
 
         public async Task SetTemporaryPasswordAsync(string email)
         {
+
             User user = await _userRepository.GetUserByEmailAsync(email);
+
             string password = CreateRandomPassword();
 
             CreatePasswordHash(password, out byte[] passwordHash, out byte[] passwordSalt);
@@ -151,6 +158,8 @@ namespace BLL.Services.AuthService
 
         private string CreateToken(User user)
         {
+            
+
             List<Claim> claims = new()
             {
                 new Claim("Email", user.Email),
