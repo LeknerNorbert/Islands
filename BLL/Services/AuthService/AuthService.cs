@@ -6,6 +6,7 @@ using DAL.Models.Enums;
 using DAL.Repositories.UserRepository;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json.Linq;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
@@ -120,6 +121,7 @@ namespace BLL.Services.AuthService
             user.PasswordSalt = passwordSalt;
 
             await _userRepository.UpdateUserAsync(user);
+            SendEmailPasswordChangeEmail(user.Email);
         }
 
         public async Task<DateTime> GetEmailValidationDateByUsernameAsync(string username)
@@ -141,6 +143,17 @@ namespace BLL.Services.AuthService
                 Email = email,
                 Subject = "Erősítsd meg az email címed!",
                 Body = $"<a href='http://localhost:3000/email-verification/{token}'>Kattints ide</a>"
+            };
+            _emailService.SendEmail(request);
+        }
+
+        private void SendEmailPasswordChangeEmail(string email) 
+        {
+            EmailDto request = new()
+            {
+                Email = email,
+                Subject = "Jelszavad megváltozott:",
+                Body = $"Jelszavad {DateTime.Now} megváltozott."
             };
             _emailService.SendEmail(request);
         }
