@@ -44,7 +44,7 @@ namespace DAL.Repositories.NotificationRepository
                     Experience = notification.Experience,
                     CreateDate = notification.CreateDate,
                 })
-                .OrderBy(notification => notification.CreateDate)
+                .OrderByDescending(notification => notification.CreateDate)
                 .ToListAsync();
         }
 
