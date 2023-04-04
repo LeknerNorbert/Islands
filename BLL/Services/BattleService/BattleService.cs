@@ -36,7 +36,7 @@ namespace BLL.Services.BattleService
             Player player = await _playerRepository.GetPlayerByUsernameAsync(username);
             int playerLevel = _configurationService.GetLevelByExperience(player.Experience);
 
-            int minimumLevel = playerLevel - 1;
+            int minimumLevel = playerLevel > 5 ? playerLevel - 1 : 5;
             int maximumLevel = playerLevel > 28 ? 30 : playerLevel + 2;
             int minimumExperience = _configurationService.GetExperienceByLevel(minimumLevel);
             int maximumExperience = _configurationService.GetExperienceByLevel(maximumLevel);
