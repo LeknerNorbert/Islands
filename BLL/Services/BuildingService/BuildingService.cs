@@ -233,6 +233,7 @@ namespace BLL.Services.BuildingService
                 IronsForBuild = nextLevelConfiguration.IronsForBuild,
                 StonesForBuild = nextLevelConfiguration.StonesForBuild,
                 WoodsForBuild = nextLevelConfiguration.WoodsForBuild,
+                ProductionInterval = nextLevelConfiguration.ProductionInterval,
                 ProducedCoins = nextLevelConfiguration.ProducedCoins,
                 ProducedIrons = nextLevelConfiguration.ProducedIrons,
                 ProducedStones = nextLevelConfiguration.ProducedStones,
