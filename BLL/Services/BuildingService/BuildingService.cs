@@ -90,6 +90,7 @@ namespace BLL.Services.BuildingService
                 IronsForBuild = buildingConfiguration.IronsForBuild,
                 StonesForBuild = buildingConfiguration.StonesForBuild,
                 WoodsForBuild = buildingConfiguration.WoodsForBuild,
+                ProductionInterval = buildingConfiguration.ProductionInterval,
                 ProducedCoins = buildingConfiguration.ProducedCoins,
                 ProducedIrons = buildingConfiguration.ProducedIrons,
                 ProducedStones = buildingConfiguration.ProducedStones,
