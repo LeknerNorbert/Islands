@@ -10,5 +10,6 @@
         public int Irons { get; set; }
         public int Coins { get; set; }
         public int Experience { get; set; }
+        public DateTime Date { get; set; }
     }
 }

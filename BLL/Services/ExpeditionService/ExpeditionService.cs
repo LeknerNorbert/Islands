@@ -206,6 +206,8 @@ namespace BLL.Services.ExpeditionService
             player.Experience += lootExperience;
             player.LastExpeditionDate = DateTime.Now;
 
+            expeditionReport.Date = player.LastExpeditionDate;
+
             await _playerRepository.UpdatePlayerAsync(player);
             await _notificationRepository.AddNotificationAsync(expeditionNotification);
 
