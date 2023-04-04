@@ -2,15 +2,12 @@
 using BLL.Services.EmailService;
 using DAL.DTOs;
 using DAL.Models;
-using DAL.Models.Enums;
 using DAL.Repositories.UserRepository;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
-using Newtonsoft.Json.Linq;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
-using System.Text;
 using System.Text.RegularExpressions;
 
 namespace BLL.Services.AuthService
@@ -64,7 +61,7 @@ namespace BLL.Services.AuthService
             };
 
             await _userRepository.AddUserAsync(user);
-            SendEmailValidationEmail(user.Email, validationToken);
+            SendEmailValidationEmail(user.Username, user.Email, validationToken);
         }
 
         public async Task ResendVerifyEmailAsync(string email)
@@ -77,7 +74,7 @@ namespace BLL.Services.AuthService
 
             await _userRepository.UpdateUserAsync(user);
 
-            SendEmailValidationEmail(user.Email, validationToken);
+            SendEmailValidationEmail(user.Username, user.Email, validationToken);
         }
 
         public async Task<bool> VerifyEmailAsync(string token)
@@ -97,7 +94,6 @@ namespace BLL.Services.AuthService
 
         public async Task SetTemporaryPasswordAsync(string email)
         {
-
             User user = await _userRepository.GetUserByEmailAsync(email);
 
             string password = CreateRandomPassword();
@@ -109,7 +105,7 @@ namespace BLL.Services.AuthService
 
             await _userRepository.UpdateUserAsync(user);
 
-            SendTemporaryPasswordEmail(email, password);
+            SendTemporaryPasswordEmail(user.Username, email, password);
         }
 
         public async Task UpdatePasswordAsync(string username, PasswordChangeDto password)
@@ -121,7 +117,7 @@ namespace BLL.Services.AuthService
             user.PasswordSalt = passwordSalt;
 
             await _userRepository.UpdateUserAsync(user);
-            SendEmailPasswordChangeEmail(user.Email);
+            SendEmailPasswordChangeEmail(user.Username, user.Email);
         }
 
         public async Task<DateTime> GetEmailValidationDateByUsernameAsync(string username)
@@ -136,50 +132,62 @@ namespace BLL.Services.AuthService
             return emailValidationDate; 
         }
 
-        private void SendEmailValidationEmail(string email, string token)
+        private void SendEmailValidationEmail(string username, string email, string token)
         {
+            string htmlTemplate = File.ReadAllText("../BLL/Templates/EmailValidationEmail.html");
+            htmlTemplate = htmlTemplate.Replace("Username", username);
+            htmlTemplate = htmlTemplate.Replace("Token", token);
+
             EmailDto request = new()
             {
                 Email = email,
                 Subject = "Erősítsd meg az email címed!",
-                Body = $"<a href='http://localhost:3000/email-verification/{token}'>Kattints ide</a>"
+                Body = htmlTemplate
             };
+
             _emailService.SendEmail(request);
         }
 
-        private void SendEmailPasswordChangeEmail(string email) 
+        private void SendEmailPasswordChangeEmail(string username, string email) 
         {
+            string htmlTemplate = File.ReadAllText("../BLL/Templates/UpdatePasswordEmail.html");
+            htmlTemplate = htmlTemplate.Replace("Username", username);
+
             EmailDto request = new()
             {
                 Email = email,
-                Subject = "Jelszavad megváltozott:",
-                Body = $"Jelszavad {DateTime.Now} megváltozott."
+                Subject = "Jelszavad megváltozott!",
+                Body = htmlTemplate
             };
+
             _emailService.SendEmail(request);
         }
 
-        private void SendTemporaryPasswordEmail(string email, string password)
+        private void SendTemporaryPasswordEmail(string username, string email, string password)
         {
+            string htmlTemplate = File.ReadAllText("../BLL/Templates/TemporaryPasswordEmail.html");
+            htmlTemplate = htmlTemplate.Replace("Username", username);
+            htmlTemplate = htmlTemplate.Replace("<span>TemporaryPassword</span>", $"<span>${password}</span>");
+
             EmailDto request = new()
             {
                 Email = email,
                 Subject = "Ideiglenes jelszó beállítva!",
-                Body = $"Az ideiglenes jelszavad: {password} (belépés után rögtön változtasd meg)."
+                Body = htmlTemplate,
             };
+
             _emailService.SendEmail(request);
         }
 
         private string CreateToken(User user)
         {
-            
-
             List<Claim> claims = new()
             {
                 new Claim("Email", user.Email),
                 new Claim("Username", user.Username)
             };
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(
+            var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(
                     _configuration.GetSection("AppSettings:Token").Value
                 ));
 
@@ -199,13 +207,13 @@ namespace BLL.Services.AuthService
         {
             using var hmac = new HMACSHA512();
             passwordSalt = hmac.Key;
-            passwordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
+            passwordHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
         }
 
         private static bool VerifyPasswordHash(string password, byte[] passwordHash, byte[] passwordSalt)
         {
             using var hmac = new HMACSHA512(passwordSalt);
-            var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
+            var computedHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
 
             return computedHash.SequenceEqual(passwordHash);
         }

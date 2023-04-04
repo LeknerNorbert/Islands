@@ -27,10 +27,10 @@ namespace BLL.Services.ExpeditionService
 
             if (player == null)
             {
-                throw new ArgumentException("Nem létező játékos!");
+                throw new ArgumentException("Player does not exist!");
             }
 
-            if (player.LastExpeditionDate > DateTime.Now.AddMinutes(-10))
+            if (player.LastExpeditionDate > DateTime.Now.AddMinutes(-1))
             {
                 throw new ExpeditionNotAllowedException($"Expedition is not allowed, date of your last expedition is {player.LastExpeditionDate}");
             }
@@ -43,9 +43,7 @@ namespace BLL.Services.ExpeditionService
             int lootCoins = 0;
             int lootExperience = 0;
 
-
             ExpeditionReportDto expeditionReport = new();
-
 
             //Expedíció nyerés szövegek
             List<string> winText = new()
