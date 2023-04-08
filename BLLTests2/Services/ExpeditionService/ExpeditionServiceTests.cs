@@ -20,32 +20,40 @@ namespace BLL.Services.ExpeditionService.Tests
         public void LootCalcTest()
         {
             //Arrange
+            int intellect = 13;
+            int difficulty = 2;
 
             // Az általad megadott számot fogja visszaadni mindig randomként
             // Random mock
             mockRandomProvider.Setup(randomProvider =>
-                randomProvider.GetRandomNumber(It.IsAny<int>(), It.IsAny<int>())).Returns(10);
+                randomProvider.GetRandomNumber(It.IsAny<int>(), It.IsAny<int>())).Returns(80);
 
             //Act
+            ExpeditionService expeditionService = new ExpeditionService(null, null, mockRandomProvider.Object);
+            int result = expeditionService.LootCalc(intellect, difficulty);
 
             //Assert
-            Assert.Fail();
+            Assert.AreEqual(145, result);
         }
 
         [TestMethod()]
         public void CoinCalcTest()
         {
             //Arrange
+            int intellect = 13;
+            int difficulty = 2;
 
             // Az általad megadott számot fogja visszaadni mindig randomként
             // Random mock
             mockRandomProvider.Setup(randomProvider =>
-                randomProvider.GetRandomNumber(It.IsAny<int>(), It.IsAny<int>())).Returns(10);
+                randomProvider.GetRandomNumber(It.IsAny<int>(), It.IsAny<int>())).Returns(150);
 
             //Act
+            ExpeditionService expeditionService = new ExpeditionService(null, null, mockRandomProvider.Object);
+            int result = expeditionService.LootCalc(intellect, difficulty);
 
             //Assert
-            Assert.Fail();
+            Assert.AreEqual(215, result);
         }
     }
 }
