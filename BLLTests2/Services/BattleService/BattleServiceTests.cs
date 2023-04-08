@@ -15,13 +15,35 @@ namespace BLL.Services.BattleService.Tests
         [TestMethod()]
         public void AttackDamageTest()
         {
-            Assert.Fail();
+            //Arrange
+            int strength = 13;
+            int agility = 12;
+            int churchLevel = 2;
+            int practiceRangeLevel = 1;
+
+            //Act
+            BattleService battleService = new BattleService(null, null, null, null);
+            int result = battleService.AttackDamage(strength, agility, churchLevel, practiceRangeLevel);
+
+
+            //Assert
+            Assert.IsTrue(result<20 & result>10);
         }
 
         [TestMethod()]
         public void DamageCalcTest()
         {
-            Assert.Fail();
+            //Arrange
+            double multiply = 1.5;
+            int strength = 13;
+            int churchLevel= 2;
+
+            //Act
+            BattleService battleService = new BattleService(null, null, null, null);
+            int result = battleService.DamageCalc(multiply, strength, churchLevel);
+
+            //Assert
+            Assert.IsTrue(result>=22 & result<=28);
         }
 
         [TestMethod()]
