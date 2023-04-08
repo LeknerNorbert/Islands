@@ -2,7 +2,6 @@
 using BLL.Services.NotificationService;
 using DAL.DTOs;
 using DAL.Models;
-using DAL.Repositories.NotificationRepository;
 using DAL.Repositories.PlayerRepository;
 
 namespace BLL.Services.ExpeditionService
@@ -216,7 +215,7 @@ namespace BLL.Services.ExpeditionService
             return expeditionReport;
         }
 
-        static int LootCalc(int intellect, Random rngLoot, int difficulty)
+        public int LootCalc(int intellect, Random rngLoot, int difficulty)
         {
             int baseLoot = rngLoot.Next(50, 100);
             double calculator = baseLoot + (intellect * 5);
@@ -237,7 +236,7 @@ namespace BLL.Services.ExpeditionService
         }
 
 
-        static int CoinCalc(int intellect, Random rngCoin, int difficulty)
+        public int CoinCalc(int intellect, Random rngCoin, int difficulty)
         {
             int baseLoot = rngCoin.Next(100, 200);
             double calculator = baseLoot + (intellect * 5);

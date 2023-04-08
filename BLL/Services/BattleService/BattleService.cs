@@ -257,7 +257,7 @@ namespace BLL.Services.BattleService
             return battleReports;
         }
 
-        private int AttackDamage(int str, int agi, int churchLvl, int trainingLvl)
+        public int AttackDamage(int str, int agi, int churchLvl, int trainingLvl)
         {
             double critChance = 10 + (agi / 2);
             int crit = random.Next(0, 100);
@@ -284,7 +284,7 @@ namespace BLL.Services.BattleService
 
         }
 
-        private int DamageCalc(double multiply, int str, int churchLvl)
+        public int DamageCalc(double multiply, int str, int churchLvl)
         {
             int min = (5 + str);
             int max = (10 + str);
@@ -298,7 +298,7 @@ namespace BLL.Services.BattleService
             return damage;
         }
 
-        private int LootCalc(int intellect)
+        public int LootCalc(int intellect)
         {
             int baseLoot = random.Next(50, 100);
 
@@ -308,7 +308,7 @@ namespace BLL.Services.BattleService
             return loot;
         }
 
-        private int CoinCalc(int intellect)
+        public int CoinCalc(int intellect)
         {
             int baseLoot = random.Next(100, 200);
 
