@@ -8,6 +8,7 @@ using BLL.Services.ExpeditionService;
 using BLL.Services.IslandService;
 using BLL.Services.NotificationService;
 using BLL.Services.PlayerService;
+using BLL.Services.RandomProvider;
 using DAL.Models.Context;
 using DAL.Repositories.BuildingRepository;
 using DAL.Repositories.ExchangeRepository;
@@ -71,6 +72,7 @@ builder.Services.AddScoped<IExpeditionService, ExpeditionService>();
 builder.Services.AddScoped<IIslandService, IslandService>();
 builder.Services.AddScoped<INotificationService, NotificationService>();
 builder.Services.AddScoped<IPlayerService, PlayerService>();
+builder.Services.AddSingleton<IRandomProvider, RandomProvider>();
 
 builder.Services.AddScoped<IBuildingRepository, BuildingRepository>();
 builder.Services.AddScoped<IExchangeRepository, ExchangeRepository>();

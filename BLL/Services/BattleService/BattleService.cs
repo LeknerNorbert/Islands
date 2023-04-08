@@ -2,6 +2,7 @@
 using BLL.Services.ConfigurationService;
 using BLL.Services.NotificationService;
 using BLL.Services.PlayerService;
+using BLL.Services.RandomProvider;
 using DAL.DTOs;
 using DAL.Models;
 using DAL.Repositories.NotificationRepository;
@@ -15,21 +16,20 @@ namespace BLL.Services.BattleService
         private readonly IPlayerRepository _playerRepository;
         private readonly IPlayerService _playerService;
         private readonly INotificationService _notificationService;
-
-        private readonly Random random;
+        private readonly IRandomProvider _randomProvider;
 
         public BattleService(
             IConfigurationService configurationService,
             IPlayerRepository playerRepository,
             IPlayerService playerService,
-            INotificationService notificationService)
+            INotificationService notificationService,
+            IRandomProvider randomProvider)
         {
             _configurationService = configurationService;
             _playerRepository = playerRepository;
             _playerService = playerService;
             _notificationService = notificationService;
-
-            random = new();
+            _randomProvider = randomProvider;
         }
 
         public async Task<List<EnemyDto>> GetAllEnemiesAsync(string username)
@@ -134,7 +134,7 @@ namespace BLL.Services.BattleService
 
                     int damage = AttackDamage(player.Strength, player.Agility, player.ChurchLevel, player.PracticeRangeLevel);
                     enemy.Health -= damage;
-                    int txt = random.Next(0, 9);
+                    int txt = _randomProvider.GetRandomNumber(0, 9);
 
                     RoundDto round = new();
 
@@ -149,7 +149,7 @@ namespace BLL.Services.BattleService
                     {
                         int damage2 = AttackDamage(enemy.Strength, enemy.Agility, enemy.ChurchLevel, enemy.PracticeRangeLevel);
                         player.Health -= damage2;
-                        int txt2 = random.Next(0, 9);
+                        int txt2 = _randomProvider.GetRandomNumber(0, 9);
 
                         RoundDto round2 = new();
 
@@ -260,7 +260,7 @@ namespace BLL.Services.BattleService
         public int AttackDamage(int str, int agi, int churchLvl, int trainingLvl)
         {
             double critChance = 10 + (agi / 2);
-            int crit = random.Next(0, 100);
+            int crit = _randomProvider.GetRandomNumber(0, 100); ;
 
             if (crit <= critChance)
             {
@@ -288,8 +288,8 @@ namespace BLL.Services.BattleService
         {
             int min = (5 + str);
             int max = (10 + str);
-            int randomDamage = random.Next(min, max);
- 
+            int randomDamage = _randomProvider.GetRandomNumber(min, max);
+
             double calculator = randomDamage * (1 + (churchLvl / 10));
             int churchDmg = Convert.ToInt32(Math.Round(calculator));
 
@@ -300,7 +300,7 @@ namespace BLL.Services.BattleService
 
         public int LootCalc(int intellect)
         {
-            int baseLoot = random.Next(50, 100);
+            int baseLoot = _randomProvider.GetRandomNumber(50, 100);
 
             double calculator = baseLoot + (intellect * 5);
             int loot = Convert.ToInt32(Math.Round(calculator));
@@ -310,7 +310,7 @@ namespace BLL.Services.BattleService
 
         public int CoinCalc(int intellect)
         {
-            int baseLoot = random.Next(100, 200);
+            int baseLoot = _randomProvider.GetRandomNumber(100, 200);
 
             double calculator = baseLoot + (intellect * 5);
             int coin = Convert.ToInt32(Math.Round(calculator));

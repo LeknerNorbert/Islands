@@ -1,5 +1,6 @@
 ﻿using BLL.Exceptions;
 using BLL.Services.NotificationService;
+using BLL.Services.RandomProvider;
 using DAL.DTOs;
 using DAL.Models;
 using DAL.Repositories.PlayerRepository;
@@ -10,16 +11,17 @@ namespace BLL.Services.ExpeditionService
     {
         private readonly IPlayerRepository _playerRepository;
         private readonly INotificationService _notificationService;
-        private readonly Random rng;
+        private readonly IRandomProvider _randomProvider;
 
 
         public ExpeditionService(
             IPlayerRepository playerRepository, 
-            INotificationService notificationService)
+            INotificationService notificationService,
+            IRandomProvider randomProvider)
         {
             _playerRepository = playerRepository;
             _notificationService = notificationService;
-            rng = new();
+            _randomProvider = randomProvider;
         }
 
         public async Task<ExpeditionReportDto> GetExpeditionReportAsync(string username, int difficulty)
@@ -69,20 +71,20 @@ namespace BLL.Services.ExpeditionService
                 "A felfedező csapat kifogyott a vízből és élelemből. Elkezdtek különböző növényeket enni és furcsa vízforrásokból ittak. Mindannyian szenvedések közt haltak meg mérgezésben. Nem volt sikeres az expedíció."
             };
 
-            int winOrLose = rng.Next(0, 9) + 1;
+            int winOrLose = _randomProvider.GetRandomNumber(0, 9) + 1;
 
             if (difficulty == 1)
             {
                 if (winOrLose <= 9) //90% esély
                 {
-                    int win = rng.Next(0, 6);
+                    int win = _randomProvider.GetRandomNumber(0, 6);
                     message = winText[win];
                     expTitle = "Sikeres expedíció";
-                    lootWoods = LootCalc(player.Intelligence, rng, difficulty);
-                    lootStones = LootCalc(player.Intelligence, rng, difficulty);
-                    lootIrons = LootCalc(player.Intelligence, rng, difficulty);
-                    lootCoins = CoinCalc(player.Intelligence, rng, difficulty);
-                    lootExperience = CoinCalc(player.Intelligence, rng, difficulty);
+                    lootWoods = LootCalc(player.Intelligence, difficulty);
+                    lootStones = LootCalc(player.Intelligence, difficulty);
+                    lootIrons = LootCalc(player.Intelligence, difficulty);
+                    lootCoins = CoinCalc(player.Intelligence, difficulty);
+                    lootExperience = CoinCalc(player.Intelligence, difficulty);
 
                     expeditionReport.Message = message;
                     expeditionReport.Title = expTitle;
@@ -95,7 +97,7 @@ namespace BLL.Services.ExpeditionService
                 }
                 else
                 {
-                    int lose = rng.Next(0, 5);
+                    int lose = _randomProvider.GetRandomNumber(0, 5);
                     message = loseText[lose];
                     expTitle = "Sikertelen expedíció";
 
@@ -113,14 +115,14 @@ namespace BLL.Services.ExpeditionService
             {
                 if (winOrLose <= 7) //70% esély
                 {
-                    int win = rng.Next(0, 6);
+                    int win = _randomProvider.GetRandomNumber(0, 6);
                     message = winText[win];
                     expTitle = "Sikeres expedíció";
-                    lootWoods = LootCalc(player.Intelligence, rng, difficulty);
-                    lootStones = LootCalc(player.Intelligence, rng, difficulty);
-                    lootIrons = LootCalc(player.Intelligence, rng, difficulty);
-                    lootCoins = CoinCalc(player.Intelligence, rng, difficulty);
-                    lootExperience = CoinCalc(player.Intelligence, rng, difficulty);
+                    lootWoods = LootCalc(player.Intelligence, difficulty);
+                    lootStones = LootCalc(player.Intelligence, difficulty);
+                    lootIrons = LootCalc(player.Intelligence, difficulty);
+                    lootCoins = CoinCalc(player.Intelligence, difficulty);
+                    lootExperience = CoinCalc(player.Intelligence, difficulty);
 
                     expeditionReport.Message = message;
                     expeditionReport.Title = expTitle;
@@ -133,7 +135,7 @@ namespace BLL.Services.ExpeditionService
                 }
                 else
                 {
-                    int lose = rng.Next(0, 5);
+                    int lose = _randomProvider.GetRandomNumber(0, 5);
                     message = loseText[lose];
                     expTitle = "Sikertelen expedíció";
 
@@ -151,14 +153,14 @@ namespace BLL.Services.ExpeditionService
             {
                 if (winOrLose <= 5) // 50% esély
                 {
-                    int win = rng.Next(0, 6);
+                    int win = _randomProvider.GetRandomNumber(0, 6);
                     message = winText[win];
                     expTitle = "Sikeres expedíció";
-                    lootWoods = LootCalc(player.Intelligence, rng, difficulty);
-                    lootStones = LootCalc(player.Intelligence, rng, difficulty);
-                    lootIrons = LootCalc(player.Intelligence, rng, difficulty);
-                    lootCoins = CoinCalc(player.Intelligence, rng, difficulty);
-                    lootExperience = CoinCalc(player.Intelligence, rng, difficulty);
+                    lootWoods = LootCalc(player.Intelligence, difficulty);
+                    lootStones = LootCalc(player.Intelligence, difficulty);
+                    lootIrons = LootCalc(player.Intelligence, difficulty);
+                    lootCoins = CoinCalc(player.Intelligence, difficulty);
+                    lootExperience = CoinCalc(player.Intelligence, difficulty);
 
                     expeditionReport.Message = message;
                     expeditionReport.Title = expTitle;
@@ -171,7 +173,7 @@ namespace BLL.Services.ExpeditionService
                 }
                 else
                 {
-                    int lose = rng.Next(0, 5);
+                    int lose = _randomProvider.GetRandomNumber(0, 5);
                     message = loseText[lose];
                     expTitle = "Sikertelen expedíció";
 
@@ -215,9 +217,9 @@ namespace BLL.Services.ExpeditionService
             return expeditionReport;
         }
 
-        public int LootCalc(int intellect, Random rngLoot, int difficulty)
+        public int LootCalc(int intellect, int difficulty)
         {
-            int baseLoot = rngLoot.Next(50, 100);
+            int baseLoot = _randomProvider.GetRandomNumber(50, 100);
             double calculator = baseLoot + (intellect * 5);
             int loot = Convert.ToInt32(Math.Round(calculator));
 
@@ -236,9 +238,9 @@ namespace BLL.Services.ExpeditionService
         }
 
 
-        public int CoinCalc(int intellect, Random rngCoin, int difficulty)
+        public int CoinCalc(int intellect, int difficulty)
         {
-            int baseLoot = rngCoin.Next(100, 200);
+            int baseLoot = _randomProvider.GetRandomNumber(100, 200);
             double calculator = baseLoot + (intellect * 5);
             int coin = Convert.ToInt32(Math.Round(calculator));
             if (difficulty == 1)
