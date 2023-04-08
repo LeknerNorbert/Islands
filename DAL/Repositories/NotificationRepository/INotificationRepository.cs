@@ -5,9 +5,10 @@ namespace DAL.Repositories.NotificationRepository
 {
     public interface INotificationRepository
     {
-        Task AddNotificationAsync(Notification notification);
-        Task<Notification> GetNotificationById(int id);
-        Task<List<NotificationDto>> GetAllNotificationsByUsername(string username);
-        Task RemoveNotification(Notification notification);
+        Task<Notification> AddNotificationAsync(Notification notification);
+        Task<Notification> GetNotificationByIdAsync(int id);
+        Task<List<NotificationDto>> GetAllNotificationsByUsernameAsync(string username);
+        Task RemoveNotificationAsync(Notification notification);
+        Task UpdateNotificationAsync(Notification notification);
     }
 }

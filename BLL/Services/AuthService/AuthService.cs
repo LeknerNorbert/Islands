@@ -132,6 +132,16 @@ namespace BLL.Services.AuthService
             return emailValidationDate; 
         }
 
+        public string GetTokenForNotificationHub()
+        {
+            User user = new()
+            {
+                Username = Guid.NewGuid().ToString(),
+                Email = Guid.NewGuid().ToString()
+            };
+            return CreateToken(user);
+        }
+
         private void SendEmailValidationEmail(string username, string email, string token)
         {
             string htmlTemplate = File.ReadAllText("../BLL/Templates/EmailValidationEmail.html");
@@ -183,8 +193,8 @@ namespace BLL.Services.AuthService
         {
             List<Claim> claims = new()
             {
+                new Claim(ClaimTypes.NameIdentifier, user.Username),
                 new Claim("Email", user.Email),
-                new Claim("Username", user.Username)
             };
 
             var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(

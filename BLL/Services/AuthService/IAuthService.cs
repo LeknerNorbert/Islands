@@ -11,5 +11,6 @@ namespace BLL.Services.AuthService
         Task SetTemporaryPasswordAsync(string email);
         Task UpdatePasswordAsync(string username, PasswordChangeDto password);
         Task<DateTime> GetEmailValidationDateByUsernameAsync(string username);
+        string GetTokenForNotificationHub();
     }
 }

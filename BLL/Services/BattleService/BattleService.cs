@@ -1,5 +1,6 @@
 ﻿using BLL.Exceptions;
 using BLL.Services.ConfigurationService;
+using BLL.Services.NotificationService;
 using BLL.Services.PlayerService;
 using DAL.DTOs;
 using DAL.Models;
@@ -13,7 +14,7 @@ namespace BLL.Services.BattleService
         private readonly IConfigurationService _configurationService;
         private readonly IPlayerRepository _playerRepository;
         private readonly IPlayerService _playerService;
-        private readonly INotificationRepository _notificationRepository;
+        private readonly INotificationService _notificationService;
 
         private readonly Random random;
 
@@ -21,12 +22,12 @@ namespace BLL.Services.BattleService
             IConfigurationService configurationService,
             IPlayerRepository playerRepository,
             IPlayerService playerService,
-            INotificationRepository notificationRepository)
+            INotificationService notificationService)
         {
             _configurationService = configurationService;
             _playerRepository = playerRepository;
             _playerService = playerService;
-            _notificationRepository = notificationRepository;
+            _notificationService = notificationService;
 
             random = new();
         }
@@ -100,6 +101,10 @@ namespace BLL.Services.BattleService
             }
 
             int winnerId = 0;
+            int losingId = 0;
+            string winnerUsername = "";
+            string losingUsername = "";
+
             int lootWoods = 0;
             int lootStones = 0;
             int lootIrons = 0;
@@ -158,6 +163,10 @@ namespace BLL.Services.BattleService
                     else
                     {
                         winnerId = player.Id;
+                        winnerUsername = player.Username;
+
+                        losingId = enemy.Id;
+                        losingUsername = enemy.Username;
 
                         lootWoods = LootCalc(enemy.Intelligence);
                         lootStones = LootCalc(enemy.Intelligence);
@@ -178,6 +187,10 @@ namespace BLL.Services.BattleService
                 else
                 {
                     winnerId = enemy.Id;
+                    winnerUsername = enemy.Username;
+
+                    losingId = player.Id;
+                    losingUsername = player.Username;
 
                     lootWoods = LootCalc(enemy.Intelligence);
                     lootStones = LootCalc(enemy.Intelligence);
@@ -198,6 +211,7 @@ namespace BLL.Services.BattleService
             }
 
             Player winnerPlayer = await _playerRepository.GetPlayerByIdAsync(winnerId);
+            Player losingPlayer = await _playerRepository.GetPlayerByIdAsync(losingId);
 
             winnerPlayer.Woods += lootWoods;
             winnerPlayer.Stones += lootStones;
@@ -209,6 +223,7 @@ namespace BLL.Services.BattleService
             {
                 Player = winnerPlayer,
                 Title = "Győztes csata",
+                Message = $"Megnyertél egy csatát {losingUsername} ellen.",
                 Woods = lootWoods,
                 Stones = lootStones,
                 Irons = lootIrons,
@@ -217,12 +232,27 @@ namespace BLL.Services.BattleService
                 CreateDate = DateTime.Now
             };
 
+            Notification losingNotification = new()
+            {
+                Player = losingPlayer,
+                Title = "Vesztes csata",
+                Message = $"{winnerUsername} megnyert egy csatát ellened.",
+                Woods = 0,
+                Stones = 0,
+                Irons = 0,
+                Coins = 0,
+                Experience = 0,
+                CreateDate = DateTime.Now
+            };
+
+
             Player battleStartPlayer = await _playerRepository.GetPlayerByUsernameAsync(username);
             battleStartPlayer.LastBattleDate = DateTime.Now;
 
             await _playerRepository.UpdatePlayerAsync(battleStartPlayer);
             await _playerRepository.UpdatePlayerAsync(winnerPlayer);
-            await _notificationRepository.AddNotificationAsync(winnerNotification);
+            await _notificationService.AddNotificationAsync(winnerNotification, winnerUsername);
+            await _notificationService.AddNotificationAsync(losingNotification, losingUsername);
 
             return battleReports;
         }

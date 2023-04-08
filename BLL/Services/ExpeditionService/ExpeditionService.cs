@@ -1,4 +1,5 @@
 ﻿using BLL.Exceptions;
+using BLL.Services.NotificationService;
 using DAL.DTOs;
 using DAL.Models;
 using DAL.Repositories.NotificationRepository;
@@ -9,15 +10,16 @@ namespace BLL.Services.ExpeditionService
     public class ExpeditionService : IExpeditionService
     {
         private readonly IPlayerRepository _playerRepository;
-        private readonly INotificationRepository _notificationRepository;
+        private readonly INotificationService _notificationService;
         private readonly Random rng;
+
 
         public ExpeditionService(
             IPlayerRepository playerRepository, 
-            INotificationRepository notificationRepository)
+            INotificationService notificationService)
         {
             _playerRepository = playerRepository;
-            _notificationRepository = notificationRepository;
+            _notificationService = notificationService;
             rng = new();
         }
 
@@ -209,7 +211,7 @@ namespace BLL.Services.ExpeditionService
             expeditionReport.Date = player.LastExpeditionDate;
 
             await _playerRepository.UpdatePlayerAsync(player);
-            await _notificationRepository.AddNotificationAsync(expeditionNotification);
+            await _notificationService.AddNotificationAsync(expeditionNotification, player.User.Username);
 
             return expeditionReport;
         }

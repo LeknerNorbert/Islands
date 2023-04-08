@@ -3,6 +3,7 @@ using BLL.Services.BattleService;
 using DAL.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace Web.Controllers
 {
@@ -22,7 +23,7 @@ namespace Web.Controllers
         {
             try
             {
-                string username = User.Claims.First(c => c.Type == "Username").Value;
+                string username = User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value;
                 BattleReportDto battleResult = await _battleService.GetBattleReportAsync(username, enemyUsername);
                 
                 return Ok(battleResult);
@@ -43,7 +44,7 @@ namespace Web.Controllers
         {
             try
             {
-                string username = User.Claims.First(c => c.Type == "Username").Value;
+                string username = User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value;
                 List<EnemyDto> enemies = await _battleService.GetAllEnemiesAsync(username);
 
                 return Ok(enemies);

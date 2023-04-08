@@ -12,13 +12,15 @@ namespace DAL.Repositories.NotificationRepository
         {
             _context = context;
         }
-        public async Task AddNotificationAsync(Notification notification)
+        public async Task<Notification> AddNotificationAsync(Notification notification)
         {
             await _context.Notifications.AddAsync(notification);
             await _context.SaveChangesAsync();
+
+            return notification;
         }
 
-        public async Task<Notification> GetNotificationById(int id)
+        public async Task<Notification> GetNotificationByIdAsync(int id)
         {
             return await _context.Notifications
                 .Include(notification => notification.Player)
@@ -26,7 +28,7 @@ namespace DAL.Repositories.NotificationRepository
                 .FirstAsync(notification => notification.Id == id);
         }
 
-        public async Task<List<NotificationDto>> GetAllNotificationsByUsername(string username)
+        public async Task<List<NotificationDto>> GetAllNotificationsByUsernameAsync(string username)
         {
             return await _context.Notifications
                 .Include(notification => notification.Player)
@@ -42,15 +44,22 @@ namespace DAL.Repositories.NotificationRepository
                     Irons = notification.Irons,
                     Coins = notification.Coins,
                     Experience = notification.Experience,
+                    IsOpened = notification.IsOpened,
                     CreateDate = notification.CreateDate,
                 })
                 .OrderByDescending(notification => notification.CreateDate)
                 .ToListAsync();
         }
 
-        public async Task RemoveNotification(Notification notification)
+        public async Task RemoveNotificationAsync(Notification notification)
         {
             _context.Notifications.Remove(notification);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task UpdateNotificationAsync(Notification notification)
+        {
+            _context.Entry(notification).State = EntityState.Modified;
             await _context.SaveChangesAsync();
         }
     }

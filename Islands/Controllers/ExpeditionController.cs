@@ -3,6 +3,7 @@ using BLL.Services.ExpeditionService;
 using DAL.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace Web.Controllers
 {
@@ -23,7 +24,7 @@ namespace Web.Controllers
         {
             try
             {
-                string username = User.Claims.First(c => c.Type == "Username").Value;
+                string username = User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value;
                 ExpeditionReportDto expeditionResult = await _expeditionService.GetExpeditionReportAsync(username, difficulty);
                 
                 return Ok(expeditionResult);

@@ -15,6 +15,7 @@ namespace DAL.Models
         public int Coins { get; set; }
         public int Experience { get; set; }
         public DateTime CreateDate { get; set; }
+        public bool IsOpened { get; set; }
         public Player? Player { get; set; }
     }
 }

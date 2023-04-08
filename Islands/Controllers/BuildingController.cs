@@ -5,6 +5,7 @@ using DAL.Models.Enums;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace Web.Controllers
 {
@@ -25,7 +26,7 @@ namespace Web.Controllers
         {
             try
             {
-                string username = User.Claims.First(c => c.Type == "Username").Value;
+                string username = User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value;
                 BuildingDto addedBuilding = await _buildingService.AddBuildingAsync(username, building);
 
                 return Ok(addedBuilding);
@@ -42,7 +43,7 @@ namespace Web.Controllers
         {
             try
             {
-                string username = User.Claims.First(c => c.Type == "Username").Value;
+                string username = User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value;
                 List<BuildingDto> buildings = await _buildingService.GetAllBuildingsAsync(username);
 
                 return Ok(buildings);
@@ -59,7 +60,7 @@ namespace Web.Controllers
         {
             try
             {
-                string username = User.Claims.First(c => c.Type == "Username").Value;
+                string username = User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value;
                 List<UnbuiltBuildingDto> buildings = await _buildingService.GetAllUnbuiltBuildingsAsync(username);
 
                 return Ok(buildings);
@@ -76,7 +77,7 @@ namespace Web.Controllers
         {
             try
             {
-                string username = User.Claims.First(c => c.Type == "Username").Value;
+                string username = User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value;
                 UnbuiltBuildingDto nextLevelBuilding = await _buildingService.GetNextLevelOfBuildingByIslandAsync(username, type);
 
                 return Ok(nextLevelBuilding);
@@ -93,7 +94,7 @@ namespace Web.Controllers
         {
             try
             {
-                string username = User.Claims.First(c => c.Type == "Username").Value;
+                string username = User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value;
                 BuildingDto building = await _buildingService.UpgradeBuildingAsync(username, type);
 
                 return Ok(building);
@@ -110,7 +111,7 @@ namespace Web.Controllers
         {
             try
             {
-                string username = User.Claims.First(c => c.Type == "Username").Value;
+                string username = User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value;
                 ItemsDto receivedItems = await _buildingService.CollectItemsAsync(username, collectRequest);
 
                 return Ok(receivedItems);

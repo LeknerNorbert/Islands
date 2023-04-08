@@ -4,6 +4,7 @@ using DAL.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 using Web.Filters;
 
 namespace Web.Controllers
@@ -25,7 +26,7 @@ namespace Web.Controllers
         {
             try
             {
-                string username = User.Claims.First(c => c.Type == "Username").Value;
+                string username = User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value;
                 List<ExchangeDto> exchanges = await _exchangeService.GetAllExchangesAsync(username);
                 return Ok(exchanges);
             }
@@ -41,7 +42,7 @@ namespace Web.Controllers
         {
             try
             {
-                string username = User.Claims.First(c => c.Type == "Username").Value;
+                string username = User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value;
                 List<ExchangeDto> exchanges = await _exchangeService.GetAllExchangesByUsernameAsync(username);
 
                 return Ok(exchanges);
@@ -59,7 +60,7 @@ namespace Web.Controllers
         {
             try
             {
-                string username = User.Claims.First(c => c.Type == "Username").Value;
+                string username = User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value;
                 await _exchangeService.AddExchangeAsync(username, exchange);
 
                 return Ok("Exchange successfully created.");
@@ -80,7 +81,7 @@ namespace Web.Controllers
         {
             try
             {
-                string username = User.Claims.First(c => c.Type == "Username").Value;
+                string username = User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value;
                 await _exchangeService.RemoveExchangeAsync(id);
 
                 return Ok("Exchange successfully deleted.");
@@ -97,7 +98,7 @@ namespace Web.Controllers
         {
             try
             {
-                string username = User.Claims.First(c => c.Type == "Username").Value;
+                string username = User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value;
                 await _exchangeService.BuyExchangeAsync(username, id);
 
                 return StatusCode(200, "Exchange successfully bought.");

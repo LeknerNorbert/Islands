@@ -5,6 +5,7 @@ using DAL.Models.Enums;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace Web.Controllers
 {
@@ -25,7 +26,7 @@ namespace Web.Controllers
         {
             try
             {
-                string username = User.Claims.First(claim => claim.Type == "Username").Value;
+                string username = User.Claims.First(claim => claim.Type == ClaimTypes.NameIdentifier).Value;
                 PlayerDto player = await _playerService.GetPlayerByUsernameAsync(username);
 
                 return Ok(player);
@@ -46,7 +47,7 @@ namespace Web.Controllers
         {
             try
             {
-                string username = User.Claims.First(claim => claim.Type == "Username").Value;
+                string username = User.Claims.First(claim => claim.Type == ClaimTypes.NameIdentifier).Value;
                 PlayerDto player = await _playerService.AddPlayerAsync(username, island);
 
                 return Ok(player);
@@ -64,7 +65,7 @@ namespace Web.Controllers
         {
             try
             {
-                string username = User.Claims.First(claim => claim.Type == "Username").Value;
+                string username = User.Claims.First(claim => claim.Type == ClaimTypes.NameIdentifier).Value;
                 await _playerService.UpdateSkillsAsync(username, skillPoints);
 
                 return Ok("Skill points has been updated");
@@ -81,7 +82,7 @@ namespace Web.Controllers
         {
             try
             {
-                string username = User.Claims.First(claim => claim.Type == "Username").Value;
+                string username = User.Claims.First(claim => claim.Type == ClaimTypes.NameIdentifier).Value;
                 await _playerService.UpdateItemsAsync(username, items);
 
                 return Ok("Items has been updated!");

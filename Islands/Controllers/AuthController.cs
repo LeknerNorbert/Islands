@@ -4,6 +4,7 @@ using DAL.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 using Web.Filters;
 
 namespace Web.Controllers
@@ -101,7 +102,7 @@ namespace Web.Controllers
         {
             try
             {
-                string username = User.Claims.First(c => c.Type == "Username").Value;
+                string username = User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value;
                 DateTime emailValidationDate = await _authService
                     .GetEmailValidationDateByUsernameAsync(username);
 
@@ -135,7 +136,7 @@ namespace Web.Controllers
         {
             try
             {
-                string username = User.Claims.First(c => c.Type == "Username").Value;
+                string username = User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value;
                 await _authService.UpdatePasswordAsync(username, passwordReset);
 
                 return Ok("Password successfully reseted.");

@@ -3,6 +3,7 @@ using DAL.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace Web.Controllers
 {
@@ -23,7 +24,7 @@ namespace Web.Controllers
         {
             try
             {
-                string username = User.Claims.First(c => c.Type == "Username").Value;
+                string username = User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value;
                 IslandDto island = await _islandService.GetIslandByUsernameAsync(username);
 
                 return Ok(island);
@@ -40,7 +41,7 @@ namespace Web.Controllers
         {
             try
             {
-                string username = User.Claims.First(c => c.Type == "Username").Value;
+                string username = User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value;
                 SkillsDto defaultSkills = await _islandService.GetDefaultSkillsByUsernameAsync(username);
 
                 return Ok(defaultSkills);
