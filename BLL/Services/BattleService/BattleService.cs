@@ -290,7 +290,7 @@ namespace BLL.Services.BattleService
             int max = (10 + str);
             int randomDamage = _randomProvider.GetRandomNumber(min, max);
 
-            double calculator = randomDamage * (1 + (churchLvl / 10));
+            double calculator = randomDamage * (1 + (churchLvl / 10d));
             int churchDmg = Convert.ToInt32(Math.Round(calculator));
 
             double allDmg = Math.Round(churchDmg * multiply);
