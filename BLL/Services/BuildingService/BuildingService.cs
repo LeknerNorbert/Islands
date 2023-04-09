@@ -212,7 +212,7 @@ namespace BLL.Services.BuildingService
             player.Coins -= nextLevelConfiguration.CoinsForBuild;
             player.Woods -= nextLevelConfiguration.WoodsForBuild;
             player.Stones -= nextLevelConfiguration.StonesForBuild;
-            player.Woods -= nextLevelConfiguration.WoodsForBuild;
+            player.Irons -= nextLevelConfiguration.IronsForBuild;
             player.Experience += nextLevelConfiguration.ExperienceReward;
 
             await _buildingRepository.UpdateBuildingAsync(building);
