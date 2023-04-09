@@ -42,29 +42,60 @@ namespace BLL.Services.BattleService.Tests
         [TestMethod()]
         public void DamageCalcTest()
         {
-            ////Arrange
-            //double multiply = 1.5;
-            //int strength = 13;
-            //int churchLevel= 2;
+            //Arrange
+            double multiply = 1.5;
+            int strength = 13;
+            int churchLevel= 2;
 
-            ////Act
-            //BattleService battleService = new BattleService(null, null, null, null);
-            //int result = battleService.DamageCalc(multiply, strength, churchLevel);
+            // Az általad megadott számot fogja visszaadni mindig randomként
+            // Random mock
+            mockRandomProvider.Setup(randomProvider =>
+                randomProvider.GetRandomNumber(It.IsAny<int>(), It.IsAny<int>())).Returns(10);
 
-            ////Assert
-            //Assert.IsTrue(result>=22 & result<=28);
+            //Act
+            BattleService battleService = new BattleService(null, null, null, null, mockRandomProvider.Object);
+            int result = battleService.DamageCalc(multiply, strength, churchLevel);
+
+            //Assert
+            Assert.AreEqual(18, result);
         }
 
         [TestMethod()]
         public void LootCalcTest()
         {
-            Assert.Fail();
+            //Arrange
+            int intellect = 13;
+
+            // Az általad megadott számot fogja visszaadni mindig randomként
+            // Random mock
+            mockRandomProvider.Setup(randomProvider =>
+                randomProvider.GetRandomNumber(It.IsAny<int>(), It.IsAny<int>())).Returns(80);
+
+            //Act
+            BattleService battleService = new BattleService(null, null, null, null, mockRandomProvider.Object);
+            int result = battleService.LootCalc(intellect);
+
+            //Assert
+            Assert.AreEqual(145,result);
         }
 
         [TestMethod()]
         public void CoinCalcTest()
         {
-            Assert.Fail();
+            //Arrange
+            int intellect = 13;
+
+            // Az általad megadott számot fogja visszaadni mindig randomként
+            // Random mock
+            mockRandomProvider.Setup(randomProvider =>
+                randomProvider.GetRandomNumber(It.IsAny<int>(), It.IsAny<int>())).Returns(150);
+
+            //Act
+            BattleService battleService = new BattleService(null, null, null, null, mockRandomProvider.Object);
+            int result = battleService.CoinCalc(intellect);
+
+            //Assert
+            Assert.AreEqual(215, result);
         }
     }
 }
