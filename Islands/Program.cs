@@ -21,7 +21,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Filters;
-using System.Security.Claims;
 using System.Text;
 using Web.Filters;
 using Web.Hubs;
@@ -36,11 +35,11 @@ builder.Services.AddCors(options =>
     options.AddPolicy(name: MyAllowSpecificOrigins,
         policy =>
         {
-            policy.WithOrigins("http://localhost:3000")
+            policy.AllowAnyOrigin()
                 .AllowAnyMethod()
                 .AllowAnyHeader()
                 .AllowCredentials()
-                .SetIsOriginAllowed((host) => true);
+                .WithOrigins("http://localhost:3000", "http://192.168.100.12:3000");
         });
 });
 

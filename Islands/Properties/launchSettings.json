@@ -16,7 +16,7 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
-      "applicationUrl": "https://localhost:7276;http://127.0.0.1:5276",
+      "applicationUrl": "https://localhost:7276;http://127.0.0.1:5726;",
       "dotnetRunMessages": true
     },
     "IIS Express": {
@@ -37,13 +37,15 @@
       },
       "distributionName": ""
     },
-    "Profile 1": {
-      "commandName": "IISExpress",
+    "For mobile": {
+      "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "swagger",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
-      }
+      },
+      "applicationUrl": "http://192.168.100.12:7276;",
+      "remoteDebugMachine": "ASPNETCORE_ENVIRONMENT=Development"
     }
   }
 }
