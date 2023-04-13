@@ -17,7 +17,7 @@ A projekt indításához az alábbi követelmények szükségesek:
 2. A mysql sorában az Admin gombra kattitunk, ami megnyit egy ablakot az adatbázis felületével. Vagy a böngésző sávjába bemásoljuk az alábbi szöveget: [http://localhost/phpmyadmin/](http://localhost/phpmyadmin/)
 3. Létrehozunk egy új adatbázist Island néven, utf-8 hungarian kódolással.
 4. Megnyitjuk az Islands.sln-t Visual studioban.
-5. Packet manager console-ban beírjuk, hogy ### `update-database`.
+5. Packet manager console-ban beírjuk az : `update-database` parancsot.
 6. Ezután visszatérünk a mysql adatbázishoz és beolvassuk a repository-ban található sql file-t, hogy feltöltsük ellenfelekkel az adatbázist.
 7. Elindítjuk a backendet és megnyílik egy új ablakban a swagger az apikkal.
 
