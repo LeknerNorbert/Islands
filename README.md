@@ -10,6 +10,7 @@ A projekt indításához az alábbi követelmények szükségesek:
 - Visual studio (lehetőleg 2022-es verzió)
 - Xampp (adatbázis indításához)
 - A projekt fileok klónozása vagy kicsomagolva letöltése
+- SQL file, amit a "database" mappában talál meg a repositoryban.
 
 ## A projekt indítása
 
@@ -18,7 +19,7 @@ A projekt indításához az alábbi követelmények szükségesek:
 3. Létrehozunk egy új adatbázist `island` néven, utf-8 hungarian kódolással.
 4. Megnyitjuk az Islands.sln-t Visual studioban.
 5. Packet manager console-ban beírjuk az : `update-database` parancsot.
-6. Ezután visszatérünk a mysql adatbázishoz és beolvassuk a repository-ban található sql file-t, hogy feltöltsük ellenfelekkel az adatbázist.
+6. Ezután visszatérünk a mysql adatbázishoz és beolvassuk a repository "database" mappájában található sql file-t, hogy feltöltsük ellenfelekkel az adatbázist.
 7. Elindítjuk a backendet és megnyílik egy új ablakban a swagger az apikkal.
 
 
