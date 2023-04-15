@@ -43,7 +43,9 @@ namespace DAL.Repositories.PlayerRepository
 
         public async Task<Player> GetPlayerByIdAsync(int id)
         {
-            return await _context.Players.FirstAsync(p => p.Id == id);
+            return await _context.Players
+                .Include(player => player.User)
+                .FirstAsync(p => p.Id == id);
         }
 
         public async Task<Player> GetPlayerByUsernameAsync(string username)

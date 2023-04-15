@@ -36,21 +36,21 @@ namespace BLL.Services.NotificationService
             await _notificationRepository.RemoveNotificationAsync(removedNotification);
         }
 
-        public async Task AddNotificationAsync(Notification notification, string receiverUsername)
+        public async Task AddNotificationAsync(Notification notification, bool isItemsUpdateForce, string receiverUsername)
         {
             Notification addedNotification = await _notificationRepository.AddNotificationAsync(notification);
-            await SendNotificationToClientAsync(addedNotification, receiverUsername);
+            await SendNotificationToClientAsync(addedNotification, isItemsUpdateForce, receiverUsername);
         }
 
         public async Task SetNotificationToOpenedAsync(int id)
         {
             Notification notification = await _notificationRepository.GetNotificationByIdAsync(id);
             notification.IsOpened = true;
-            
+
             await _notificationRepository.UpdateNotificationAsync(notification);
         }
 
-        private async Task SendNotificationToClientAsync(Notification notification, string receiverUsername)
+        private async Task SendNotificationToClientAsync(Notification notification, bool isItemsUpdateForce, string receiverUsername)
         {
             NotificationDto notificationToClient = new()
             {
@@ -64,6 +64,7 @@ namespace BLL.Services.NotificationService
                 Experience = notification.Experience,
                 IsOpened = notification.IsOpened,
                 CreateDate = notification.CreateDate,
+                IsItemsUpdateForce = isItemsUpdateForce
             };
 
             await _notificationHubConnection.StartAsync();

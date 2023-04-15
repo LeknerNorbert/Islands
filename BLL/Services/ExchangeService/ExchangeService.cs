@@ -1,4 +1,5 @@
 ﻿using BLL.Exceptions;
+using BLL.Services.NotificationService;
 using DAL.DTOs;
 using DAL.Models;
 using DAL.Models.Enums;
@@ -11,13 +12,16 @@ namespace BLL.Services.ExchangeService
     {
         private readonly IExchangeRepository _exchangeRepository;
         private readonly IPlayerRepository _playerRepository;
+        private readonly INotificationService _notificationService;
 
         public ExchangeService(
             IExchangeRepository exchangeRepository, 
-            IPlayerRepository playerRepository)
+            IPlayerRepository playerRepository,
+            INotificationService notificationService)
         {
             _exchangeRepository = exchangeRepository;
             _playerRepository = playerRepository;
+            _notificationService = notificationService;
         }
 
         public async Task AddExchangeAsync(string username, CreateExchangeDto exchange)
@@ -92,6 +96,16 @@ namespace BLL.Services.ExchangeService
             Player buyer = await _playerRepository.GetPlayerByUsernameAsync(username);
             Player advertiser = await _playerRepository.GetPlayerByForAdAsync(id);
 
+            Notification notification = new()
+            {
+                Title = "A hiretésedet megvették!",
+                Message = "Gratulálunk, az egyik hirdetésed vevőre talált. A cserébe kapott nyersanyag:",
+                CreateDate = DateTime.Now,
+                IsOpened = false,
+                Player = advertiser
+            };
+
+
             switch (exchange.ReplacementItem)
             {
                 case Item.Coin:
@@ -99,6 +113,7 @@ namespace BLL.Services.ExchangeService
                     {
                         buyer.Coins -= exchange.ReplacementAmount;
                         advertiser.Coins += exchange.ReplacementAmount;
+                        notification.Coins = exchange.ReplacementAmount;
                     }
                     else
                     {
@@ -111,6 +126,7 @@ namespace BLL.Services.ExchangeService
                     {
                         buyer.Woods -= exchange.ReplacementAmount;
                         advertiser.Woods += exchange.ReplacementAmount;
+                        notification.Woods = exchange.ReplacementAmount;
                     }
                     else
                     {
@@ -123,6 +139,7 @@ namespace BLL.Services.ExchangeService
                     {
                         buyer.Stones -= exchange.ReplacementAmount;
                         advertiser.Stones += exchange.ReplacementAmount;
+                        notification.Stones = exchange.ReplacementAmount;
                     }
                     else
                     {
@@ -135,6 +152,7 @@ namespace BLL.Services.ExchangeService
                     {
                         buyer.Irons -= exchange.ReplacementAmount;
                         advertiser.Irons += exchange.ReplacementAmount;
+                        notification.Irons = exchange.ReplacementAmount;
                     }
                     else
                     {
@@ -164,6 +182,7 @@ namespace BLL.Services.ExchangeService
                     break;
             }
 
+            await _notificationService.AddNotificationAsync(notification, true, advertiser.User.Username);
             await _playerRepository.UpdatePlayerAsync(buyer);
             await _playerRepository.UpdatePlayerAsync(advertiser);
             await _exchangeRepository.RemoveExchangeAsync(exchange);

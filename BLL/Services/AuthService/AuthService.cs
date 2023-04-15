@@ -177,7 +177,7 @@ namespace BLL.Services.AuthService
         {
             string htmlTemplate = File.ReadAllText("../BLL/Templates/TemporaryPasswordEmail.html");
             htmlTemplate = htmlTemplate.Replace("Username", username);
-            htmlTemplate = htmlTemplate.Replace("<span>TemporaryPassword</span>", $"<span>${password}</span>");
+            htmlTemplate = htmlTemplate.Replace("<span>TemporaryPassword</span>", $"<span>{password}</span>");
 
             EmailDto request = new()
             {

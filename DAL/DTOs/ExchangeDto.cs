@@ -1,4 +1,5 @@
 ﻿using DAL.Models.Enums;
+using System.ComponentModel.DataAnnotations;
 
 namespace DAL.DTOs
 {

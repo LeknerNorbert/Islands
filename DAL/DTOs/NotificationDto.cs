@@ -12,5 +12,6 @@
         public int Experience { get; set; }
         public bool IsOpened { get; set; }
         public DateTime CreateDate { get; set; }
+        public bool IsItemsUpdateForce { get; set; }
     }
 }

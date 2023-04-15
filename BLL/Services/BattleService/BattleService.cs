@@ -251,8 +251,8 @@ namespace BLL.Services.BattleService
 
             await _playerRepository.UpdatePlayerAsync(battleStartPlayer);
             await _playerRepository.UpdatePlayerAsync(winnerPlayer);
-            await _notificationService.AddNotificationAsync(winnerNotification, winnerUsername);
-            await _notificationService.AddNotificationAsync(losingNotification, losingUsername);
+            await _notificationService.AddNotificationAsync(winnerNotification, winnerUsername != username, winnerUsername);
+            await _notificationService.AddNotificationAsync(losingNotification, false, losingUsername);
 
             return battleReports;
         }

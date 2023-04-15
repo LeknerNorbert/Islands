@@ -1,5 +1,6 @@
 ﻿using BLL.Exceptions;
 using BLL.Services.ConfigurationService;
+using BLL.Services.NotificationService;
 using DAL.DTOs;
 using DAL.Models;
 using DAL.Models.Enums;
@@ -14,18 +15,18 @@ namespace BLL.Services.PlayerService
         private readonly IPlayerRepository _playerRepository;
         private readonly IUserRepository _userRepository;
         private readonly IConfigurationService _configurationService;
-        private readonly INotificationRepository _notificationRepository;
+        private readonly INotificationService _notificationService;
 
         public PlayerService(
             IPlayerRepository playerRepository, 
             IUserRepository userRepository, 
             IConfigurationService configurationService,
-            INotificationRepository notificationRepository)
+            INotificationService notificationService)
         {
             _playerRepository = playerRepository;
             _userRepository = userRepository; 
             _configurationService = configurationService;
-            _notificationRepository = notificationRepository;
+            _notificationService = notificationService;
         }
 
         public async Task<PlayerDto> AddPlayerAsync(string username, IslandType islandType)
@@ -72,7 +73,7 @@ namespace BLL.Services.PlayerService
                 Player = createdPlayer
             };
 
-            await _notificationRepository.AddNotificationAsync(notification);
+            await _notificationService.AddNotificationAsync(notification, false, username);
 
             return new PlayerDto()
             {

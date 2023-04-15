@@ -7,7 +7,7 @@ namespace BLL.Services.NotificationService
     {
         Task<List<NotificationDto>> GetAllNotificationsByUsernameAsync(string username);
         Task RemoveNotificationAsync(int id);
-        Task AddNotificationAsync (Notification notification, string receiverUsername);
+        Task AddNotificationAsync (Notification notification, bool isItemsUpdateForce, string receiverUsername);
         Task SetNotificationToOpenedAsync(int id);
     }
 }

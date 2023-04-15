@@ -212,7 +212,7 @@ namespace BLL.Services.ExpeditionService
             expeditionReport.Date = player.LastExpeditionDate;
 
             await _playerRepository.UpdatePlayerAsync(player);
-            await _notificationService.AddNotificationAsync(expeditionNotification, player.User.Username);
+            await _notificationService.AddNotificationAsync(expeditionNotification, false, player.User.Username);
 
             return expeditionReport;
         }
