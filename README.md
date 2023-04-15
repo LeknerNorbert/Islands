@@ -7,6 +7,7 @@
 ## A projekt indításához szükséges feltételek
 
 A projekt indításához az alábbi követelmények szükségesek:
+- .NET 6.0 SDK telepítése
 - Visual studio (lehetőleg 2022-es verzió)
 - Xampp (adatbázis indításához)
 - A projekt fileok klónozása vagy kicsomagolva letöltése
