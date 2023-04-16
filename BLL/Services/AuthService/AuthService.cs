@@ -14,9 +14,10 @@ namespace BLL.Services.AuthService
 {
     public class AuthService : IAuthService
     {
-        private readonly IUserRepository _userRepository;
         private readonly IConfiguration _configuration;
+        private readonly IUserRepository _userRepository;
         private readonly IEmailService _emailService;
+        private readonly string rootPath;
 
         public AuthService(
             IUserRepository userRepository, 
@@ -26,6 +27,7 @@ namespace BLL.Services.AuthService
             _userRepository = userRepository;
             _configuration = configuration;
             _emailService = emailService;
+            rootPath = _configuration.GetSection("RootPath").Value;
         }
 
         public async Task<string> LoginAsync(LoginRequestDto login)
@@ -144,7 +146,8 @@ namespace BLL.Services.AuthService
 
         private void SendEmailValidationEmail(string username, string email, string token)
         {
-            string htmlTemplate = File.ReadAllText("../BLL/Templates/EmailValidationEmail.html");
+            string path = Path.Combine(rootPath, "Templates", "EmailValidationEmail.html");
+            string htmlTemplate = File.ReadAllText(path);
             htmlTemplate = htmlTemplate.Replace("Username", username);
             htmlTemplate = htmlTemplate.Replace("Token", token);
 
@@ -160,7 +163,8 @@ namespace BLL.Services.AuthService
 
         private void SendEmailPasswordChangeEmail(string username, string email) 
         {
-            string htmlTemplate = File.ReadAllText("../BLL/Templates/UpdatePasswordEmail.html");
+            string path = Path.Combine(rootPath, "Templates", "UpdatePasswordEmail.html");
+            string htmlTemplate = File.ReadAllText(path);
             htmlTemplate = htmlTemplate.Replace("Username", username);
 
             EmailDto request = new()
@@ -175,7 +179,8 @@ namespace BLL.Services.AuthService
 
         private void SendTemporaryPasswordEmail(string username, string email, string password)
         {
-            string htmlTemplate = File.ReadAllText("../BLL/Templates/TemporaryPasswordEmail.html");
+            string path = Path.Combine(rootPath, "Templates", "TemporaryPasswordEmail.html");
+            string htmlTemplate = File.ReadAllText(path);
             htmlTemplate = htmlTemplate.Replace("Username", username);
             htmlTemplate = htmlTemplate.Replace("<span>TemporaryPassword</span>", $"<span>{password}</span>");
 
