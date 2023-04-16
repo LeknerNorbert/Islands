@@ -127,7 +127,8 @@ namespace BLL.Services.ConfigurationService
 
         public int GetLevelByExperience(int experiences)
         {
-            return Convert.ToInt32(0.1 * Math.Sqrt(experiences));
+            double sqrt = Math.Sqrt(experiences);
+            return Convert.ToInt32(Math.Floor(sqrt * 0.1));
         }
 
         public async Task<SkillsDto> GetMaximumSkillPointsAsync()

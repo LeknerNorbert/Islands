@@ -82,7 +82,7 @@ namespace Web.Controllers
             try
             {
                 string username = User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value;
-                await _exchangeService.RemoveExchangeAsync(id);
+                await _exchangeService.RemoveExchangeAsync(username, id);
 
                 return Ok("Exchange successfully deleted.");
             }

@@ -38,7 +38,7 @@ namespace BLL.Services.BattleService
             int playerLevel = _configurationService.GetLevelByExperience(player.Experience);
 
             int minimumLevel = playerLevel > 5 ? playerLevel - 1 : 5;
-            int maximumLevel = playerLevel + 2;
+            int maximumLevel = playerLevel + 3;
             int minimumExperience = _configurationService.GetExperienceByLevel(minimumLevel);
             int maximumExperience = _configurationService.GetExperienceByLevel(maximumLevel);
 

@@ -198,9 +198,32 @@ namespace BLL.Services.ExchangeService
             return await _exchangeRepository.GetAllExchangesByUsernameAsync(username);
         }
 
-        public async Task RemoveExchangeAsync(int id)
+        public async Task RemoveExchangeAsync(string username, int id)
         {
             Exchange exchange = await _exchangeRepository.GetExchangeByIdAsync(id);
+            Player player = await _playerRepository.GetPlayerByUsernameAsync(username);
+
+            switch (exchange.Item)
+            {
+                case Item.Coin:
+                    player.Coins += exchange.Amount;
+
+                    break;
+                case Item.Wood:
+                    player.Woods += exchange.Amount;
+
+                    break;
+                case Item.Stone:
+                    player.Stones += exchange.Amount;
+
+                    break;
+                case Item.Iron:
+                    player.Irons += exchange.Amount;
+
+                    break;
+            }
+
+            await _playerRepository.UpdatePlayerAsync(player);
             await _exchangeRepository.RemoveExchangeAsync(exchange);
         }
     }

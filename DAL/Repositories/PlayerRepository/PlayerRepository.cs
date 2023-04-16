@@ -59,7 +59,7 @@ namespace DAL.Repositories.PlayerRepository
         {
             return await _context.Players
                 .Include(player => player.User)
-                .Where(player => player.Experience >= minExperience && player.Experience <= maxExperience && player.User.Username != username)
+                .Where(player => player.Experience >= minExperience && player.Experience < maxExperience && player.User.Username != username)
                 .ToListAsync();
         }
 
