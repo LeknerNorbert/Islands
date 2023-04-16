@@ -6,7 +6,12 @@ namespace BLL.Services.ConfigurationService
 {
     public class ConfigurationService : IConfigurationService
     {
-        private readonly string appFolderPath = AppDomain.CurrentDomain.BaseDirectory;
+        private readonly string appFolderPath;
+
+        public ConfigurationService()
+        {
+            appFolderPath = AppDomain.CurrentDomain.BaseDirectory.Replace("\\Islands\\bin\\Debug\\net6.0\\", "");
+        }
 
         public async Task<List<BuildingConfigurationDto>> GetAllUnbuiltBuildingsByIslandAsync(IslandType islandType)
         {
@@ -143,7 +148,7 @@ namespace BLL.Services.ConfigurationService
 
         public async Task<SkillsDto> GetMaximumSkillPointsAsync()
         {
-            string path = Path.Combine(appFolderPath, "BLL", "ConfigurationFiles", "MaxSkillPoints.json"); /*@"..\BLL\ConfigurationFiles\MaxSkillPoints\MaxSkillPoints.json";*/
+            string path = Path.Combine(appFolderPath, "BLL", "ConfigurationFiles", "MaxSkillPoints", "MaxSkillPoints.json"); /*@"..\BLL\ConfigurationFiles\MaxSkillPoints\MaxSkillPoints.json";*/
 
             if (!File.Exists(path))
             {
