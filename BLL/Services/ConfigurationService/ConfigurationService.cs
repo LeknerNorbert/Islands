@@ -10,7 +10,7 @@ namespace BLL.Services.ConfigurationService
 
         public ConfigurationService()
         {
-            appFolderPath = AppDomain.CurrentDomain.BaseDirectory.Replace("\\Islands\\bin\\Debug\\net6.0\\", "");
+            appFolderPath = System.Reflection.Assembly.GetExecutingAssembly().Location.Replace("\\Islands\\bin\\Debug\\net6.0\\", "");
         }
 
         public async Task<List<BuildingConfigurationDto>> GetAllUnbuiltBuildingsByIslandAsync(IslandType islandType)
