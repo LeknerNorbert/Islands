@@ -35,11 +35,11 @@ builder.Services.AddCors(options =>
     options.AddPolicy(name: MyAllowSpecificOrigins,
         policy =>
         {
-            policy.AllowAnyOrigin()
+            policy
                 .AllowAnyMethod()
                 .AllowAnyHeader()
                 .AllowCredentials()
-                .WithOrigins("http://localhost:3000", "http://192.168.100.12:3000");
+                .WithOrigins("https://islanders-b7706.web.app", "http://localhost:3000");
         });
 });
 
