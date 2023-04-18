@@ -5,48 +5,94 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BLL.Services.RandomProvider;
+using Moq;
 
 namespace BLL.Services.BattleService.Tests
 {
     [TestClass()]
     public class BattleServiceTests
     {
+        // Random mock
+        private readonly Mock<IRandomProvider> mockRandomProvider = new();
+
         [TestMethod()]
-        public void GetAllEnemiesAsync_LevelOne_ReturnEqualLevelEnemies()
+        public void AttackDamageTest()
         {
-            // Arrange
-            int amount = 0;
+            //Arrange
+            int strength = 13;
+            int agility = 12;
+            int churchLevel = 2;
+            int practiceRangeLevel = 1;
 
-            // Act
-            int result = amount + 10;
+            // Az általad megadott számot fogja visszaadni mindig randomként
+            // Random mock
+            mockRandomProvider.Setup(randomProvider =>
+                randomProvider.GetRandomNumber(It.IsAny<int>(), It.IsAny<int>())).Returns(10);
 
-            // Assert
-            Assert.AreEqual(10, result);
-        }
+            //Act
+            BattleService battleService = new(null, null, null, null, mockRandomProvider.Object);
+            int result = battleService.AttackDamage(strength, agility, churchLevel, practiceRangeLevel);
 
-        private int Osszead(int szam1, int szam2)
-        {
-            return szam1 + szam2;
-        }
 
-        [TestMethod()] 
-        public void Osszead_tizEsTizenegy_EredmenyHuszonegy()
-        {
-            // Arrange
-            int tiz = 10;
-            int tizenegy = 11;
-
-            // Act
-            int eredmeny = Osszead(tiz, tizenegy);
-
-            // Assert
-            Assert.AreEqual(21, eredmeny);
+            //Assert
+            Assert.AreEqual(18, result);
         }
 
         [TestMethod()]
-        public void GetBattleReportAsyncTest()
+        public void DamageCalcTest()
         {
-            Assert.Fail();
+            //Arrange
+            double multiply = 1.5;
+            int strength = 13;
+            int churchLevel = 2;
+
+            // Random mock
+            mockRandomProvider.Setup(randomProvider =>
+                randomProvider.GetRandomNumber(It.IsAny<int>(), It.IsAny<int>())).Returns(10);
+
+            //Act
+            BattleService battleService = new BattleService(null, null, null, null, mockRandomProvider.Object);
+            int result = battleService.DamageCalc(multiply, strength, churchLevel);
+
+            //Assert
+            Assert.AreEqual(18, result);
+        }
+
+        [TestMethod()]
+        public void LootCalcTest()
+        {
+            //Arrange
+            int intellect = 13;
+
+            // Random mock
+            mockRandomProvider.Setup(randomProvider =>
+                randomProvider.GetRandomNumber(It.IsAny<int>(), It.IsAny<int>())).Returns(80);
+
+            //Act
+            BattleService battleService = new BattleService(null, null, null, null, mockRandomProvider.Object);
+            int result = battleService.LootCalc(intellect);
+
+            //Assert
+            Assert.AreEqual(145, result);
+        }
+
+        [TestMethod()]
+        public void CoinCalcTest()
+        {
+            //Arrange
+            int intellect = 13;
+
+            // Random mock
+            mockRandomProvider.Setup(randomProvider =>
+                randomProvider.GetRandomNumber(It.IsAny<int>(), It.IsAny<int>())).Returns(150);
+
+            //Act
+            BattleService battleService = new BattleService(null, null, null, null, mockRandomProvider.Object);
+            int result = battleService.CoinCalc(intellect);
+
+            //Assert
+            Assert.AreEqual(215, result);
         }
     }
 }

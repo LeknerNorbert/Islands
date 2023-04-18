@@ -28,7 +28,7 @@ namespace DAL.Repositories.ExchangeRepository
                 .Include(exchange => exchange.Player)
                     .ThenInclude(player => player.User)
                 .Where(exchange => exchange.PublishDate >= DateTime.Now.AddDays(-7) && exchange.Player.User.Username != username)
-                .OrderBy(exchange => exchange.PublishDate)
+                .OrderByDescending(exchange => exchange.PublishDate)
                 .Select(exchange => new ExchangeDto()
                 {
                     Id = exchange.Id,

@@ -39,7 +39,7 @@ builder.Services.AddCors(options =>
                 .AllowAnyMethod()
                 .AllowAnyHeader()
                 .AllowCredentials()
-                .WithOrigins("https://islanders-b7706.web.app", "http://localhost:3000");
+                .WithOrigins("https://islanders-b7706.web.app", "http://localhost:3000", "http://localhost");
         });
 });
 

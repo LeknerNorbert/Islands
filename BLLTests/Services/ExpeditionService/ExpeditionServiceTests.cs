@@ -5,15 +5,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using BLL.Services.RandomProvider;
 using Moq;
+using BLL.Services.RandomProvider;
 
 namespace BLL.Services.ExpeditionService.Tests
 {
     [TestClass()]
     public class ExpeditionServiceTests
     {
-        // Random mock
         private readonly Mock<IRandomProvider> mockRandomProvider = new();
 
         [TestMethod()]
@@ -23,7 +22,6 @@ namespace BLL.Services.ExpeditionService.Tests
             int intellect = 13;
             int difficulty = 2;
 
-            // Az általad megadott számot fogja visszaadni mindig randomként
             // Random mock
             mockRandomProvider.Setup(randomProvider =>
                 randomProvider.GetRandomNumber(It.IsAny<int>(), It.IsAny<int>())).Returns(80);
@@ -43,7 +41,6 @@ namespace BLL.Services.ExpeditionService.Tests
             int intellect = 13;
             int difficulty = 2;
 
-            // Az általad megadott számot fogja visszaadni mindig randomként
             // Random mock
             mockRandomProvider.Setup(randomProvider =>
                 randomProvider.GetRandomNumber(It.IsAny<int>(), It.IsAny<int>())).Returns(150);
