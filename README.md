@@ -23,5 +23,6 @@ A projekt indításához az alábbi követelmények szükségesek:
 6. Ezután visszatérünk a mysql adatbázishoz és beolvassuk a repository "database" mappájában található sql file-t, hogy feltöltsük ellenfelekkel az adatbázist.
 7. Elindítjuk a backendet és megnyílik egy új ablakban a swagger az apikkal.
 
+## Mobil App letöltése: [Drive link](https://drive.google.com/file/d/1WGelaRy3E8ZCe_cKAB6aX95UlDfARWSi/view?usp=sharing)
 
-
+## Webes deploy elérése: [https://islanders-b7706.web.app/island](https://islanders-b7706.web.app)
