@@ -26,11 +26,6 @@ namespace BLL.Services.ConfigurationService
                 Path.Combine(rootPath, "ConfigurationFiles", "Buildings", islandType.ToString(), "LumberYard-1.json"),
                 Path.Combine(rootPath, "ConfigurationFiles", "Buildings", islandType.ToString(), "Mine-1.json"),
                 Path.Combine(rootPath, "ConfigurationFiles", "Buildings", islandType.ToString(), "PracticeRange-1.json"),
-                //@$"..\BLL\ConfigurationFiles\Buildings\{islandType}\Church-1.json",
-                //@$"..\BLL\ConfigurationFiles\Buildings\{islandType}\Factory-1.json",
-                //@$"..\BLL\ConfigurationFiles\Buildings\{islandType}\LumberYard-1.json",
-                //@$"..\BLL\ConfigurationFiles\Buildings\{islandType}\Mine-1.json",
-                //@$"..\BLL\ConfigurationFiles\Buildings\{islandType}\PracticeRange-1.json",
             };
 
             List<BuildingConfigurationDto> unbuiltBuildings = new();
@@ -58,8 +53,7 @@ namespace BLL.Services.ConfigurationService
 
         public async Task<BuildingConfigurationDto> GetBuildingByIslandAsync(IslandType islandType, BuildingType buildingType, int level)
         {
-            string path = Path.Combine(rootPath, "ConfigurationFiles", "Buildings", islandType.ToString(), $"{buildingType}-{level}.json"); /*@$"..\BLL\ConfigurationFiles\Buildings\{islandType}\{buildingType}-{level}.json";*/
-
+            string path = Path.Combine(rootPath, "ConfigurationFiles", "Buildings", islandType.ToString(), $"{buildingType}-{level}.json"); 
 
             if (!File.Exists(path))
             {
@@ -79,7 +73,7 @@ namespace BLL.Services.ConfigurationService
 
         public async Task<SkillsDto> GetDefaultSkillsByIslandAsync(IslandType islandType)
         {
-            string path = Path.Combine(rootPath, "ConfigurationFiles", "DefaultSkills", $"{islandType}.json"); /*@$"..\BLL\ConfigurationFiles\DefaultSkills\{islandType}.json";*/
+            string path = Path.Combine(rootPath, "ConfigurationFiles", "DefaultSkills", $"{islandType}.json");
 
 
             if (!File.Exists(path))
@@ -100,7 +94,7 @@ namespace BLL.Services.ConfigurationService
 
         public async Task<EnemyConfigurationDto> GetEnemyByIslandAsync(IslandType islandType)
         {
-            string path = Path.Combine(rootPath, "ConfigurationFiles", "Enemies", $"{islandType}.json"); /*@$"..\BLL\ConfigurationFiles\Enemies\{islandType}.json"*/;
+            string path = Path.Combine(rootPath, "ConfigurationFiles", "Enemies", $"{islandType}.json");
 
             if (!File.Exists(path))
             {
@@ -125,7 +119,7 @@ namespace BLL.Services.ConfigurationService
 
         public async Task<IslandDto> GetIslandAsync(IslandType islandType)
         {
-            string path = Path.Combine(rootPath, "ConfigurationFiles", "Islands", $"{islandType}.json"); /*@$"..\BLL\ConfigurationFiles\Islands\{islandType}.json";*/
+            string path = Path.Combine(rootPath, "ConfigurationFiles", "Islands", $"{islandType}.json");
 
             if (!File.Exists(path))
             {
@@ -151,7 +145,7 @@ namespace BLL.Services.ConfigurationService
 
         public async Task<SkillsDto> GetMaximumSkillPointsAsync()
         {
-            string path = Path.Combine(rootPath, "ConfigurationFiles", "MaxSkillPoints", "MaxSkillPoints.json"); /*@"..\BLL\ConfigurationFiles\MaxSkillPoints\MaxSkillPoints.json";*/
+            string path = Path.Combine(rootPath, "ConfigurationFiles", "MaxSkillPoints", "MaxSkillPoints.json");
 
             if (!File.Exists(path))
             {
@@ -171,7 +165,7 @@ namespace BLL.Services.ConfigurationService
 
         public async Task<ProfileImageConfigurationDto> GetProfileImageByIslandAsync(IslandType islandType)
         {
-            string path = Path.Combine(rootPath, "ConfigurationFiles", "ProfileImages", $"{islandType}.json"); /*@$"..\BLL\ConfigurationFiles\ProfileImages\{islandType}.json";*/
+            string path = Path.Combine(rootPath, "ConfigurationFiles", "ProfileImages", $"{islandType}.json");
 
             if (!File.Exists(path))
             {
