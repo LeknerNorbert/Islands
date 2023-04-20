@@ -28,8 +28,8 @@ A projekt indításához az alábbi követelmények szükségesek:
 ## Webes deploy elérése: [https://islanders-b7706.web.app/island](https://islanders-b7706.web.app)
 
 ## A `Prezentacio` mappában található:
-### - Magyar nyelvű prezentáció (PDF és PPTX formátumban)
-### - Angol nyelvű prezentáció (PDF és PPTX formátumban)
+- Magyar nyelvű prezentáció (PDF és PPTX formátumban)
+- Angol nyelvű prezentáció (PDF és PPTX formátumban)
 
 ## A `Dokumentacio` mappában található:
 - Dokumentáció a programról (PDF és DOCX formátumban)
