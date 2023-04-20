@@ -32,5 +32,5 @@ A projekt indításához az alábbi követelmények szükségesek:
 ### - Angol nyelvű prezentáció (PDF és PPTX formátumban)
 
 ## A `Dokumentacio` mappában található:
-### - Dokumentáció a programról (PDF és DOCX formátumban)
-### - Tesztelési dokumentáció (PDF és DOCX formátumban)
+- Dokumentáció a programról (PDF és DOCX formátumban)
+- Tesztelési dokumentáció (PDF és DOCX formátumban)
