@@ -26,3 +26,11 @@ A projekt indításához az alábbi követelmények szükségesek:
 ## Mobil App letöltése: [Drive link](https://drive.google.com/file/d/1WGelaRy3E8ZCe_cKAB6aX95UlDfARWSi/view?usp=sharing)
 
 ## Webes deploy elérése: [https://islanders-b7706.web.app/island](https://islanders-b7706.web.app)
+
+## A `Prezentacio` mappában található:
+### - Magyar nyelvű prezentáció (PDF és PPTX formátumban)
+### - Angol nyelvű prezentáció (PDF és PPTX formátumban)
+
+## A `Dokumentacio` mappában található:
+### - Dokumentáció a programról (PDF és DOCX formátumban)
+### - Tesztelési dokumentáció (PDF és DOCX formátumban)
