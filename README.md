@@ -1,5 +1,9 @@
 # Islanders backend repo
 
+## Adatbázis diagram
+
+![Adatbázis diagram](./database/database.png)
+
 ## A frontend szükséges a teljes program működéséhez, ami egy másik repositoryban van.
 
 [Frontend repository elérése](https://github.com/fireball90/island_base)
