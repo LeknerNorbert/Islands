@@ -59,11 +59,12 @@ namespace BLL.Services.AuthService
                 PasswordHash = passwordHash,
                 PasswordSalt = passwordSalt,
                 EmailValidationToken = validationToken,
-                EmailValidationTokenExpiration = DateTime.Now.AddMinutes(10)
+                EmailValidationTokenExpiration = DateTime.Now.AddMinutes(10),
+                EmailValidationDate = DateTime.Now
             };
 
             await _userRepository.AddUserAsync(user);
-            SendEmailValidationEmail(user.Username, user.Email, validationToken);
+            //SendEmailValidationEmail(user.Username, user.Email, validationToken);
         }
 
         public async Task ResendVerifyEmailAsync(string email)
