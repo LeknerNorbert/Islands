@@ -18,8 +18,8 @@ namespace BLL.Services.NotificationService
             _notificationRepository = notificationRepository;
             _authService = authService;
             _notificationHubConnection = new HubConnectionBuilder()
-                .WithUrl("https://islanders-001-site1.htempurl.com/notificationHub", options =>
-                //.WithUrl("https://localhost:7276/notificationHub", options =>
+                //.WithUrl("https://islanders-001-site1.htempurl.com/notificationHub", options =>
+                .WithUrl("https://localhost:7276/notificationHub", options =>
                 {
                     options.Headers.Add("Authorization", "Bearer " + _authService.GetTokenForNotificationHub());
                 })
